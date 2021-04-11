@@ -11,6 +11,6 @@ describe('Home', () => {
 
         const {getByText} = renderedInstance;
 
-        expect(getByText('Home')).toBeInTheDocument();
+        expect(getByText('Hom')).toBeInTheDocument();
     });
 });
