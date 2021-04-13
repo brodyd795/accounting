@@ -19,7 +19,6 @@ export const conn = () => {
 		password: process.env.DB_PASSWORD,
 		user: process.env.DB_USER
 	}
-	console.log(`config`, config)
 
 	connection = mysql({
 		config
