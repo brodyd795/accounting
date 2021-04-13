@@ -11,15 +11,16 @@ export const conn = () => {
 		return connection;
 	}
 
-	const databaseBaseName = process.env.DB_NAME;
+	const config = {
+		database: process.env.DB_NAME,
+		host: process.env.DB_HOST,
+		password: process.env.DB_PASSWORD,
+		user: process.env.DB_USER
+	}
+	console.log(`config`, config)
 
 	connection = mysql({
-		config: {
-            database: process.env.ENVIRONMENT === 'dev' ? `${databaseBaseName}_DEV` : databaseBaseName,
-            host: process.env.DB_HOST,
-            password: process.env.DB_PASSWORD,
-            user: process.env.DB_USER
-        }
+		config
 	});
 
 	return connection;
