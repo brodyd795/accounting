@@ -11,8 +11,10 @@ export const conn = () => {
 		return connection;
 	}
 
+	const database = process.env.VERCEL_GIT_COMMIT_REF === 'main' ? process.env.DB_NAME : process.env.DEV_DB_NAME;
+
 	const config = {
-		database: process.env.DB_NAME,
+		database: database,
 		host: process.env.DB_HOST,
 		password: process.env.DB_PASSWORD,
 		user: process.env.DB_USER
