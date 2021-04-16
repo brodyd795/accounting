@@ -1,11 +1,11 @@
 import Router from 'next/router';
 import React, {Component} from 'react';
 
-import createLoginUrl from '../lib/url-helper';
+import {redirectTo} from '../utils/url-helpers';
 
 export default class RedirectToLogin extends Component {
 	componentDidMount() {
-		window.location.assign(createLoginUrl(Router.pathname));
+		window.location.assign(redirectTo(Router.pathname));
 	}
 
 	render() {
