@@ -2,7 +2,7 @@ import escape from 'sql-template-strings';
 
 import {conn} from './transaction-wrapper-repository';
 
-export const homeRepository = async () => {
+export const accountsSummaryRepository = async () => {
 	return conn().query(
 		escape`
 			SELECT
