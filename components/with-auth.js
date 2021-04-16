@@ -4,6 +4,10 @@ import auth0 from '../lib/auth0';
 import {fetchUser} from '../lib/user';
 import {redirectTo} from '../utils/url-helpers';
 
+/*
+TODO: figure out how to throw an error screen to any user other than me
+*/
+
 import RedirectToLogin from './login-redirect';
 
 export default InnerComponent => {
