@@ -1,7 +1,10 @@
+import {withTransactionWrapper} from '../repositories/transaction-wrapper-repository';
 import {accountsSummaryRepository} from '../repositories/accounts-summary-repository';
 
-export const accountsSummaryService = async () => {
-    const data = await accountsSummaryRepository();
+const accountsSummary = async (props) => {
+    const data = await accountsSummaryRepository(props);
 
     return data;
 };
+
+export const accountsSummaryService = async props => withTransactionWrapper(accountsSummary, props);
