@@ -2,7 +2,9 @@ import {accountsSummaryService} from '../services/accounts-summary-service';
 
 export default async (req, res) => {
 	try {
-		const data = await accountsSummaryService();
+		const date = req.body.date;
+
+		const data = await accountsSummaryService({date});
 	
 		res.json(data);
 	} catch (error) {

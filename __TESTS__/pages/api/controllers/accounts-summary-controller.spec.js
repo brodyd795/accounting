@@ -10,13 +10,19 @@ const chance = new Chance();
 describe('accounts-summary-controller', () => {
     let expectedData,
         expectedReq,
-        expectedRes;
+        expectedRes,
+        expectedDate;
 
     beforeEach(() => {
         expectedData = {
             [chance.word()]: chance.word()
         };
-        expectedReq = jest.fn();
+        expectedDate = chance.date();
+        expectedReq = {
+            body: {
+                date: expectedDate
+            }
+        };
         expectedRes = {
             json: jest.fn(),
             status: jest.fn(),
@@ -26,6 +32,15 @@ describe('accounts-summary-controller', () => {
 
     afterEach(() => {
         jest.clearAllMocks();
+    });
+
+    test('should call service', async () => {
+        await accountsSummaryController(expectedReq, expectedRes);
+
+        expect(accountsSummaryService).toHaveBeenCalledTimes(1);
+        expect(accountsSummaryService).toHaveBeenCalledWith({
+            date: expectedDate
+        });
     });
 
     test('should return data', async () => {
