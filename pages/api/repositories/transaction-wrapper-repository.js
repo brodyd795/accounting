@@ -4,51 +4,51 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 let connection,
-	isMidTransaction = false;
+    isMidTransaction = false;
 
 export const conn = () => {
-	if (connection !== undefined) {
-		return connection;
-	}
+    if (connection !== undefined) {
+        return connection;
+    }
 
-	const database = process.env.VERCEL_GIT_COMMIT_REF === 'main' ? process.env.DB_NAME : process.env.DEV_DB_NAME;
+    const database = process.env.VERCEL_GIT_COMMIT_REF === 'main' ? process.env.DB_NAME : process.env.DEV_DB_NAME;
 
-	const config = {
-		database: database,
-		host: process.env.DB_HOST,
-		password: process.env.DB_PASSWORD,
-		user: process.env.DB_USER
-	}
+    const config = {
+        database,
+        host: process.env.DB_HOST,
+        password: process.env.DB_PASSWORD,
+        user: process.env.DB_USER
+    };
 
-	connection = mysql({
-		config
-	});
+    connection = mysql({
+        config
+    });
 
-	return connection;
+    return connection;
 };
 
 export const withTransactionWrapper = async (queries, props) => {
-	if (!isMidTransaction) {
-		isMidTransaction = true;
+    if (!isMidTransaction) {
+        isMidTransaction = true;
 
-		try {
-			await conn().query('BEGIN');
-            
-			const results = await queries(props);
+        try {
+            await conn().query('BEGIN');
 
-			await conn().query('COMMIT');
+            const results = await queries(props);
 
-			return results;
-		} catch (error) {
-			await conn().query('ROLLBACK');
-			console.log('Error in transaction', error)
+            await conn().query('COMMIT');
 
-			throw error;
-		} finally {
-			await conn().end();
-			isMidTransaction = false;
-		}
-	}
+            return results;
+        } catch (error) {
+            await conn().query('ROLLBACK');
+            console.log('Error in transaction', error);
 
-	return queries(props);
+            throw error;
+        } finally {
+            await conn().end();
+            isMidTransaction = false;
+        }
+    }
+
+    return queries(props);
 };
