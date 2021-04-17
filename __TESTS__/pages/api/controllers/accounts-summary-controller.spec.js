@@ -25,8 +25,9 @@ describe('accounts-summary-controller', () => {
         };
         expectedRes = {
             json: jest.fn(),
-            status: jest.fn(),
-            end: jest.fn()
+            status: jest.fn().mockImplementation(() => ({
+                end: jest.fn()
+            }))
         }
     });
 
