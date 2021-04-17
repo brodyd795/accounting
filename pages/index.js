@@ -1,9 +1,7 @@
-import withAuth from "../components/with-auth";
+import React from 'react';
 
-const Home = () => {
-  return (
-    <div>{'Home'}</div>
-  )
-}
+import withAuth from '../components/with-auth';
+
+const Home = () => <div>{'Home'}</div>;
 
 export default withAuth(Home);
