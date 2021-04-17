@@ -1,8 +1,8 @@
 import Chance from 'chance';
 
-import {accountsSummaryRepository} from "../../../../pages/api/repositories/accounts-summary-repository";
-import {withTransactionWrapper} from "../../../../pages/api/repositories/transaction-wrapper-repository";
-import {accountsSummaryService} from "../../../../pages/api/services/accounts-summary-service";
+import {accountsSummaryRepository} from '../../../../pages/api/repositories/accounts-summary-repository';
+import {withTransactionWrapper} from '../../../../pages/api/repositories/transaction-wrapper-repository';
+import {accountsSummaryService} from '../../../../pages/api/services/accounts-summary-service';
 
 jest.mock('../../../../pages/api/repositories/accounts-summary-repository');
 jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
@@ -10,8 +10,7 @@ jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
 const chance = new Chance();
 
 describe('accounts-summary-service', () => {
-    let expectedProps,
-        expectedResults;
+    let expectedProps, expectedResults;
 
     beforeEach(() => {
         expectedProps = {};

@@ -1,8 +1,8 @@
 import Chance from 'chance';
 import escape from 'sql-template-strings';
 
-import {accountsSummaryRepository} from "../../../../pages/api/repositories/accounts-summary-repository";
-import {conn} from "../../../../pages/api/repositories/transaction-wrapper-repository";
+import {accountsSummaryRepository} from '../../../../pages/api/repositories/accounts-summary-repository';
+import {conn} from '../../../../pages/api/repositories/transaction-wrapper-repository';
 
 jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
 jest.mock('sql-template-strings');
@@ -10,8 +10,7 @@ jest.mock('sql-template-strings');
 const chance = new Chance();
 
 describe('accounts-summary-repository', () => {
-    let expectedProps,
-        queryMock;
+    let expectedProps, queryMock;
 
     beforeEach(() => {
         expectedProps = {
@@ -27,7 +26,7 @@ describe('accounts-summary-repository', () => {
         await accountsSummaryRepository(expectedProps);
 
         const [[sql], params] = escape.mock.calls[0];
-        
+
         const expectedSQL = `
             SELECT
                 balances.balance,
@@ -44,7 +43,7 @@ describe('accounts-summary-repository', () => {
                 balances.date =
         `;
 
-        expect(expectedSQL).toBeIgnoringWhitespace(sql)
+        expect(expectedSQL).toBeIgnoringWhitespace(sql);
         expect(params).toStrictEqual(expectedProps.date);
     });
 });

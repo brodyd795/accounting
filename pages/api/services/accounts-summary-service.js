@@ -7,4 +7,4 @@ const accountsSummary = async (props) => {
     return data;
 };
 
-export const accountsSummaryService = async props => withTransactionWrapper(accountsSummary, props);
+export const accountsSummaryService = (props) => withTransactionWrapper(accountsSummary, props);
