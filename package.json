@@ -5,8 +5,12 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "test": "jest",
-    "start": "next start"
+    "test": "yarn lint && yarn prettier:check && jest",
+    "start": "next start",
+    "eslint": "eslint . --ext .json --ext .js",
+    "lint": "yarn eslint",
+    "prettier": "prettier --write \"**/*.{html,js,json,md,mdx,mjs,yml}\"",
+    "prettier:check": "prettier --check \"**/*.{js,json,md,yml}\""
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^0.15.0",
@@ -23,6 +27,9 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "chance": "^1.1.7",
-    "jest": "^26.6.3"
+    "eslint": "^7.24.0",
+    "eslint-config-get-off-my-lawn": "^6.0.1",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.1"
   }
 }
