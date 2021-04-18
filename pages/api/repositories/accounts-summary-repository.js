@@ -1,10 +1,8 @@
-import escape from 'sql-template-strings';
-
 import {conn} from './transaction-wrapper-repository';
 
-export const accountsSummaryRepository = ({date}) =>
+export const accountsSummaryRepository = ({startDate, endDate}) =>
     conn().query(
-        escape`
+        `
             SELECT
                 accounts.accountId,
                 IFNULL(s.amount, 0) AS balance,
@@ -34,7 +32,7 @@ export const accountsSummaryRepository = ({date}) =>
                                 accounts.category = 'Income'
                                 OR
                                 accounts.category = 'Expenses',
-                                '2021-02-01',
+                                ?,
                                 '2000-01-01'
                             )
                     AND 
@@ -43,7 +41,7 @@ export const accountsSummaryRepository = ({date}) =>
                                 accounts.category = 'Income'
                                 OR
                                 accounts.category = 'Expenses',
-                                '2021-03-01',
+                                ?,
                                 '3000-01-01'
                             )
                     UNION ALL
@@ -63,7 +61,7 @@ export const accountsSummaryRepository = ({date}) =>
                             accounts.category = 'Income'
                             OR 
                             accounts.category = 'Expenses',
-                            '2021-02-01',
+                            ?,
                             '2000-01-01'
                         )
                     AND DATE < IF
@@ -71,7 +69,7 @@ export const accountsSummaryRepository = ({date}) =>
                             accounts.category = 'Income'
                             OR 
                             accounts.category = 'Expenses',
-                            '2021-03-01',
+                            ?,
                             '3000-01-01'
                         )
                     ) t
@@ -81,5 +79,6 @@ export const accountsSummaryRepository = ({date}) =>
                     category
                 ) s
             ON accounts.accountId = s.accountid; 
-		`
+		`,
+        [startDate, endDate, startDate, endDate]
     );
