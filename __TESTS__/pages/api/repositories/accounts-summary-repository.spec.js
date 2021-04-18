@@ -4,7 +4,6 @@ import {accountsSummaryRepository} from '../../../../pages/api/repositories/acco
 import {conn} from '../../../../pages/api/repositories/transaction-wrapper-repository';
 
 jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
-jest.mock('sql-template-strings');
 
 const chance = new Chance();
 
