@@ -8,7 +8,7 @@ jest.mock('../../../../pages/api/services/accounts-summary-service');
 const chance = new Chance();
 
 describe('accounts-summary-controller', () => {
-    let expectedData, expectedReq, expectedRes, expectedDate;
+    let expectedData, expectedReq, expectedRes, expectedDate, expectedJsonStub, expectedEndStub, expectedStatusStub;
 
     beforeEach(() => {
         expectedData = {
@@ -20,11 +20,14 @@ describe('accounts-summary-controller', () => {
                 date: expectedDate
             }
         };
+        expectedJsonStub = jest.fn();
+        expectedEndStub = jest.fn();
+        expectedStatusStub = jest.fn().mockImplementation(() => ({
+            end: expectedEndStub
+        }));
         expectedRes = {
-            json: jest.fn(),
-            status: jest.fn().mockImplementation(() => ({
-                end: jest.fn()
-            }))
+            json: expectedJsonStub,
+            status: expectedStatusStub
         };
     });
 
@@ -46,8 +49,8 @@ describe('accounts-summary-controller', () => {
 
         await accountsSummaryController(expectedReq, expectedRes);
 
-        expect(expectedRes.json).toHaveBeenCalledTimes(1);
-        expect(expectedRes.json).toHaveBeenCalledWith(expectedData);
+        expect(expectedJsonStub).toHaveBeenCalledTimes(1);
+        expect(expectedJsonStub).toHaveBeenCalledWith(expectedData);
     });
 
     describe('on error', () => {
@@ -61,9 +64,10 @@ describe('accounts-summary-controller', () => {
 
             await accountsSummaryController(expectedReq, expectedRes);
 
-            //  TypeError: Cannot read property 'end' of undefined
-            expect(expectedRes.status).toHaveBeenCalledTimes(1);
-            expect(expectedRes.status).toHaveBeenCalledWith(expectedError.status);
+            expect(expectedStatusStub).toHaveBeenCalledTimes(1);
+            expect(expectedStatusStub).toHaveBeenCalledWith(expectedError.status);
+            expect(expectedEndStub).toHaveBeenCalledTimes(1);
+            expect(expectedEndStub).toHaveBeenCalledWith(expectedError.message);
         });
 
         test('should respond with 500 code if no error status', async () => {
@@ -75,9 +79,10 @@ describe('accounts-summary-controller', () => {
 
             await accountsSummaryController(expectedReq, expectedRes);
 
-            //  TypeError: Cannot read property 'end' of undefined
-            expect(expectedRes.status).toHaveBeenCalledTimes(1);
-            expect(expectedRes.status).toHaveBeenCalledWith(500);
+            expect(expectedStatusStub).toHaveBeenCalledTimes(1);
+            expect(expectedStatusStub).toHaveBeenCalledWith(500);
+            expect(expectedEndStub).toHaveBeenCalledTimes(1);
+            expect(expectedEndStub).toHaveBeenCalledWith(expectedError.message);
         });
     });
 });
