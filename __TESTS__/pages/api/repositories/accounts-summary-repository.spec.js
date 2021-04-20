@@ -1,11 +1,9 @@
 import Chance from 'chance';
-import escape from 'sql-template-strings';
 
 import {accountsSummaryRepository} from '../../../../pages/api/repositories/accounts-summary-repository';
 import {conn} from '../../../../pages/api/repositories/transaction-wrapper-repository';
 
 jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
-jest.mock('sql-template-strings');
 
 const chance = new Chance();
 
@@ -14,7 +12,8 @@ describe('accounts-summary-repository', () => {
 
     beforeEach(() => {
         expectedProps = {
-            date: chance.date()
+            endDate: chance.date(),
+            startDate: chance.date()
         };
         queryMock = jest.fn();
 
@@ -22,28 +21,102 @@ describe('accounts-summary-repository', () => {
             query: queryMock
         }));
     });
-    test('should do a thing', async () => {
-        await accountsSummaryRepository(expectedProps);
 
-        const [[sql], params] = escape.mock.calls[0];
-
-        const expectedSQL = `
+    test('should make the query', async () => {
+        const expectedQuery = `
             SELECT
-                balances.balance,
+                accounts.accountId,
+                IFNULL(s.amount, 0) AS balance,
                 accounts.accountName,
-                accounts.category,
-                accounts.accountId
+                accounts.category
             FROM
-                balances
-            INNER JOIN
                 accounts
-            ON
-                balances.accountId = accounts.accountId
-            WHERE
-                balances.date =
+            LEFT JOIN (
+                SELECT
+                    accountid,
+                    SUM(amount) AS amount
+                FROM (
+                    SELECT
+                        fromaccountid AS accountId,
+                        amount * -1.00 AS amount,
+                        accountName,
+                        category
+                    FROM
+                        transactions
+                    INNER JOIN
+                        accounts
+                    ON
+                        accounts.accountid = transactions.fromaccountid
+                    WHERE
+                        DATE >= IF
+                            (
+                                accounts.category = 'Income'
+                                OR
+                                accounts.category = 'Expenses',
+                                ?,
+                                '2000-01-01'
+                            )
+                    AND 
+                        DATE < IF
+                            (
+                                accounts.category = 'Income'
+                                OR
+                                accounts.category = 'Expenses',
+                                ?,
+                                '3000-01-01'
+                            )
+                    UNION ALL
+                        SELECT
+                            toaccountid,
+                            amount,
+                            accountName,
+                            category
+                    FROM
+                        transactions
+                    INNER JOIN
+                        accounts
+                    ON
+                        accounts.accountid = transactions.toaccountid
+                    WHERE  DATE >= IF
+                        (
+                            accounts.category = 'Income'
+                            OR 
+                            accounts.category = 'Expenses',
+                            ?,
+                            '2000-01-01'
+                        )
+                    AND DATE < IF
+                        (
+                            accounts.category = 'Income'
+                            OR 
+                            accounts.category = 'Expenses',
+                            ?,
+                            '3000-01-01'
+                        )
+                    ) t
+                GROUP BY
+                    accountId,
+                    accountName,
+                    category
+                ) s
+            ON accounts.accountId = s.accountid; 
         `;
 
-        expect(expectedSQL).toBeIgnoringWhitespace(sql);
-        expect(params).toStrictEqual(expectedProps.date);
+        const expectedParams = [
+            expectedProps.startDate,
+            expectedProps.endDate,
+            expectedProps.startDate,
+            expectedProps.endDate,
+        ];
+
+        await accountsSummaryRepository(expectedProps);
+
+        expect(conn).toHaveBeenCalledTimes(1);
+        expect(queryMock).toHaveBeenCalledTimes(1);
+        
+        const [actualQuery, actualParams] = queryMock.mock.calls[0];
+
+        expect(actualQuery).toBeIgnoringWhitespace(expectedQuery);
+        expect(actualParams).toStrictEqual(expectedParams);
     });
 });
