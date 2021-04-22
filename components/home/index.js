@@ -18,11 +18,20 @@ export const Home = () => {
     return (
         <Layout>
             <div>{'Home here'}</div>
-            <div>
-                {data.map((account) => <div key={account.accountId}>
-                    {account.balance}
-                </div>)}
-            </div>
+            <table>
+                <tr>
+                    <th>{'Category'}</th>
+                    <th>{'Account Name'}</th>
+                    <th>{'Balance'}</th>
+                </tr>
+                {data.map((account) => 
+                    <tr key={account.accountId}>
+                        <td>{account.category}</td>
+                        <td>{account.accountName}</td>
+                        <td>{account.balance}</td>
+                    </tr>
+                )}
+            </table>
         </Layout>
     )
 };
