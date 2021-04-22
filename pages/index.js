@@ -1,6 +1,6 @@
 import React from 'react';
 
-import withAuth from '../components/with-auth';
+import withAuth from '../components/auth/with-auth';
 
 const Home = () => <div>{'Home'}</div>;
 

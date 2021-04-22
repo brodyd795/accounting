@@ -3,9 +3,9 @@ import {render} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 
 import Home from '../../pages';
-import withAuth from '../../components/with-auth';
+import withAuth from '../../components/auth/with-auth';
 
-jest.mock('../../components/with-auth');
+jest.mock('../../components/auth/with-auth');
 
 describe('Home', () => {
     let renderedInstance;
