@@ -6,7 +6,6 @@ import {accountsSummaryRepository} from '../../../../pages/api/repositories/acco
 import {withTransactionWrapper} from '../../../../pages/api/repositories/transaction-wrapper-repository';
 import {accountsSummaryService} from '../../../../pages/api/services/accounts-summary-service';
 
-
 jest.mock('../../../../pages/api/repositories/accounts-summary-repository');
 jest.mock('../../../../pages/api/repositories/transaction-wrapper-repository');
 jest.mock('date-fns/startOfMonth');
