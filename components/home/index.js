@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import styled from 'styled-components';
 
 import fetch from '../../lib/fetch';
+import { cleanAccountNameForUI } from '../../utils/string-helpers';
 
 const StyledContainer = styled.div`
     display: flex;
@@ -13,6 +14,10 @@ const StyledContainer = styled.div`
 
 const StyledHeader = styled.div`
     text-align: center;
+`;
+
+const StyledTable = styled.table`
+    width: 50%;
 `;
 
 export const Home = () => {
@@ -31,7 +36,7 @@ export const Home = () => {
             <StyledHeader>
                 <h1>{'Accounting'}</h1>
             </StyledHeader>
-            <table>
+            <StyledTable>
                 <thead>
                     <tr>
                         <th>{'Category'}</th>
@@ -43,12 +48,12 @@ export const Home = () => {
                     {data.map((account) => 
                         <tr key={account.accountId}>
                             <td>{account.category}</td>
-                            <td>{account.accountName}</td>
+                            <td>{cleanAccountNameForUI(account.accountName)}</td>
                             <td>{account.balance}</td>
                         </tr>
                     )}
                 </tbody>
-            </table>
+            </StyledTable>
         </StyledContainer>
     )
 };
