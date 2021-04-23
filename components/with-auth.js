@@ -3,11 +3,11 @@ import React, {Component} from 'react';
 import auth0 from '../lib/auth0';
 import {fetchUser} from '../lib/user';
 import {redirectTo} from '../utils/url-helpers';
+import {ADMIN_EMAILS} from '../enums/admin-emails';
 
 import RedirectToLogin from './login-redirect';
 
-export default InnerComponent => {
-	return class Authenticated extends Component {
+export default InnerComponent => class Authenticated extends Component {
 		static async getInitialProps(ctx) {
 			if (!ctx.req) {
 				const user = await fetchUser();
@@ -45,4 +45,3 @@ export default InnerComponent => {
 			);
 		}
 	};
-};

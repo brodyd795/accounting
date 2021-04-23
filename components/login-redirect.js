@@ -8,9 +8,7 @@ export default class RedirectToLogin extends Component {
 		window.location.assign(redirectTo(Router.pathname));
 	}
 
-	render() {
-		return (
-			<div>Signing you in...</div>
-		);
-	}
+    render() {
+        return <div>{'Signing you in...'}</div>;
+    }
 }
