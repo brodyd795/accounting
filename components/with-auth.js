@@ -40,6 +40,10 @@ export default InnerComponent => {
 				return <RedirectToLogin />;
 			}
 
+            if (!ADMIN_EMAILS.includes(this.props.user.email)) {
+                return <div>{'Unauthorized.'}</div>
+            }
+
 			return (
 				<div>{<InnerComponent {...this.props} user={this.props.user} />}</div>
 			);
