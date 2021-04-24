@@ -1,1 +1,1 @@
-export const cleanAccountNameForUI = (str) => str.replace(/_/ug, ' ');
+export const cleanAccountNameOrCategoryForUI = (str) => str.replace(/_/ug, ' ');
