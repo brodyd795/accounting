@@ -1,14 +1,18 @@
 import React from 'react';
 import {UserProvider} from '@auth0/nextjs-auth0';
 
-import '../styles/globals.css';
+import GlobalStyle from '../components/global-style';
+import { Layout } from '../components/layout';
 
 const MyApp = ({Component, pageProps}) => {
     const {user} = pageProps;
 
     return (
         <UserProvider user={user}>
-            <Component {...pageProps} />
+            <Layout>
+                <Component {...pageProps} />
+            </Layout>
+            <GlobalStyle />
         </UserProvider>
     )
 };
