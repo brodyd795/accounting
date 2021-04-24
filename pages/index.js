@@ -1,7 +1,27 @@
 import React from 'react';
+import {useUser, withPageAuthRequired} from '@auth0/nextjs-auth0';
 
-import withAuth from '../components/with-auth';
+import {ADMIN_EMAILS} from '../enums/admin-emails';
+import {Home} from '../components/home';
 
-const Home = () => <div>{'Home'}</div>;
+const Index = () => {
+    const {user, error, isLoading} = useUser();
 
-export default withAuth(Home);
+    if (error) {
+        return 'Error';
+    }
+
+    if (isLoading) {
+        return 'Loading user profile...';
+    }
+
+    if (!user || !user.email || !ADMIN_EMAILS.includes(user.email)) {
+        return 'Unauthorized';
+    }
+
+    return <Home />
+};
+
+export const getServerSideProps = withPageAuthRequired();
+
+export default Index;
