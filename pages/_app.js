@@ -3,7 +3,7 @@ import {UserProvider} from '@auth0/nextjs-auth0';
 
 import GlobalStyle from '../components/global-style';
 import {Layout} from '../components/layout';
-import {init} from '../lib/sentry';
+import {init} from '../utils/sentry';
 
 init();
 

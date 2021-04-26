@@ -3,6 +3,9 @@ import * as Sentry from '@sentry/node'
 
 import {ADMIN_EMAILS} from '../../../enums/admin-emails';
 import {accountsSummaryService} from '../services/accounts-summary-service';
+import {init} from '../../../utils/sentry';
+
+init()
 
 export default withApiAuthRequired(async (req, res) => {
     try {
