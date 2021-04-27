@@ -50,7 +50,8 @@ export const Home = () => {
             </StyledHeader>
             <DatePicker
                 dateFormat={'MMMM yyyy'}
-                maxDate={() => new Date().setDate(new Date().getDate())}
+                maxDate={new Date()}
+                minDate={new Date(2021, 3, 1)}
                 onChange={newDate => setSelectedMonth(newDate)}
                 selected={selectedMonth}
                 showMonthYearPicker
