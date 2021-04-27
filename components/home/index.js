@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import useSWR from 'swr';
 import styled from 'styled-components';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
@@ -27,8 +29,8 @@ const StyledTablesContainer = styled.div`
 `;
 
 export const Home = () => {
-    const date = new Date();
-    const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${date}`, fetch);
+    const [selectedMonth, setSelectedMonth] = useState(new Date());
+    const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
     
     if (error) {
         return <div>{'Error!'}</div>
@@ -46,6 +48,13 @@ export const Home = () => {
             <StyledHeader>
                 <h1>{'Accounting'}</h1>
             </StyledHeader>
+            <DatePicker
+                dateFormat={'MMMM yyyy'}
+                maxDate={() => new Date().setDate(new Date().getDate())}
+                onChange={newDate => setSelectedMonth(newDate)}
+                selected={selectedMonth}
+                showMonthYearPicker
+            />
             <StyledTablesContainer>
                 <StyledTable>
                     <thead>
