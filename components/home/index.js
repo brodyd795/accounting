@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {AccountsSummaryTable} from './accounts-summary-table';
+import {UnseenTransactionsTable} from './unseen-transactions-table';
 
 const StyledContainer = styled.div`
     display: flex;
@@ -21,6 +22,7 @@ export const Home = () => {
                 <h1>{'Accounting'}</h1>
             </StyledHeader>
             <AccountsSummaryTable />
+            <UnseenTransactionsTable />
         </StyledContainer>
     )
 };
