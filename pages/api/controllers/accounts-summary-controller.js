@@ -15,7 +15,7 @@ export default withApiAuthRequired(async (req, res) => {
             throw new Error('Unauthorized.');
         }
 
-        const date = req.body.date;
+        const date = new Date(req.query.date);
 
         const data = await accountsSummaryService({date});
 
