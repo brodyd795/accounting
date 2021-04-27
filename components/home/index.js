@@ -27,7 +27,8 @@ const StyledTablesContainer = styled.div`
 `;
 
 export const Home = () => {
-    const {data, error} = useSWR('/api/controllers/accounts-summary-controller', fetch);
+    const date = new Date();
+    const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${date}`, fetch);
     
     if (error) {
         return <div>{'Error!'}</div>
