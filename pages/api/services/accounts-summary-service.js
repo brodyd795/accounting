@@ -3,6 +3,7 @@ import addMonths from 'date-fns/addMonths';
 
 import {withTransactionWrapper} from '../repositories/transaction-wrapper-repository';
 import {accountsSummaryRepository} from '../repositories/accounts-summary-repository';
+import { formatDateForDb } from '../../../utils/date-helpers';
 
 
 const accountsSummary = async ({date}) => {
@@ -10,8 +11,8 @@ const accountsSummary = async ({date}) => {
     const endDate = addMonths(startDate, 1);
 
     const data = await accountsSummaryRepository({
-        endDate,
-        startDate
+        endDate: formatDateForDb(endDate),
+        startDate: formatDateForDb(startDate)
     });
 
     return data;
