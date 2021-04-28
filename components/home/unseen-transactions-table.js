@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import useSWR from 'swr';
 
-import fetch from '../../lib/fetch';
+import fetcher from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
 const TransactionRow = ({transaction}) => {
+    // TODO:
+    // clean up
+    // add edit modal
     const {transactionId, date, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
 
@@ -25,9 +28,10 @@ const TransactionRow = ({transaction}) => {
 
         if (res.ok) {
             setHasBeenSeen(true);
-            console.log('success!')
+
+            alert('Success!');
         } else {
-            console.log('error!')
+            alert('Error!');
         }
     }
 
@@ -51,7 +55,7 @@ const TransactionRow = ({transaction}) => {
 }
 
 export const UnseenTransactionsTable = () => {
-    const {data, error} = useSWR(`/api/controllers/unseen-transactions-controller`, fetch);
+    const {data, error} = useSWR(`/api/controllers/unseen-transactions-controller`, fetcher);
     
     if (error) {
         return <div>{'Error!'}</div>

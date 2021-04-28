@@ -18,7 +18,6 @@ export default withApiAuthRequired(async (req, res) => {
         const transactionId = req.body.transactionId;
 
         const data = await markAsSeenService({transactionId});
-        console.log(`data`, data)
 
         res.json(data);
     } catch (error) {
