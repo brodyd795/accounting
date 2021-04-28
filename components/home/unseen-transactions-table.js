@@ -5,9 +5,12 @@ import fetcher from '../../lib/fetch';
 import { formatDateForDb } from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
+import {TransactionEditModal} from './modals/transaction-edit-modal';
+
 const TransactionRow = ({transaction}) => {
     const {transactionId, date, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
+    const [shouldShowEditModal, setShouldShowEditModal] = useState(false);
 
     if (hasBeenSeen) {
         return null;
@@ -59,8 +62,11 @@ const TransactionRow = ({transaction}) => {
                 alert('Error while deleting...');
             }
         }
+    };
 
-    }
+    const editTransaction = () => {
+        setShouldShowEditModal(true);
+    };
 
     return (
         <tr>
@@ -79,7 +85,7 @@ const TransactionRow = ({transaction}) => {
             </td>
             <td>
                 <button
-                    onClick={() => console.log('edit')}
+                    onClick={editTransaction}
                     type={'button'}
                 >
                     {'Edit'}
@@ -93,6 +99,12 @@ const TransactionRow = ({transaction}) => {
                     {'Delete'}
                 </button>
             </td>
+            {shouldShowEditModal && 
+                <TransactionEditModal
+                    setShouldShowEditModal={setShouldShowEditModal}
+                    shouldShowEditModal={shouldShowEditModal}
+                    transactionBeingEdited={transaction}
+                />}
         </tr>
     )
 }
