@@ -6,12 +6,15 @@ export const unseenTransactionsRepository = () =>
         SELECT
             transactionId,
             date,
+            fromAccountId,
+            toAccountId,
             accountsTo.accountName fromAccountName,
             accountsTo.category fromAccountCategory,
             accountsFrom.accountName toAccountName,
             accountsFrom.category toAccountCategory,
             amount,
-            comment
+            comment,
+            isMarkedAsSeen
         FROM
             transactions
         INNER JOIN

@@ -2,12 +2,10 @@ import React, {useState} from 'react';
 import useSWR from 'swr';
 
 import fetcher from '../../lib/fetch';
+import { formatDateForDb } from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
 const TransactionRow = ({transaction}) => {
-    // TODO:
-    // clean up
-    // add edit modal
     const {transactionId, date, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
 
@@ -33,6 +31,35 @@ const TransactionRow = ({transaction}) => {
         } else {
             alert('Error!');
         }
+    };
+
+    const deleteTransaction = async () => {
+        const confirmation = confirm('Are you sure you want to delete this transaction? This cannot be undone.');
+
+        if (confirmation) {
+            console.log('confirmed!');
+            const res = await fetch(`/api/controllers/transactions/delete-controller`, {
+                body: JSON.stringify({
+                    transaction: {
+                        ...transaction,
+                        date: formatDateForDb(new Date(date))
+                    }
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST'
+            });
+    
+            if (res.ok) {
+                setHasBeenSeen(true);
+    
+                alert('Successful delete!');
+            } else {
+                alert('Error while deleting...');
+            }
+        }
+
     }
 
     return (
@@ -48,6 +75,22 @@ const TransactionRow = ({transaction}) => {
                     type={'button'}
                 >
                     {'Mark as seen'}
+                </button>
+            </td>
+            <td>
+                <button
+                    onClick={() => console.log('edit')}
+                    type={'button'}
+                >
+                    {'Edit'}
+                </button>
+            </td>
+            <td>
+                <button
+                    onClick={deleteTransaction}
+                    type={'button'}
+                >
+                    {'Delete'}
                 </button>
             </td>
         </tr>
