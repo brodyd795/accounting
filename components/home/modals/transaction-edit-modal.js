@@ -114,6 +114,7 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
         comment,
         date,
         fromAccountId,
+        isMarkedAsSeen,
         toAccountId,
         transactionId
     } = transactionBeingEdited;
@@ -127,31 +128,40 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
     }
 
     const handleSubmit = async (values) => {
-        console.log('submitted!')
-        // const {amount, comment, date, fromAccountName, toAccountName} = values;
-        // const res = await fetch(
-        //     `/api/controllers/transactions/edit`,
-        //     {
-        //         body: JSON.stringify({
-        //             amount: amount * 100,
-        //             comment,
-        //             date,
-        //             fromAccountId: fromAccountName.accountId,
-        //             toAccountId: toAccountName.accountId,
-        //             transactionId
-        //         }),
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         method: 'PUT'
-        //     }
-        // );
+        const {amount: newAmount, comment: newComment, date: newDate, fromAccountName: newFromAccount, toAccountName: newToAccount} = values;
+        const res = await fetch(
+            `/api/controllers/transactions/edit-controller`,
+            {
+                body: JSON.stringify({
+                    editedTransaction: {
+                        amount: newAmount * 100,
+                        comment: newComment,
+                        date: new Date(newDate),
+                        fromAccountId: newFromAccount.accountId,
+                        toAccountId: newToAccount.accountId
+                    },
+                    originalTransaction: {
+                        amount,
+                        comment,
+                        date: new Date(date),
+                        fromAccountId,
+                        isMarkedAsSeen,
+                        toAccountId,
+                        transactionId
+                    }
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'PUT'
+            }
+        );
 
-        // if (res.status === 200) {
-        //     setUpdateStatusMessage('Success!');
-        // } else {
-        //     setUpdateStatusMessage('Sorry, something went wrong.');
-        // }
+        if (res.status === 200) {
+            setUpdateStatusMessage('Success!');
+        } else {
+            setUpdateStatusMessage('Sorry, something went wrong.');
+        }
     };
 
     const flatAccounts = accounts.reduce((acc, current) => [...acc, current.options], []).flat();
