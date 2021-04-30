@@ -123,6 +123,10 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
         return 'Error!';
     }
 
+    if (!accounts) {
+        return null;
+    }
+
     const handleSubmit = async (values) => {
         const {amount: newAmount, comment: newComment, date: newDate, fromAccountName: newFromAccount, toAccountName: newToAccount} = values;
         const res = await fetch(
