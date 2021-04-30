@@ -159,6 +159,9 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
 
         if (res.status === 200) {
             setUpdateStatusMessage('Success!');
+            setTimeout(() => {
+                setShouldShowEditModal(false)
+            }, 1500);
         } else {
             setUpdateStatusMessage('Sorry, something went wrong.');
         }
