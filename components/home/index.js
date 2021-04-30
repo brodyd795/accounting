@@ -5,24 +5,22 @@ import {AccountsSummaryTable} from './accounts-summary-table';
 import {UnseenTransactionsTable} from './unseen-transactions-table';
 
 const StyledContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 20px;
+    flex: 1;
+    margin: 0 auto;
+    max-width: 768px;
+    width: 100%;
 `;
 
 const StyledHeader = styled.div`
     text-align: center;
 `;
 
-export const Home = () => {
-    return (
-        <StyledContainer>
-            <StyledHeader>
-                <h1>{'Accounting'}</h1>
-            </StyledHeader>
-            <AccountsSummaryTable />
-            <UnseenTransactionsTable />
-        </StyledContainer>
-    )
-};
+export const Home = () => (
+    <StyledContainer>
+        <StyledHeader>
+            <h1>{'Accounting'}</h1>
+        </StyledHeader>
+        <AccountsSummaryTable />
+        <UnseenTransactionsTable />
+    </StyledContainer>
+);

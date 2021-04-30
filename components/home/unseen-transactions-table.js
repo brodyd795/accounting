@@ -1,11 +1,20 @@
 import React, {useState} from 'react';
 import useSWR from 'swr';
+import styled from 'styled-components';
 
 import fetcher from '../../lib/fetch';
 import { formatDateForDb } from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
 import {TransactionEditModal} from './modals/transaction-edit-modal';
+
+const StyledUnseenTransactionsContainer = styled.div`
+    margin-top: 40px;
+`;
+
+const StyledTableHeader = styled.td`
+    font-weight: bold;
+`;
 
 const TransactionRow = ({transaction}) => {
     const {transactionId, date, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
@@ -121,17 +130,17 @@ export const UnseenTransactionsTable = () => {
     }
 
     return (
-        <>
-            <div>{'Unseen Transactions'}</div>
+        <StyledUnseenTransactionsContainer>
+            <h2>{'Unseen Transactions'}</h2>
             {data.length ?
                 <table>
                     <thead>
                         <tr>
-                            <td>{'Date'}</td>
-                            <td>{'From'}</td>
-                            <td>{'To'}</td>
-                            <td>{'Amount'}</td>
-                            <td>{'Comment'}</td>
+                            <StyledTableHeader>{'Date'}</StyledTableHeader>
+                            <StyledTableHeader>{'From'}</StyledTableHeader>
+                            <StyledTableHeader>{'To'}</StyledTableHeader>
+                            <StyledTableHeader>{'Amount'}</StyledTableHeader>
+                            <StyledTableHeader>{'Comment'}</StyledTableHeader>
                         </tr>
                     </thead>
                     {data.map((transaction) => (
@@ -139,7 +148,7 @@ export const UnseenTransactionsTable = () => {
                     ))}
                 </table>
                 :
-                'Nothing to see here!'}
-        </>
+                'You\'re all caught up!'}
+        </StyledUnseenTransactionsContainer>
     )
 };

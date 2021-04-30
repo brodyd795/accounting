@@ -8,19 +8,30 @@ import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
 const StyledTable = styled.table`
-    width: 50%;
+    table-layout: fixed;
+    margin: 0 auto;
+    width: 500px;
 `;
 
 const StyledTablesContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    margin-top: 20px;
+`;
+
+const StyledSummaryTableContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
 `;
 
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
-    
+
     if (error) {
         return <div>{'Error!'}</div>
     }
@@ -33,8 +44,9 @@ export const AccountsSummaryTable = () => {
     const persistentAccounts = data.filter((account) => account.category === 'Assets' || account.category === 'Debts');
 
     return (
-        <>
-            <DatePicker
+        <StyledSummaryTableContainer>
+            <h2>{'Accounts Summary'}</h2>
+            <StyledDatePicker
                 dateFormat={'MMMM yyyy'}
                 maxDate={new Date()}
                 minDate={new Date(2021, 3, 1)}
@@ -80,6 +92,6 @@ export const AccountsSummaryTable = () => {
                     </tbody>
                 </StyledTable>
             </StyledTablesContainer>
-        </>
+        </StyledSummaryTableContainer>
     )
 };
