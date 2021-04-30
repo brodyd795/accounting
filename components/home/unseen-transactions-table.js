@@ -3,7 +3,7 @@ import useSWR from 'swr';
 import styled from 'styled-components';
 
 import fetcher from '../../lib/fetch';
-import { formatDateForDb } from '../../utils/date-helpers';
+import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
 import {TransactionEditModal} from './modals/transaction-edit-modal';
@@ -17,9 +17,10 @@ const StyledTableHeader = styled.td`
 `;
 
 const TransactionRow = ({transaction}) => {
-    const {transactionId, date, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
+    const {transactionId, date: dateString, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowEditModal, setShouldShowEditModal] = useState(false);
+    const date = new Date(dateString);
 
     if (hasBeenSeen) {
         return null;
@@ -49,7 +50,6 @@ const TransactionRow = ({transaction}) => {
         const confirmation = confirm('Are you sure you want to delete this transaction? This cannot be undone.');
 
         if (confirmation) {
-            console.log('confirmed!');
             const res = await fetch(`/api/controllers/transactions/delete-controller`, {
                 body: JSON.stringify({
                     transaction: {
@@ -79,7 +79,7 @@ const TransactionRow = ({transaction}) => {
 
     return (
         <tr>
-            <td>{date}</td>
+            <td>{date.toDateString()}</td>
             <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
             <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
             <td>{amount}</td>
