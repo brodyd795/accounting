@@ -8,9 +8,7 @@ import {Home} from '../../components/home';
 
 jest.mock('../../components/auth/with-auth');
 // eslint-disable-next-line react/display-name
-jest.mock('../../components/home', () => () => (
-    <div>{'home-component'}</div>
-));
+jest.mock('../../components/home', () => () => <div>{'home-component'}</div>);
 
 describe('Index', () => {
     let renderedInstance;
