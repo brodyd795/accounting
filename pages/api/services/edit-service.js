@@ -13,15 +13,7 @@ const editTransaction = async ({editedTransaction, originalTransaction}) => {
         fromAccountId: newFromAccountId,
         toAccountId: newToAccountId
     } = editedTransaction;
-    const {
-        amount,
-        comment,
-        date,
-        fromAccountId,
-        isMarkedAsSeen,
-        toAccountId,
-        transactionId
-    } = originalTransaction;
+    const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = originalTransaction;
 
     await editRepository({
         editedTransaction: {

@@ -19,7 +19,7 @@ const Index = () => {
         return 'Unauthorized';
     }
 
-    return <Home />
+    return <Home />;
 };
 
 export const getServerSideProps = withPageAuthRequired();

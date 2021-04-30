@@ -106,14 +106,14 @@ describe('accounts-summary-repository', () => {
             expectedProps.startDate,
             expectedProps.endDate,
             expectedProps.startDate,
-            expectedProps.endDate,
+            expectedProps.endDate
         ];
 
         await accountsSummaryRepository(expectedProps);
 
         expect(conn).toHaveBeenCalledTimes(1);
         expect(queryMock).toHaveBeenCalledTimes(1);
-        
+
         const [actualQuery, actualParams] = queryMock.mock.calls[0];
 
         expect(actualQuery).toBeIgnoringWhitespace(expectedQuery);

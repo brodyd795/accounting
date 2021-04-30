@@ -17,7 +17,15 @@ const StyledTableHeader = styled.td`
 `;
 
 const TransactionRow = ({transaction}) => {
-    const {transactionId, date: dateString, amount, comment, fromAccountName, toAccountName, isMarkedAsSeen} = transaction;
+    const {
+        transactionId,
+        date: dateString,
+        amount,
+        comment,
+        fromAccountName,
+        toAccountName,
+        isMarkedAsSeen
+    } = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowEditModal, setShouldShowEditModal] = useState(false);
     const date = new Date(dateString);
@@ -62,10 +70,10 @@ const TransactionRow = ({transaction}) => {
                 },
                 method: 'POST'
             });
-    
+
             if (res.ok) {
                 setHasBeenSeen(true);
-    
+
                 alert('Successful delete!');
             } else {
                 alert('Error while deleting...');
@@ -85,54 +93,46 @@ const TransactionRow = ({transaction}) => {
             <td>{amount}</td>
             <td>{comment}</td>
             <td>
-                <button
-                    onClick={markTransactionAsSeen}
-                    type={'button'}
-                >
+                <button onClick={markTransactionAsSeen} type={'button'}>
                     {'Mark as seen'}
                 </button>
             </td>
             <td>
-                <button
-                    onClick={editTransaction}
-                    type={'button'}
-                >
+                <button onClick={editTransaction} type={'button'}>
                     {'Edit'}
                 </button>
             </td>
             <td>
-                <button
-                    onClick={deleteTransaction}
-                    type={'button'}
-                >
+                <button onClick={deleteTransaction} type={'button'}>
                     {'Delete'}
                 </button>
             </td>
-            {shouldShowEditModal && 
+            {shouldShowEditModal && (
                 <TransactionEditModal
                     setShouldShowEditModal={setShouldShowEditModal}
                     shouldShowEditModal={shouldShowEditModal}
                     transactionBeingEdited={transaction}
-                />}
+                />
+            )}
         </tr>
-    )
-}
+    );
+};
 
 export const UnseenTransactionsTable = () => {
     const {data, error} = useSWR(`/api/controllers/unseen-transactions-controller`, fetcher);
-    
+
     if (error) {
-        return <div>{'Error!'}</div>
+        return <div>{'Error!'}</div>;
     }
 
     if (!data) {
-        return <div>{'Loading unseen transactions...'}</div>
+        return <div>{'Loading unseen transactions...'}</div>;
     }
 
     return (
         <StyledUnseenTransactionsContainer>
             <h2>{'Unseen Transactions'}</h2>
-            {data.length ?
+            {data.length ? (
                 <table>
                     <thead>
                         <tr>
@@ -147,8 +147,9 @@ export const UnseenTransactionsTable = () => {
                         <TransactionRow key={transaction.transactionId} transaction={transaction} />
                     ))}
                 </table>
-                :
-                'You\'re all caught up!'}
+            ) : (
+                "You're all caught up!"
+            )}
         </StyledUnseenTransactionsContainer>
-    )
+    );
 };

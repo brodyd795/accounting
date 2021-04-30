@@ -11,9 +11,9 @@ import DatePickerField from '../form-fields/date-selector';
 import AmountSelector from '../form-fields/amount-selector';
 
 const StyledSelect = styled(Select)`
-	width: 150px;
-	color: black;
-	text-align: left;
+    width: 150px;
+    color: black;
+    text-align: left;
 `;
 
 const StyledModal = styled(Modal)`
@@ -78,46 +78,44 @@ const validationSchema = yup.object().shape({
     amount: yup.number().required('Required'),
     comment: yup.string().notRequired(),
     date: yup.date().required('Required'),
-    fromAccountName: yup.object().shape({
-        accountId: yup.number().required(),
-        label: yup.string().required(),
-        value: yup.string().required()
-    }).test(
-        'accounts-match',
-        'To and From accounts must be different',
-        // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
-        function () {
-            // eslint-disable-next-line no-invalid-this
-            return this.parent.fromAccountName.accountId !== this.parent.toAccountName.accountId;
-        }
-    ),
-    toAccountName: yup.object().shape({
-        accountId: yup.number().required(),
-        label: yup.string().required(),
-        value: yup.string().required()
-    }).test(
-        'accounts-match',
-        'To and From accounts must be different',
-        // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
-        function () {
-            // eslint-disable-next-line no-invalid-this
-            return this.parent.fromAccountName.accountId !== this.parent.toAccountName.accountId;
-        }
-    )
-  });
+    fromAccountName: yup
+        .object()
+        .shape({
+            accountId: yup.number().required(),
+            label: yup.string().required(),
+            value: yup.string().required()
+        })
+        .test(
+            'accounts-match',
+            'To and From accounts must be different',
+            // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
+            function () {
+                // eslint-disable-next-line no-invalid-this
+                return this.parent.fromAccountName.accountId !== this.parent.toAccountName.accountId;
+            }
+        ),
+    toAccountName: yup
+        .object()
+        .shape({
+            accountId: yup.number().required(),
+            label: yup.string().required(),
+            value: yup.string().required()
+        })
+        .test(
+            'accounts-match',
+            'To and From accounts must be different',
+            // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
+            function () {
+                // eslint-disable-next-line no-invalid-this
+                return this.parent.fromAccountName.accountId !== this.parent.toAccountName.accountId;
+            }
+        )
+});
 
 export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModal, transactionBeingEdited}) => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [updateStatusMessage, setUpdateStatusMessage] = useState('');
-    const {
-        amount,
-        comment,
-        date,
-        fromAccountId,
-        isMarkedAsSeen,
-        toAccountId,
-        transactionId
-    } = transactionBeingEdited;
+    const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
 
     if (error) {
         return 'Error!';
@@ -128,39 +126,42 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
     }
 
     const handleSubmit = async (values) => {
-        const {amount: newAmount, comment: newComment, date: newDate, fromAccountName: newFromAccount, toAccountName: newToAccount} = values;
-        const res = await fetch(
-            `/api/controllers/transactions/edit-controller`,
-            {
-                body: JSON.stringify({
-                    editedTransaction: {
-                        amount: newAmount * 100,
-                        comment: newComment,
-                        date: new Date(newDate),
-                        fromAccountId: newFromAccount.accountId,
-                        toAccountId: newToAccount.accountId
-                    },
-                    originalTransaction: {
-                        amount,
-                        comment,
-                        date: new Date(date),
-                        fromAccountId,
-                        isMarkedAsSeen,
-                        toAccountId,
-                        transactionId
-                    }
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
+        const {
+            amount: newAmount,
+            comment: newComment,
+            date: newDate,
+            fromAccountName: newFromAccount,
+            toAccountName: newToAccount
+        } = values;
+        const res = await fetch(`/api/controllers/transactions/edit-controller`, {
+            body: JSON.stringify({
+                editedTransaction: {
+                    amount: newAmount * 100,
+                    comment: newComment,
+                    date: new Date(newDate),
+                    fromAccountId: newFromAccount.accountId,
+                    toAccountId: newToAccount.accountId
                 },
-                method: 'PUT'
-            }
-        );
+                originalTransaction: {
+                    amount,
+                    comment,
+                    date: new Date(date),
+                    fromAccountId,
+                    isMarkedAsSeen,
+                    toAccountId,
+                    transactionId
+                }
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'PUT'
+        });
 
         if (res.status === 200) {
             setUpdateStatusMessage('Success!');
             setTimeout(() => {
-                setShouldShowEditModal(false)
+                setShouldShowEditModal(false);
             }, 1500);
         } else {
             setUpdateStatusMessage('Sorry, something went wrong.');
@@ -180,10 +181,7 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
         >
             <StyledModalHeader>
                 <StyledModalHeading>{'Edit Transaction'}</StyledModalHeading>
-                <StyledCloseModalButton
-                    onClick={() => setShouldShowEditModal(false)}
-                    type={'button'}
-                >
+                <StyledCloseModalButton onClick={() => setShouldShowEditModal(false)} type={'button'}>
                     {'X'}
                 </StyledCloseModalButton>
             </StyledModalHeader>
@@ -224,7 +222,7 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
                                 onChange={(option) => setFieldValue('toAccountName', option)}
                                 options={accounts}
                                 value={values.toAccountName}
-                                />
+                            />
                             <ErrorMessage name="toAccountName" />
                         </StyledFieldContainer>
                         <StyledFieldContainer>
@@ -238,21 +236,12 @@ export const TransactionEditModal = ({shouldShowEditModal, setShouldShowEditModa
                             <ErrorMessage name={'comment'} />
                         </StyledFieldContainer>
                         <StyledButtonsContainer>
-                            <StyledButton
-                                onClick={() => setShouldShowEditModal(false)}
-                                type={'button'}
-                            >
+                            <StyledButton onClick={() => setShouldShowEditModal(false)} type={'button'}>
                                 {'Cancel'}
                             </StyledButton>
-                            <StyledButton
-                                type={'submit'}
-                            >
-                                {'Update'}
-                            </StyledButton>
+                            <StyledButton type={'submit'}>{'Update'}</StyledButton>
                         </StyledButtonsContainer>
-                        <div>
-                            {updateStatusMessage}
-                        </div>
+                        <div>{updateStatusMessage}</div>
                     </StyledForm>
                 )}
             </Formik>

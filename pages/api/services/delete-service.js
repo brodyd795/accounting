@@ -5,15 +5,7 @@ import {deleteRepository} from '../repositories/delete-repository';
 import {editLogsRepository} from '../repositories/edit-logs-repository';
 
 const deleteTransaction = async ({transaction}) => {
-    const {
-        transactionId,
-        date,
-        fromAccountId,
-        toAccountId,
-        amount,
-        comment,
-        isMarkedAsSeen
-    } = transaction;
+    const {transactionId, date, fromAccountId, toAccountId, amount, comment, isMarkedAsSeen} = transaction;
 
     await deleteRepository({transactionId});
     await editLogsRepository({

@@ -17,7 +17,7 @@ const MyApp = ({Component, pageProps}) => {
             </Layout>
             <GlobalStyle />
         </UserProvider>
-    )
+    );
 };
 
 export default MyApp;

@@ -6,5 +6,4 @@ const StyledLayout = styled.div`
     width: 100%;
 `;
 
-export const Layout = ({children}) =>
-    <StyledLayout>{children}</StyledLayout>;
+export const Layout = ({children}) => <StyledLayout>{children}</StyledLayout>;
