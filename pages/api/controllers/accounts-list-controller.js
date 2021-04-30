@@ -2,7 +2,7 @@ import {withApiAuthRequired, getSession} from '@auth0/nextjs-auth0';
 import * as Sentry from '@sentry/node';
 
 import {ADMIN_EMAILS} from '../../../enums/admin-emails';
-import {accountsSummaryService} from '../services/accounts-summary-service';
+import {accountsListService} from '../services/accounts-list-service';
 import {init} from '../../../utils/sentry';
 
 init();
@@ -15,9 +15,7 @@ export default withApiAuthRequired(async (req, res) => {
             throw new Error('Unauthorized.');
         }
 
-        const date = new Date(req.query.date);
-
-        const data = await accountsSummaryService({date});
+        const data = await accountsListService();
 
         res.json(data);
     } catch (error) {

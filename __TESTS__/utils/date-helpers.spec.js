@@ -1,4 +1,4 @@
-import {formatDateForDb} from "../../utils/date-helpers";
+import {formatDateForDb} from '../../utils/date-helpers';
 
 describe('date-helpers', () => {
     describe('formatDateForDb', () => {
