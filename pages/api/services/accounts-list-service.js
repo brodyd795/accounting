@@ -1,6 +1,7 @@
 import {withTransactionWrapper} from '../repositories/transaction-wrapper-repository';
 import {accountsListRepository} from '../repositories/accounts-list-repository';
 import {transactionCategories} from '../../../enums/transaction-categories';
+import { cleanAccountNameOrCategoryForUI } from '../../../utils/string-helpers';
 
 const accountsList = async () => {
     const data = await accountsListRepository();
@@ -11,7 +12,7 @@ const accountsList = async () => {
 			.filter((account) => account.category === category)
 			.map((account) => ({
 				accountId: account.accountId,
-				label: account.accountName.replace(/_/g, " "),
+				label: cleanAccountNameOrCategoryForUI(account.accountName),
 				value: account.accountName
 			}))
 	}));
