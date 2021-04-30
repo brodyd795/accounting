@@ -3,8 +3,7 @@ import addMonths from 'date-fns/addMonths';
 
 import {withTransactionWrapper} from '../repositories/transaction-wrapper-repository';
 import {accountsSummaryRepository} from '../repositories/accounts-summary-repository';
-import { formatDateForDb } from '../../../utils/date-helpers';
-
+import {formatDateForDb} from '../../../utils/date-helpers';
 
 const accountsSummary = async ({date}) => {
     const startDate = startOfMonth(date);
