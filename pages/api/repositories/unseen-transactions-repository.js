@@ -26,6 +26,9 @@ export const unseenTransactionsRepository = () =>
         ON
             accountsFrom.accountId = transactions.toAccountId
         WHERE
-            isMarkedAsSeen = false; 
+            isMarkedAsSeen = false
+        ORDER BY
+            date
+        DESC
 		`
     );
