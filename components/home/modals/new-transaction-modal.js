@@ -30,7 +30,7 @@ export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
         const res = await fetch(`/api/controllers/transactions/new-transaction-controller`, {
             body: JSON.stringify({
                 transaction: {
-                    amount,
+                    amount: amount * 100,
                     comment,
                     date: new Date(date),
                     fromAccountId: fromAccount.accountId,
