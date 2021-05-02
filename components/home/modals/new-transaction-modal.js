@@ -5,44 +5,36 @@ import fetcher from '../../../lib/fetch';
 
 import {TransactionModal} from './transaction-modal';
 
-export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, transactionBeingEdited}) => {
+export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [updateStatusMessage, setUpdateStatusMessage] = useState('');
-    const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
+    // const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
 
     if (error) {
         return 'Error!';
     }
 
     if (!accounts) {
-        return null;
+        return "loading";
     }
 
     const handleSubmit = async (values) => {
         const {
-            amount: newAmount,
-            comment: newComment,
-            date: newDate,
-            fromAccountName: newFromAccount,
-            toAccountName: newToAccount
+            amount,
+            comment,
+            date,
+            fromAccountName: fromAccount,
+            toAccountName: toAccount
         } = values;
-        const res = await fetch(`/api/controllers/transactions/edit-controller`, {
+
+        const res = await fetch(`/api/controllers/transactions/new-transaction-controller`, {
             body: JSON.stringify({
-                editedTransaction: {
-                    amount: newAmount * 100,
-                    comment: newComment,
-                    date: new Date(newDate),
-                    fromAccountId: newFromAccount.accountId,
-                    toAccountId: newToAccount.accountId
-                },
-                originalTransaction: {
+                transaction: {
                     amount,
                     comment,
                     date: new Date(date),
-                    fromAccountId,
-                    isMarkedAsSeen,
-                    toAccountId,
-                    transactionId
+                    fromAccountId: fromAccount.accountId,
+                    toAccountId: toAccount.accountId
                 }
             }),
             headers: {
@@ -62,24 +54,24 @@ export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, trans
     };
 
     const flatAccounts = accounts.reduce((acc, current) => [...acc, current.options], []).flat();
-    const fromAccountOption = flatAccounts.find((account) => account.accountId === fromAccountId);
-    const toAccountOption = flatAccounts.find((account) => account.accountId === toAccountId);
+    // const fromAccountOption = flatAccounts.find((account) => account.accountId === fromAccountId);
+    // const toAccountOption = flatAccounts.find((account) => account.accountId === toAccountId);
 
     return (
         <TransactionModal
             accounts={accounts}
             handleSubmit={handleSubmit}
             initialValues={{
-                amount: amount / 100,
-                comment,
-                date: new Date(date),
-                fromAccountName: fromAccountOption,
-                toAccountName: toAccountOption
+                amount: undefined,
+                comment: '',
+                date: new Date(),
+                fromAccountName: undefined,
+                toAccountName: undefined
             }}
             setShouldShowModal={setShouldShowModal}
             shouldShowModal={shouldShowModal}
-            title={'Edit Transaction'}
-            transactionBeingEdited={transactionBeingEdited}
+            title={'New Transaction'}
+            // transactionBeingEdited={transactionBeingEdited}
             updateStatusMessage={updateStatusMessage}
         />
     )

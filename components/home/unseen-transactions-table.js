@@ -27,7 +27,7 @@ const TransactionRow = ({transaction}) => {
         isMarkedAsSeen
     } = transaction;
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
-    const [shouldShowEditModal, setShouldShowEditModal] = useState(false);
+    const [shouldShowModal, setShouldShowModal] = useState(false);
     const date = new Date(dateString);
 
     if (hasBeenSeen) {
@@ -82,7 +82,7 @@ const TransactionRow = ({transaction}) => {
     };
 
     const editTransaction = () => {
-        setShouldShowEditModal(true);
+        setShouldShowModal(true);
     };
 
     return (
@@ -107,10 +107,10 @@ const TransactionRow = ({transaction}) => {
                     {'Delete'}
                 </button>
             </td>
-            {shouldShowEditModal && (
+            {shouldShowModal && (
                 <TransactionEditModal
-                    setShouldShowEditModal={setShouldShowEditModal}
-                    shouldShowEditModal={shouldShowEditModal}
+                    setShouldShowModal={setShouldShowModal}
+                    shouldShowModal={shouldShowModal}
                     transactionBeingEdited={transaction}
                 />
             )}
