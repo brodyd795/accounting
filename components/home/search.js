@@ -99,11 +99,11 @@ const validationSchema = yup.object().shape({
 });
 
 const initialValues = {
-    fromAmount: 0,
-    toAmount: 0,
-    comment: '',
-    toDate: new Date(),
-    fromDate: new Date(),
+    fromAmount: undefined,
+    toAmount: undefined,
+    comment: undefined,
+    toDate: undefined,
+    fromDate: undefined,
     fromAccountObject: undefined,
     toAccountObject: undefined
 };
@@ -111,9 +111,38 @@ const initialValues = {
 export const Search = () => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         console.log('submitting!');
         console.log(`values`, values)
+        
+        const {
+            comment,
+            fromAccountObject,
+            toAccountObject,
+            fromDate,
+            toDate,
+            fromAmount,
+            toAmount
+        } = values;
+        
+
+        // const res = await fetch(`/api/controllers/transactions/search`, {
+        //     body: JSON.stringify({
+        //         input: {
+        //             comment,
+        //             fromAccount: fromAccountObject.accountId,
+        //             fromAmount: fromAmount * 100,
+        //             fromDate: fromDate ? new Date(fromDate) : undefined,
+        //             toAccount: toAccountObject.accountId,
+        //             toAmount: toAmount * 100,
+        //             toDate: toDate ? new Date(toDate) : undefined
+        //         }
+        //     }),
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     method: 'GET'
+        // });
     };
 
     return (
