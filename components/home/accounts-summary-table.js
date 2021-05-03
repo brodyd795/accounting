@@ -34,10 +34,6 @@ export const AccountsSummaryTable = () => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
 
-    const addNewTransaction = () => {
-
-    }
-
     if (error) {
         return <div>{'Error!'}</div>;
     }

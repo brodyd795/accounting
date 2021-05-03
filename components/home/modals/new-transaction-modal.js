@@ -8,7 +8,6 @@ import {TransactionModal} from './transaction-modal';
 export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [updateStatusMessage, setUpdateStatusMessage] = useState('');
-    // const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
 
     if (error) {
         return 'Error!';
@@ -52,10 +51,6 @@ export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
             setUpdateStatusMessage('Sorry, something went wrong.');
         }
     };
-
-    const flatAccounts = accounts.reduce((acc, current) => [...acc, current.options], []).flat();
-    // const fromAccountOption = flatAccounts.find((account) => account.accountId === fromAccountId);
-    // const toAccountOption = flatAccounts.find((account) => account.accountId === toAccountId);
 
     return (
         <TransactionModal
