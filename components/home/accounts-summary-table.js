@@ -7,6 +7,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
+import {NewTransactionModal} from './modals/new-transaction-modal';
+
 const StyledTable = styled.table`
     table-layout: fixed;
     margin: 0 auto;
@@ -29,6 +31,7 @@ const StyledDatePicker = styled(DatePicker)``;
 
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
+    const [shouldShowModal, setShouldShowModal] = useState(false);
     const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
 
     if (error) {
@@ -45,14 +48,22 @@ export const AccountsSummaryTable = () => {
     return (
         <StyledSummaryTableContainer>
             <h2>{'Accounts Summary'}</h2>
-            <StyledDatePicker
-                dateFormat={'MMMM yyyy'}
-                maxDate={new Date()}
-                minDate={new Date(2021, 3, 1)}
-                onChange={(newDate) => setSelectedMonth(newDate)}
-                selected={selectedMonth}
-                showMonthYearPicker
-            />
+            <div>
+                <StyledDatePicker
+                    dateFormat={'MMMM yyyy'}
+                    maxDate={new Date()}
+                    minDate={new Date(2021, 3, 1)}
+                    onChange={(newDate) => setSelectedMonth(newDate)}
+                    selected={selectedMonth}
+                    showMonthYearPicker
+                />
+                <button onClick={() => setShouldShowModal(true)} type={'button'}>
+                    {'Add transaction'}
+                </button>
+                {shouldShowModal && (
+                    <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
+                )}
+            </div>
             <StyledTablesContainer>
                 <StyledTable>
                     <thead>
