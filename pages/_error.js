@@ -56,4 +56,3 @@ MyError.getInitialProps = async ({res, err, asPath}) => {
 };
 
 export default MyError;
-
