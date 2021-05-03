@@ -14,17 +14,11 @@ export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
     }
 
     if (!accounts) {
-        return "loading";
+        return 'loading';
     }
 
     const handleSubmit = async (values) => {
-        const {
-            amount,
-            comment,
-            date,
-            fromAccountName: fromAccount,
-            toAccountName: toAccount
-        } = values;
+        const {amount, comment, date, fromAccountName: fromAccount, toAccountName: toAccount} = values;
 
         const res = await fetch(`/api/controllers/transactions/new-transaction-controller`, {
             body: JSON.stringify({
@@ -69,5 +63,5 @@ export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
             // transactionBeingEdited={transactionBeingEdited}
             updateStatusMessage={updateStatusMessage}
         />
-    )
+    );
 };

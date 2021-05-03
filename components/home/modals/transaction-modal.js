@@ -57,11 +57,7 @@ export const TransactionModal = ({
         setShouldShowModal={setShouldShowModal}
         title={title}
     >
-        <Formik
-            initialValues={initialValues}
-            onSubmit={handleSubmit}
-            validationSchema={validationSchema}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
             {({setFieldValue, values}) => (
                 <StyledForm>
                     <StyledFieldContainer>

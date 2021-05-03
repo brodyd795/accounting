@@ -35,19 +35,13 @@ const StyledCloseModalButton = styled.button`
 `;
 
 export const Modal = ({title, onRequestClose, isOpen, children}) => (
-        <StyledModal
-            ariaHideApp={false}
-            contentLabel={title}
-            isOpen={isOpen}
-            onRequestClose={onRequestClose}
-        >
-            <StyledModalHeader>
-                <StyledModalHeading>{title}</StyledModalHeading>
-                <StyledCloseModalButton onClick={onRequestClose} type={'button'}>
-                    {'X'}
-                </StyledCloseModalButton>
-                {children}
-            </StyledModalHeader>
-            
-        </StyledModal>
-    );
+    <StyledModal ariaHideApp={false} contentLabel={title} isOpen={isOpen} onRequestClose={onRequestClose}>
+        <StyledModalHeader>
+            <StyledModalHeading>{title}</StyledModalHeading>
+            <StyledCloseModalButton onClick={onRequestClose} type={'button'}>
+                {'X'}
+            </StyledCloseModalButton>
+            {children}
+        </StyledModalHeader>
+    </StyledModal>
+);

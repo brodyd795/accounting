@@ -82,5 +82,5 @@ export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, trans
             transactionBeingEdited={transactionBeingEdited}
             updateStatusMessage={updateStatusMessage}
         />
-    )
+    );
 };

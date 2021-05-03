@@ -57,17 +57,12 @@ export const AccountsSummaryTable = () => {
                     selected={selectedMonth}
                     showMonthYearPicker
                 />
-                <button
-                    onClick={() => setShouldShowModal(true)}
-                    type={'button'}
-                >
+                <button onClick={() => setShouldShowModal(true)} type={'button'}>
                     {'Add transaction'}
                 </button>
-                {shouldShowModal &&
-                    <NewTransactionModal
-                        setShouldShowModal={setShouldShowModal}
-                        shouldShowModal={shouldShowModal}
-                    />}
+                {shouldShowModal && (
+                    <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
+                )}
             </div>
             <StyledTablesContainer>
                 <StyledTable>

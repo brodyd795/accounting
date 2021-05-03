@@ -22,12 +22,5 @@ export const newTransactionRepository = ({date, fromAccountId, toAccountId, amou
                 ?
             )
 		`,
-        [
-            date,
-            fromAccountId,
-            toAccountId,
-            amount,
-            comment,
-            isMarkedAsSeen
-        ]
+        [date, fromAccountId, toAccountId, amount, comment, isMarkedAsSeen]
     );
