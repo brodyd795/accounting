@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
-import * as yup from 'yup';
 import Select from 'react-select';
 
 import DatePickerField from '../form-fields/date-selector';
 import AmountSelector from '../form-fields/amount-selector';
-import {validationSchema} from '../transaction-validation-schema';
+import {validationSchema} from '../schemas/transaction-validation-schema';
 
 import {Modal} from './modal';
 

@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import Select from 'react-select';
 import 'react-datepicker/dist/react-datepicker.css';
-import * as yup from 'yup';
 import useSWR from 'swr';
 
 import fetcher from '../../lib/fetch';
 
+import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
 
@@ -16,7 +16,6 @@ const StyledSearchContainer = styled.div`
     flex-direction: column;
     justify-content: center;
 `;
-
 
 const StyledSelect = styled(Select)`
     width: 150px;
@@ -50,54 +49,6 @@ const StyledButton = styled.button`
     margin-left: 5px;
 `;
 
-const validationSchema = yup.object().shape({
-    fromAmount: yup.number(),
-    toAmount: yup.number().min(yup.ref('fromAmount')),
-    comment: yup.string(),
-    fromDate: yup.date(),
-    toDate: yup.date().when('fromDate', (fromDate, schema) => fromDate && schema.min(fromDate)),
-    fromAccountObject: yup
-        .object()
-        .shape({
-            accountId: yup.number(),
-            label: yup.string(),
-            value: yup.string()
-        })
-        .test(
-            'accounts-match',
-            'To and From accounts must be different',
-            // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
-            function () {
-                if (this.parent.toAccountObject.accountId === undefined || this.parent.fromAccountObject.accountId === undefined) {
-                    return true;
-                }
-
-                // eslint-disable-next-line no-invalid-this
-                return this.parent.fromAccountObject.accountId !== this.parent.toAccountObject.accountId;
-            }
-        ),
-    toAccountObject: yup
-        .object()
-        .shape({
-            accountId: yup.number(),
-            label: yup.string(),
-            value: yup.string()
-        })
-        .test(
-            'accounts-match',
-            'To and From accounts must be different',
-            // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
-            function () {
-                if (this.parent.toAccountObject.accountId === undefined || this.parent.fromAccountObject.accountId === undefined) {
-                    return true;
-                }
-
-                // eslint-disable-next-line no-invalid-this
-                return this.parent.fromAccountObject.accountId !== this.parent.toAccountObject.accountId;
-            }
-        )
-});
-
 const initialValues = {
     fromAmount: undefined,
     toAmount: undefined,
@@ -112,9 +63,6 @@ export const Search = () => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
 
     const handleSubmit = async (values) => {
-        console.log('submitting!');
-        console.log(`values`, values)
-        
         const {
             comment,
             fromAccountObject,
@@ -124,17 +72,16 @@ export const Search = () => {
             fromAmount,
             toAmount
         } = values;
-        
 
         const res = await fetch(`/api/controllers/transactions/search-controller`, {
             body: JSON.stringify({
                 input: {
-                    comment: comment ? comment : undefined,
-                    fromAccount: fromAccountObject?.accountId ? fromAccountObject.accountId : undefined,
-                    fromAmount: fromAmount ? fromAmount * 100 : undefined,
+                    comment: comment || undefined,
+                    fromAccount: fromAccountObject?.accountId || undefined,
+                    fromAmount: fromAmount * 100 || undefined,
                     fromDate: fromDate ? new Date(fromDate) : undefined,
-                    toAccount: toAccountObject?.accountId ? toAccountObject.accountId : undefined,
-                    toAmount: toAmount ? toAmount * 100 : undefined,
+                    toAccount: toAccountObject?.accountId || undefined,
+                    toAmount: toAmount * 100 || undefined,
                     toDate: toDate ? new Date(toDate) : undefined
                 }
             }),
@@ -143,13 +90,12 @@ export const Search = () => {
             },
             method: 'POST'
         });
-        console.log(`res`, res)
     };
 
     return (
         <StyledSearchContainer>
-            <h2>{'Searcha'}</h2>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+            <h2>{'Searchb'}</h2>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={searchSchema}>
                 {({setFieldValue, values}) =>
                     (
                         <StyledForm>
