@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import Select from 'react-select';
@@ -61,6 +61,8 @@ const initialValues = {
 
 export const Search = () => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [searchError, setSearchError] = useState(false);
 
     const handleSubmit = async (values) => {
         const {
@@ -73,6 +75,8 @@ export const Search = () => {
             toAmount
         } = values;
 
+        setSearchLoading(true);
+        
         const res = await fetch(`/api/controllers/transactions/search-controller`, {
             body: JSON.stringify({
                 input: {
@@ -90,6 +94,14 @@ export const Search = () => {
             },
             method: 'POST'
         });
+
+        if (!res.ok) {
+            setSearchError(true);
+        } else {
+            setSearchError(false);
+        }
+
+        setSearchLoading(false);
     };
 
     return (
@@ -147,12 +159,10 @@ export const Search = () => {
                                 <ErrorMessage name={'comment'} />
                             </StyledFieldContainer>
                             <StyledButtonsContainer>
-                                {/* <StyledButton onClick={() => setShouldShowModal(false)} type={'button'}>
-                                    {'Cancel'}
-                                </StyledButton> */}
                                 <StyledButton type={'submit'}>{'Update'}</StyledButton>
                             </StyledButtonsContainer>
-                            {/* <div>{updateStatusMessage}</div> */}
+                            {searchError ? <div>{'Error!'}</div> : null}
+                            {searchLoading ? <div>{'Loading...'}</div> : null}
                         </StyledForm>
                     )
                 }

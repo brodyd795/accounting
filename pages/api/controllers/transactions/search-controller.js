@@ -16,7 +16,6 @@ export default withApiAuthRequired(async (req, res) => {
         }
 
         const input = req.body.input;
-        console.log(`input here`, input)
 
         const data = await searchService({input});
 
