@@ -126,28 +126,29 @@ export const Search = () => {
         } = values;
         
 
-        // const res = await fetch(`/api/controllers/transactions/search`, {
-        //     body: JSON.stringify({
-        //         input: {
-        //             comment,
-        //             fromAccount: fromAccountObject.accountId,
-        //             fromAmount: fromAmount * 100,
-        //             fromDate: fromDate ? new Date(fromDate) : undefined,
-        //             toAccount: toAccountObject.accountId,
-        //             toAmount: toAmount * 100,
-        //             toDate: toDate ? new Date(toDate) : undefined
-        //         }
-        //     }),
-        //     headers: {
-        //         'Content-Type': 'application/json'
-        //     },
-        //     method: 'GET'
-        // });
+        const res = await fetch(`/api/controllers/transactions/search-controller`, {
+            body: JSON.stringify({
+                input: {
+                    comment: comment ? comment : undefined,
+                    fromAccount: fromAccountObject?.accountId ? fromAccountObject.accountId : undefined,
+                    fromAmount: fromAmount ? fromAmount * 100 : undefined,
+                    fromDate: fromDate ? new Date(fromDate) : undefined,
+                    toAccount: toAccountObject?.accountId ? toAccountObject.accountId : undefined,
+                    toAmount: toAmount ? toAmount * 100 : undefined,
+                    toDate: toDate ? new Date(toDate) : undefined
+                }
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        });
+        console.log(`res`, res)
     };
 
     return (
         <StyledSearchContainer>
-            <h2>{'Search'}</h2>
+            <h2>{'Searcha'}</h2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
                 {({setFieldValue, values}) =>
                     (
