@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import {AccountsSummaryTable} from './accounts-summary-table';
 import {UnseenTransactionsTable} from './unseen-transactions-table';
+import {Search} from './search';
 
 const StyledContainer = styled.div`
     flex: 1;
@@ -23,5 +24,6 @@ export const Home = () => (
         </StyledHeader>
         <AccountsSummaryTable />
         <UnseenTransactionsTable />
+        <Search />
     </StyledContainer>
 );
