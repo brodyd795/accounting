@@ -50,8 +50,8 @@ const StyledButton = styled.button`
 `;
 
 const initialValues = {
-    fromAmount: undefined,
-    toAmount: undefined,
+    fromAmount: null,
+    toAmount: null,
     comment: undefined,
     toDate: undefined,
     fromDate: undefined,
