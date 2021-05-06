@@ -12,9 +12,27 @@ export const searchRepository = ({
     conn().query(
         `
             SELECT
-                *
+                transactionId,
+                date,
+                fromAccountId,
+                toAccountId,
+                accountsTo.accountName fromAccountName,
+                accountsTo.category fromAccountCategory,
+                accountsFrom.accountName toAccountName,
+                accountsFrom.category toAccountCategory,
+                amount,
+                comment,
+                isMarkedAsSeen
             FROM
                 transactions
+            INNER JOIN
+                accounts accountsTo
+            ON
+                accountsTo.accountId = transactions.fromAccountId
+            INNER JOIN
+                accounts accountsFrom
+            ON
+                accountsFrom.accountId = transactions.toAccountId
             WHERE
                 comment like ?
             AND
@@ -29,6 +47,9 @@ export const searchRepository = ({
                 amount <= ?
             AND
                 date <= ?
+            ORDER BY
+                date
+            DESC
 		`,
         [
             comment,
