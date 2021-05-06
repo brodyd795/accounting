@@ -10,6 +10,7 @@ import fetcher from '../../lib/fetch';
 import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
+import {TransactionsTable} from './transactions-table';
 
 const StyledSearchContainer = styled.div`
     display: flex;
@@ -50,8 +51,8 @@ const StyledButton = styled.button`
 `;
 
 const initialValues = {
-    fromAmount: null,
-    toAmount: null,
+    fromAmount: 0,
+    toAmount: 0,
     comment: undefined,
     toDate: undefined,
     fromDate: undefined,
@@ -63,6 +64,7 @@ export const Search = () => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchError, setSearchError] = useState(false);
+    const [searchResults, setSearchResults] = useState(null);
 
     const handleSubmit = async (values) => {
         const {
@@ -94,11 +96,13 @@ export const Search = () => {
             },
             method: 'POST'
         });
+        const json = await res.json();
 
         if (!res.ok) {
             setSearchError(true);
         } else {
             setSearchError(false);
+            setSearchResults(json);
         }
 
         setSearchLoading(false);
@@ -167,6 +171,13 @@ export const Search = () => {
                     )
                 }
             </Formik>
+            {searchResults ?
+                <TransactionsTable
+                    data={searchResults}
+                    header={'Search Results'}
+                    noResultsText={'No results for this search'}
+                />
+                : null}
         </StyledSearchContainer>
     )
 };
