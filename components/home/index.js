@@ -13,15 +13,8 @@ const StyledContainer = styled.div`
     width: 100%;
 `;
 
-const StyledHeader = styled.div`
-    text-align: center;
-`;
-
 export const Home = () => (
     <StyledContainer>
-        <StyledHeader>
-            <h1>{'Accounting'}</h1>
-        </StyledHeader>
         <AccountsSummaryTable />
         <UnseenTransactionsTable />
         <Search />

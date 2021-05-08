@@ -5,6 +5,18 @@ import Select from 'react-select';
 
 export const StyledNumberFormat = styled(NumberFormat)`
     width: 100px;
+
+    ${({isDemo}) => isDemo && `
+        color: transparent;
+        text-shadow: 0 0 8px #000;
+    `}}
+`;
+
+export const BlurrableInput = styled.input`
+    ${({isDemo}) => isDemo && `
+        color: transparent;
+        text-shadow: 0 0 8px #000;
+    `}}
 `;
 
 export const StyledDatePicker = styled(DatePicker)`

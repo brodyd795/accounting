@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 
+import {useDemo} from '../../hooks/use-demo';
 import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 
+import {BlurrableTd} from './blurrable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
 
 export const TransactionRow = ({transaction}) => {
@@ -15,6 +17,7 @@ export const TransactionRow = ({transaction}) => {
         toAccountName,
         isMarkedAsSeen
     } = transaction;
+    const {isDemo} = useDemo();
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const date = new Date(dateString);
@@ -79,8 +82,8 @@ export const TransactionRow = ({transaction}) => {
             <td>{date.toDateString()}</td>
             <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
             <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
-            <td>{amount}</td>
-            <td>{comment}</td>
+            <BlurrableTd isDemo={isDemo}>{amount}</BlurrableTd>
+            <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
             <td>
                 <button onClick={markTransactionAsSeen} type={'button'}>
                     {'Mark as seen'}

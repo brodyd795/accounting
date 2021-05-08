@@ -6,7 +6,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
+import {useDemo} from '../../hooks/use-demo';
 
+import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
 
 const StyledTable = styled.table`
@@ -33,6 +35,7 @@ export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
+    const {isDemo} = useDemo();
 
     if (error) {
         return <div>{'Error!'}</div>;
@@ -78,7 +81,7 @@ export const AccountsSummaryTable = () => {
                             <tr key={account.accountId}>
                                 <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
                                 <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <td>{account.balance}</td>
+                                <BlurrableTd isDemo={isDemo}>{account.balance}</BlurrableTd>
                             </tr>
                         ))}
                     </tbody>
@@ -96,7 +99,7 @@ export const AccountsSummaryTable = () => {
                             <tr key={account.accountId}>
                                 <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
                                 <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <td>{account.balance}</td>
+                                <BlurrableTd isDemo={isDemo}>{account.balance}</BlurrableTd>
                             </tr>
                         ))}
                     </tbody>
