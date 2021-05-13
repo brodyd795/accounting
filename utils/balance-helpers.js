@@ -2,13 +2,24 @@ import {transactionCategories} from "../enums/transaction-categories";
 
 export const formatBalanceForUI = (account) => {
     const {balance, category} = account;
+    const {INCOME, EXPENSES, DEBTS, ASSETS} = transactionCategories;
 
     let balanceWithCorrectSign = balance / 100;
+    let isNegative = false;
 
-    if (balance < 0 && (category === transactionCategories.INCOME || category === transactionCategories.DEBTS)) {
+    if (balance < 0 && (category === INCOME || category === DEBTS)) {
         balanceWithCorrectSign = balanceWithCorrectSign * -1;
     }
-    // TODO: return object with balance and isNegative or something
+    
+    if (
+        ((category === INCOME || category === DEBTS) && balance > 0) || 
+        ((category === EXPENSES || category === ASSETS) && balance < 0)
+    ) {
+        isNegative = true;
+    }
 
-    return `$ ${balanceWithCorrectSign.toLocaleString()}`;
+    return {
+        balance: `$ ${balanceWithCorrectSign.toLocaleString()}`,
+        isNegative
+    };
 };

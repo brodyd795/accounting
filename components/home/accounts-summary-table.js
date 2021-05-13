@@ -7,10 +7,10 @@ import 'react-datepicker/dist/react-datepicker.css';
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
+import {formatBalanceForUI} from '../../utils/balance-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
-import { formatBalanceForUI } from '../../utils/balance-helpers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
@@ -63,13 +63,13 @@ const Row = ({account}) => {
     const {isDemo} = useDemo();
     const category = cleanAccountNameOrCategoryForUI(account.category);
     const name = cleanAccountNameOrCategoryForUI(account.accountName);
-    const balance = formatBalanceForUI(account);
+    const {balance, isNegative} = formatBalanceForUI(account);
 
     return (
         <tr>
             <td>{category}</td>
             <td>{name}</td>
-            <BlurrableTd isDemo={isDemo}>{balance}</BlurrableTd>
+            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>{balance}</BlurrableTd>
         </tr>
     );
 };
