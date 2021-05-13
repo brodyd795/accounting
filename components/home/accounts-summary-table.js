@@ -29,7 +29,34 @@ const StyledSummaryTableContainer = styled.div`
     justify-content: center;
 `;
 
-const StyledDatePicker = styled(DatePicker)``;
+const StyledDatePicker = styled(DatePicker)`
+    text-align: center;
+    background-color: green;
+    border-radius: 4px;
+    border: 1px solid green;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 16px;
+`;
+
+const StyledH2 = styled.h2`
+    text-align: center;
+`;
+
+const StyledTopRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 0 8px;
+`;
+
+const StyledButton = styled.button`
+    border-radius: 4px;
+    background-color: green;
+    border: 1px solid green;
+    padding: 4px;
+    font-size: 16px;
+    color: white;
+`;
 
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -50,8 +77,8 @@ export const AccountsSummaryTable = () => {
 
     return (
         <StyledSummaryTableContainer>
-            <h2>{'Accounts Summary'}</h2>
-            <div>
+            <StyledH2>{'Accounts Summary'}</StyledH2>
+            <StyledTopRow>
                 <StyledDatePicker
                     dateFormat={'MMMM yyyy'}
                     maxDate={new Date()}
@@ -60,13 +87,13 @@ export const AccountsSummaryTable = () => {
                     selected={selectedMonth}
                     showMonthYearPicker
                 />
-                <button onClick={() => setShouldShowModal(true)} type={'button'}>
-                    {'Add transaction'}
-                </button>
+                <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
+                    {'New transaction'}
+                </StyledButton>
                 {shouldShowModal && (
                     <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
                 )}
-            </div>
+            </StyledTopRow>
             <StyledTablesContainer>
                 <StyledTable>
                     <thead>

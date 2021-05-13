@@ -10,7 +10,7 @@ const StyledLayout = styled.div`
 
 const StyledHeader = styled.div`
     text-align: center;
-    background-color: #c5ffb6;
+    background-color: #4f7744;
     padding: 10px 0;
     display: flex;
     flex: 1;
@@ -21,16 +21,17 @@ const StyledHeader = styled.div`
     }
 `;
 
-const StyledH1Container = styled.div`
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    flex: 1;
+const StyledH1 = styled.h1`
+    padding-left: 8px;
 `;
 
 const StyledDemoButton = styled.div`
     display: flex;
     align-items: center;
+`;
+
+const StyledInput = styled.input`
+    margin-right: 8px;
 `;
 
 const StyledMain = styled.main``;
@@ -40,16 +41,14 @@ const Header = () => {
 
     return (
         <StyledHeader>
-            <StyledH1Container>
-                <h1>{'Accounting'}</h1>
-            </StyledH1Container>
+            <StyledH1>{'Accounting'}</StyledH1>
             <StyledDemoButton>
                 <label
                     htmlFor={'demo'}
                 >
                     {'Demo'}
                 </label>
-                <input
+                <StyledInput
                     id={'demo'}
                     name={'demo'}
                     onClick={() => setIsDemo(!isDemo)}
