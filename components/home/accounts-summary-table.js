@@ -10,6 +10,7 @@ import {useDemo} from '../../hooks/use-demo';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
+import { formatBalanceForUI } from '../../utils/balance-helpers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
@@ -58,11 +59,25 @@ const StyledButton = styled.button`
     color: white;
 `;
 
+const Row = ({account}) => {
+    const {isDemo} = useDemo();
+    const category = cleanAccountNameOrCategoryForUI(account.category);
+    const name = cleanAccountNameOrCategoryForUI(account.accountName);
+    const balance = formatBalanceForUI(account);
+
+    return (
+        <tr>
+            <td>{category}</td>
+            <td>{name}</td>
+            <BlurrableTd isDemo={isDemo}>{balance}</BlurrableTd>
+        </tr>
+    );
+};
+
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const {data, error} = useSWR(`/api/controllers/accounts-summary-controller?date=${selectedMonth}`, fetch);
-    const {isDemo} = useDemo();
 
     if (error) {
         return <div>{'Error!'}</div>;
@@ -105,11 +120,7 @@ export const AccountsSummaryTable = () => {
                     </thead>
                     <tbody>
                         {persistentAccounts.map((account) => (
-                            <tr key={account.accountId}>
-                                <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
-                                <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <BlurrableTd isDemo={isDemo}>{account.balance}</BlurrableTd>
-                            </tr>
+                            <Row account={account} key={account.accountId} />
                         ))}
                     </tbody>
                 </StyledTable>
@@ -123,11 +134,7 @@ export const AccountsSummaryTable = () => {
                     </thead>
                     <tbody>
                         {monthlyAccounts.map((account) => (
-                            <tr key={account.accountId}>
-                                <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
-                                <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <BlurrableTd isDemo={isDemo}>{account.balance}</BlurrableTd>
-                            </tr>
+                            <Row account={account} key={account.accountId} />
                         ))}
                     </tbody>
                 </StyledTable>
