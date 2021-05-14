@@ -11,11 +11,27 @@ const StyledTableHeader = styled.td`
     font-weight: bold;
 `;
 
+const StyledH2 = styled.h2`
+    text-align: center;
+`;
+
+const StyledTable = styled.table`
+    border: 2px solid black;
+    padding: 8px;
+    border-collapse: collapse;
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        white-space: nowrap;
+    }
+`;
+
 export const TransactionsTable = ({data, noResultsText, header}) => (
     <StyledUnseenTransactionsContainer>
-        <h2>{header}</h2>
+        <StyledH2>{header}</StyledH2>
         {data.length ? (
-            <table>
+            <StyledTable>
                 <thead>
                     <tr>
                         <StyledTableHeader>{'Date'}</StyledTableHeader>
@@ -23,12 +39,13 @@ export const TransactionsTable = ({data, noResultsText, header}) => (
                         <StyledTableHeader>{'To'}</StyledTableHeader>
                         <StyledTableHeader>{'Amount'}</StyledTableHeader>
                         <StyledTableHeader>{'Comment'}</StyledTableHeader>
+                        <StyledTableHeader />
                     </tr>
                 </thead>
                 {data.map((transaction) => (
                     <TransactionRow key={transaction.transactionId} transaction={transaction} />
                 ))}
-            </table>
+            </StyledTable>
         ) : (
             noResultsText
         )}
