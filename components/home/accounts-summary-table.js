@@ -11,6 +11,7 @@ import {formatBalanceForUI} from '../../utils/balance-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
+import { StyledH2 } from './headers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
@@ -38,10 +39,6 @@ const StyledDatePicker = styled(DatePicker)`
     cursor: pointer;
     padding: 4px;
     font-size: 16px;
-`;
-
-const StyledH2 = styled.h2`
-    text-align: center;
 `;
 
 const StyledTopRow = styled.div`

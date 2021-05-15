@@ -11,6 +11,7 @@ import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
 import {TransactionsTable} from './transactions-table';
+import {StyledH2} from './headers';
 
 const StyledSearchContainer = styled.div`
     display: flex;
@@ -49,6 +50,7 @@ const StyledButton = styled.button`
     margin-right: 5px;
     margin-left: 5px;
 `;
+
 
 const initialValues = {
     fromAmount: 0,
@@ -110,7 +112,7 @@ export const Search = () => {
 
     return (
         <StyledSearchContainer>
-            <h2>{'Searchb'}</h2>
+            <StyledH2>{'Search'}</StyledH2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={searchSchema}>
                 {({setFieldValue, values}) =>
                     (

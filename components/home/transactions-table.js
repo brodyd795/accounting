@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { StyledH2 } from './headers';
 
 import {TransactionRow} from './transaction-row';
 
@@ -9,10 +10,6 @@ const StyledUnseenTransactionsContainer = styled.div`
 
 const StyledTableHeader = styled.td`
     font-weight: bold;
-`;
-
-const StyledH2 = styled.h2`
-    text-align: center;
 `;
 
 const StyledTable = styled.table`
