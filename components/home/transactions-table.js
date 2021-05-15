@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { StyledH2 } from './headers';
 
+import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
 const StyledUnseenTransactionsContainer = styled.div`
@@ -14,13 +14,17 @@ const StyledTableHeader = styled.td`
 
 const StyledTable = styled.table`
     border: 2px solid black;
-    padding: 8px;
+    border-radius: 10px;
+    margin: 0 10px;
     border-collapse: collapse;
+    overflow-x: scroll;
+    display: block;
+    max-width: fit-content;
+    white-space: nowrap;
 
     th, td {
         border: 1px solid black;
         padding: 8px;
-        white-space: nowrap;
     }
 `;
 
@@ -36,12 +40,14 @@ export const TransactionsTable = ({data, noResultsText, header}) => (
                         <StyledTableHeader>{'To'}</StyledTableHeader>
                         <StyledTableHeader>{'Amount'}</StyledTableHeader>
                         <StyledTableHeader>{'Comment'}</StyledTableHeader>
-                        <StyledTableHeader />
+                        <StyledTableHeader>{'Buttons'}</StyledTableHeader>
                     </tr>
                 </thead>
-                {data.map((transaction) => (
-                    <TransactionRow key={transaction.transactionId} transaction={transaction} />
-                ))}
+                <tbody>
+                    {data.map((transaction) => (
+                        <TransactionRow key={transaction.transactionId} transaction={transaction} />
+                    ))}
+                </tbody>
             </StyledTable>
         ) : (
             noResultsText

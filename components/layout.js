@@ -34,8 +34,6 @@ const StyledInput = styled.input`
     margin-right: 8px;
 `;
 
-const StyledMain = styled.main``;
-
 const Header = () => {
     const {isDemo, setIsDemo} = useDemo();
 
@@ -64,9 +62,9 @@ export const Layout = ({children}) => (
     <StyledLayout>
         <DemoProvider>
             <Header />
-            <StyledMain>
+            <main>
                 {children}
-            </StyledMain>
+            </main>
         </DemoProvider>
     </StyledLayout>
 );

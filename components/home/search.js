@@ -32,12 +32,18 @@ const StyledLabel = styled.label`
 
 const StyledForm = styled(Form)`
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const StyledFieldContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+    align-items: center;
+    margin: 10px 10px 0;
+`;
+
+const StyledFieldsGroupContainer = styled.div`
+    display: flex;
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -117,55 +123,61 @@ export const Search = () => {
                 {({setFieldValue, values}) =>
                     (
                         <StyledForm>
+                            <StyledFieldsGroupContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'fromDate'}>{'From Date:'}</StyledLabel>
+                                    <DatePickerField name={'fromDate'} type={'text'} />
+                                    <ErrorMessage name={'fromDate'} />
+                                </StyledFieldContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'toDate'}>{'To Date:'}</StyledLabel>
+                                    <DatePickerField name={'toDate'} type={'text'} />
+                                    <ErrorMessage name={'toDate'} />
+                                </StyledFieldContainer>
+                            </StyledFieldsGroupContainer>
+                            <StyledFieldsGroupContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'fromAccountObject'}>{'From account:'}</StyledLabel>
+                                    <StyledSelect
+                                        id={'fromAccountObject'}
+                                        name={'fromAccountObject'}
+                                        onChange={(option) => setFieldValue('fromAccountObject', option)}
+                                        options={accounts}
+                                        value={values.fromAccountObject}
+                                    />
+                                    <ErrorMessage name="fromAccountObject" />
+                                </StyledFieldContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'toAccountObject'}>{'To account:'}</StyledLabel>
+                                    <StyledSelect
+                                        id={'toAccountObject'}
+                                        name={'toAccountObject'}
+                                        onChange={(option) => setFieldValue('toAccountObject', option)}
+                                        options={accounts}
+                                        value={values.toAccountObject}
+                                    />
+                                    <ErrorMessage name="toAccount" />
+                                </StyledFieldContainer>
+                            </StyledFieldsGroupContainer>
+                            <StyledFieldsGroupContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'fromAmount'}>{'From Amount:'}</StyledLabel>
+                                    <Field component={AmountSelector} name={'fromAmount'} />
+                                    <ErrorMessage name={'fromAmount'} />
+                                </StyledFieldContainer>
+                                <StyledFieldContainer>
+                                    <StyledLabel htmlFor={'toAmount'}>{'To Amount:'}</StyledLabel>
+                                    <Field component={AmountSelector} name={'toAmount'} />
+                                    <ErrorMessage name={'toAmount'} />
+                                </StyledFieldContainer>
+                            </StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromDate'}>{'From Date'}</StyledLabel>
-                                <DatePickerField name={'fromDate'} type={'text'} />
-                                <ErrorMessage name={'fromDate'} />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toDate'}>{'To Date'}</StyledLabel>
-                                <DatePickerField name={'toDate'} type={'text'} />
-                                <ErrorMessage name={'toDate'} />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAccountObject'}>{'From account'}</StyledLabel>
-                                <StyledSelect
-                                    id={'fromAccountObject'}
-                                    name={'fromAccountObject'}
-                                    onChange={(option) => setFieldValue('fromAccountObject', option)}
-                                    options={accounts}
-                                    value={values.fromAccountObject}
-                                />
-                                <ErrorMessage name="fromAccountObject" />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAccountObject'}>{'To account'}</StyledLabel>
-                                <StyledSelect
-                                    id={'toAccountObject'}
-                                    name={'toAccountObject'}
-                                    onChange={(option) => setFieldValue('toAccountObject', option)}
-                                    options={accounts}
-                                    value={values.toAccountObject}
-                                />
-                                <ErrorMessage name="toAccount" />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAmount'}>{'From Amount'}</StyledLabel>
-                                <Field component={AmountSelector} name={'fromAmount'} />
-                                <ErrorMessage name={'fromAmount'} />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAmount'}>{'To Amount'}</StyledLabel>
-                                <Field component={AmountSelector} name={'toAmount'} />
-                                <ErrorMessage name={'toAmount'} />
-                            </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
+                                <StyledLabel htmlFor={'comment'}>{'Description:'}</StyledLabel>
                                 <Field name={'comment'} type={'text'} />
                                 <ErrorMessage name={'comment'} />
                             </StyledFieldContainer>
                             <StyledButtonsContainer>
-                                <StyledButton type={'submit'}>{'Update'}</StyledButton>
+                                <StyledButton type={'submit'}>{'Submit'}</StyledButton>
                             </StyledButtonsContainer>
                             {searchError ? <div>{'Error!'}</div> : null}
                             {searchLoading ? <div>{'Loading...'}</div> : null}
