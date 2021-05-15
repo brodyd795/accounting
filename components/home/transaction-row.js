@@ -89,7 +89,8 @@ export const TransactionRow = ({transaction}) => {
         setShouldShowModal(true);
     };
 
-    const cleanAmount = `$ ${amount.toLocaleString()}`;
+    const amountInDollars = amount / 100;
+    const cleanAmount = `$ ${amountInDollars.toLocaleString()}`;
 
     return (
         <tr>
