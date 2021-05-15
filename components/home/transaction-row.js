@@ -1,9 +1,21 @@
 import React, {useState} from 'react';
+import styled from 'styled-components';
 
+import {useDemo} from '../../hooks/use-demo';
 import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
+import {formatBalanceForUI} from '../../utils/balance-helpers';
 
+import {BlurrableTd} from './blurrable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
+
+const BorderlessTd = styled.td`
+    border: none;
+`;
+
+const StyledButton = styled.button`
+    margin: 0 4px;
+`;
 
 export const TransactionRow = ({transaction}) => {
     const {
@@ -15,6 +27,7 @@ export const TransactionRow = ({transaction}) => {
         toAccountName,
         isMarkedAsSeen
     } = transaction;
+    const {isDemo} = useDemo();
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const date = new Date(dateString);
@@ -74,28 +87,26 @@ export const TransactionRow = ({transaction}) => {
         setShouldShowModal(true);
     };
 
+    const cleanAmount = `$ ${amount.toLocaleString()}`;
+
     return (
         <tr>
             <td>{date.toDateString()}</td>
             <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
             <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
-            <td>{amount}</td>
-            <td>{comment}</td>
-            <td>
-                <button onClick={markTransactionAsSeen} type={'button'}>
+            <BlurrableTd isDemo={isDemo}>{cleanAmount}</BlurrableTd>
+            <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
+            <BorderlessTd>
+                <StyledButton onClick={markTransactionAsSeen} type={'button'}>
                     {'Mark as seen'}
-                </button>
-            </td>
-            <td>
-                <button onClick={editTransaction} type={'button'}>
+                </StyledButton>
+                <StyledButton onClick={editTransaction} type={'button'}>
                     {'Edit'}
-                </button>
-            </td>
-            <td>
-                <button onClick={deleteTransaction} type={'button'}>
+                </StyledButton>
+                <StyledButton onClick={deleteTransaction} type={'button'}>
                     {'Delete'}
-                </button>
-            </td>
+                </StyledButton>
+            </BorderlessTd>
             {shouldShowModal && (
                 <TransactionEditModal
                     setShouldShowModal={setShouldShowModal}

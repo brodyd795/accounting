@@ -6,19 +6,36 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
+import {useDemo} from '../../hooks/use-demo';
+import {formatBalanceForUI} from '../../utils/balance-helpers';
 
+import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
+import { StyledH2 } from './headers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
-    margin: 0 auto;
-    width: 500px;
+    margin: 10px auto;
+
+    border-collapse: collapse;
+    overflow-x: scroll;
+    display: block;
+    max-width: fit-content;
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
 `;
 
 const StyledTablesContainer = styled.div`
-    display: flex;
-    flex-direction: column;
     margin-top: 20px;
+
+    display: block;
+
+    @media (min-width: 768px) {
+        display: flex;
+    }
 `;
 
 const StyledSummaryTableContainer = styled.div`
@@ -27,7 +44,40 @@ const StyledSummaryTableContainer = styled.div`
     justify-content: center;
 `;
 
-const StyledDatePicker = styled(DatePicker)``;
+const StyledDatePicker = styled(DatePicker)`
+    text-align: center;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px;
+    font-size: 16px;
+`;
+
+const StyledTopRow = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin: 0 8px;
+`;
+
+const StyledButton = styled.button`
+    border-radius: 4px;
+    padding: 4px;
+    font-size: 16px;
+`;
+
+const Row = ({account}) => {
+    const {isDemo} = useDemo();
+    const category = cleanAccountNameOrCategoryForUI(account.category);
+    const name = cleanAccountNameOrCategoryForUI(account.accountName);
+    const {balance, isNegative} = formatBalanceForUI(account);
+
+    return (
+        <tr>
+            <td>{category}</td>
+            <td>{name}</td>
+            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>{balance}</BlurrableTd>
+        </tr>
+    );
+};
 
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -47,8 +97,8 @@ export const AccountsSummaryTable = () => {
 
     return (
         <StyledSummaryTableContainer>
-            <h2>{'Accounts Summary'}</h2>
-            <div>
+            <StyledH2>{'Accounts Summary'}</StyledH2>
+            <StyledTopRow>
                 <StyledDatePicker
                     dateFormat={'MMMM yyyy'}
                     maxDate={new Date()}
@@ -57,13 +107,13 @@ export const AccountsSummaryTable = () => {
                     selected={selectedMonth}
                     showMonthYearPicker
                 />
-                <button onClick={() => setShouldShowModal(true)} type={'button'}>
-                    {'Add transaction'}
-                </button>
+                <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
+                    {'New transaction'}
+                </StyledButton>
                 {shouldShowModal && (
                     <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
                 )}
-            </div>
+            </StyledTopRow>
             <StyledTablesContainer>
                 <StyledTable>
                     <thead>
@@ -75,11 +125,7 @@ export const AccountsSummaryTable = () => {
                     </thead>
                     <tbody>
                         {persistentAccounts.map((account) => (
-                            <tr key={account.accountId}>
-                                <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
-                                <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <td>{account.balance}</td>
-                            </tr>
+                            <Row account={account} key={account.accountId} />
                         ))}
                     </tbody>
                 </StyledTable>
@@ -93,11 +139,7 @@ export const AccountsSummaryTable = () => {
                     </thead>
                     <tbody>
                         {monthlyAccounts.map((account) => (
-                            <tr key={account.accountId}>
-                                <td>{cleanAccountNameOrCategoryForUI(account.category)}</td>
-                                <td>{cleanAccountNameOrCategoryForUI(account.accountName)}</td>
-                                <td>{account.balance}</td>
-                            </tr>
+                            <Row account={account} key={account.accountId} />
                         ))}
                     </tbody>
                 </StyledTable>
