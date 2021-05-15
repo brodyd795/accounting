@@ -1,10 +1,12 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable no-alert */
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import {useDemo} from '../../hooks/use-demo';
 import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
-import {formatBalanceForUI} from '../../utils/balance-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';

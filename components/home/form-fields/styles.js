@@ -36,26 +36,26 @@ export const selectStyles = {
         ...base,
         padding: 1
     }),
-    valueContainer: (base) => ({
+    group: (base) => ({
         ...base,
-        padding: '0px 6px'
-    }),
-    input: (base) => ({
-        ...base,
-        margin: 0,
         padding: 0
     }),
     groupHeading: (base) => ({
         ...base,
         padding: '3px 6px'
     }),
-    group: (base) => ({
+    input: (base) => ({
         ...base,
+        margin: 0,
         padding: 0
     }),
     option: (base) => ({
         ...base,
         padding: '3px 6px'
+    }),
+    valueContainer: (base) => ({
+        ...base,
+        padding: '0px 6px'
     })
 };
 

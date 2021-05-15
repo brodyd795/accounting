@@ -5,6 +5,7 @@ const DemoContext = createContext();
 export const DemoProvider = ({children}) => {
     const [isDemo, setIsDemo] = useState(false);
 
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     const value = {
         isDemo,
         setIsDemo

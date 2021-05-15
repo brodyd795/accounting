@@ -66,17 +66,17 @@ const StyledButton = styled.button`
 `;
 
 const initialValues = {
-    fromAmount: 0,
-    toAmount: 0,
     comment: undefined,
-    toDate: undefined,
-    fromDate: undefined,
     fromAccountObject: undefined,
-    toAccountObject: undefined
+    fromAmount: 0,
+    fromDate: undefined,
+    toAccountObject: undefined,
+    toAmount: 0,
+    toDate: undefined
 };
 
 export const Search = () => {
-    const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
+    const {data: accounts} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchError, setSearchError] = useState(false);
     const [searchResults, setSearchResults] = useState(null);

@@ -1,3 +1,4 @@
+import React from 'react';
 import NextErrorComponent from 'next/error';
 import * as Sentry from '@sentry/node';
 
@@ -15,8 +16,8 @@ const MyError = ({statusCode, hasGetInitialPropsRun, err}) => {
 
 MyError.getInitialProps = async ({res, err, asPath}) => {
     const errorInitialProps = await NextErrorComponent.getInitialProps({
-        res,
-        err
+        err,
+        res
     });
 
     // Workaround for https://github.com/vercel/next.js/issues/8592, mark when
