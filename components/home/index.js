@@ -10,7 +10,7 @@ const StyledContainer = styled.div`
     flex: 1;
     margin: 0 auto;
     padding-bottom: 10px;
-    max-width: 768px;
+    max-width: 1000px;
     width: 100%;
 `;
 

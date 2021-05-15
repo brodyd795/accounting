@@ -15,14 +15,27 @@ import { StyledH2 } from './headers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
-    margin: 0 auto;
-    width: 500px;
+    margin: 10px auto;
+
+    border-collapse: collapse;
+    overflow-x: scroll;
+    display: block;
+    max-width: fit-content;
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+    }
 `;
 
 const StyledTablesContainer = styled.div`
-    display: flex;
-    flex-direction: column;
     margin-top: 20px;
+
+    display: block;
+
+    @media (min-width: 768px) {
+        display: flex;
+    }
 `;
 
 const StyledSummaryTableContainer = styled.div`
@@ -33,9 +46,7 @@ const StyledSummaryTableContainer = styled.div`
 
 const StyledDatePicker = styled(DatePicker)`
     text-align: center;
-    background-color: green;
     border-radius: 4px;
-    border: 1px solid green;
     cursor: pointer;
     padding: 4px;
     font-size: 16px;
@@ -49,11 +60,8 @@ const StyledTopRow = styled.div`
 
 const StyledButton = styled.button`
     border-radius: 4px;
-    background-color: green;
-    border: 1px solid green;
     padding: 4px;
     font-size: 16px;
-    color: white;
 `;
 
 const Row = ({account}) => {

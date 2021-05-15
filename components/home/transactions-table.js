@@ -15,7 +15,7 @@ const StyledTableHeader = styled.td`
 const StyledTable = styled.table`
     border: 2px solid black;
     border-radius: 10px;
-    margin: 0 10px;
+    margin: auto;
     border-collapse: collapse;
     overflow-x: scroll;
     display: block;

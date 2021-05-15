@@ -34,6 +34,10 @@ const StyledForm = styled(Form)`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
 `;
 
 const StyledFieldContainer = styled.div`
@@ -43,7 +47,11 @@ const StyledFieldContainer = styled.div`
 `;
 
 const StyledFieldsGroupContainer = styled.div`
-    display: flex;
+    display: block;
+
+    @media (min-width: 576px) {
+        display: flex;
+    }
 `;
 
 const StyledButtonsContainer = styled.div`
