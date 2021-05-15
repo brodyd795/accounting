@@ -22,7 +22,8 @@ const StyledTable = styled.table`
     max-width: fit-content;
     white-space: nowrap;
 
-    th, td {
+    th,
+    td {
         border: 1px solid black;
         padding: 8px;
     }

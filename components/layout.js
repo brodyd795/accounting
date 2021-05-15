@@ -15,7 +15,7 @@ const StyledHeader = styled.div`
     display: flex;
     flex: 1;
     justify-content: space-between;
-    
+
     h1 {
         margin: 0;
     }
@@ -41,11 +41,7 @@ const Header = () => {
         <StyledHeader>
             <StyledH1>{'Accounting'}</StyledH1>
             <StyledDemoButton>
-                <label
-                    htmlFor={'demo'}
-                >
-                    {'Demo'}
-                </label>
+                <label htmlFor={'demo'}>{'Demo'}</label>
                 <StyledInput
                     id={'demo'}
                     name={'demo'}
@@ -55,16 +51,14 @@ const Header = () => {
                 />
             </StyledDemoButton>
         </StyledHeader>
-    )
-}
+    );
+};
 
 export const Layout = ({children}) => (
     <StyledLayout>
         <DemoProvider>
             <Header />
-            <main>
-                {children}
-            </main>
+            <main>{children}</main>
         </DemoProvider>
     </StyledLayout>
 );

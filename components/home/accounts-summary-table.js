@@ -11,7 +11,7 @@ import {formatBalanceForUI} from '../../utils/balance-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
-import { StyledH2 } from './headers';
+import {StyledH2} from './headers';
 
 const StyledTable = styled.table`
     table-layout: fixed;
@@ -22,7 +22,8 @@ const StyledTable = styled.table`
     display: block;
     max-width: fit-content;
 
-    th, td {
+    th,
+    td {
         border: 1px solid black;
         padding: 8px;
     }
@@ -74,7 +75,9 @@ const Row = ({account}) => {
         <tr>
             <td>{category}</td>
             <td>{name}</td>
-            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>{balance}</BlurrableTd>
+            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>
+                {balance}
+            </BlurrableTd>
         </tr>
     );
 };

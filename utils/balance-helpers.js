@@ -1,4 +1,4 @@
-import {transactionCategories} from "../enums/transaction-categories";
+import {transactionCategories} from '../enums/transaction-categories';
 
 export const formatBalanceForUI = (account) => {
     const {balance, category} = account;
@@ -10,9 +10,9 @@ export const formatBalanceForUI = (account) => {
     if (balance < 0 && (category === INCOME || category === DEBTS)) {
         balanceWithCorrectSign = balanceWithCorrectSign * -1;
     }
-    
+
     if (
-        ((category === INCOME || category === DEBTS) && balance > 0) || 
+        ((category === INCOME || category === DEBTS) && balance > 0) ||
         ((category === EXPENSES || category === ASSETS) && balance < 0)
     ) {
         isNegative = true;

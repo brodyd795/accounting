@@ -11,5 +11,5 @@ export const BlurrableTd = styled.td`
         return 'black';
     }};
 
-    text-shadow: ${({isDemo}) => isDemo ? '0 0 8px #000' : ''};
+    text-shadow: ${({isDemo}) => (isDemo ? '0 0 8px #000' : '')};
 `;

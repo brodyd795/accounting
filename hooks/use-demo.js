@@ -10,21 +10,15 @@ export const DemoProvider = ({children}) => {
         setIsDemo
     };
 
-    return (
-        <DemoContext.Provider
-            value={value}
-        >
-            {children}
-        </DemoContext.Provider>
-    )
-}
+    return <DemoContext.Provider value={value}>{children}</DemoContext.Provider>;
+};
 
 export const useDemo = () => {
-    const context = useContext(DemoContext)
-    
+    const context = useContext(DemoContext);
+
     if (context === undefined) {
-        throw new Error('useDemo must be used within a DemoProvider')
+        throw new Error('useDemo must be used within a DemoProvider');
     }
 
-    return context
+    return context;
 };

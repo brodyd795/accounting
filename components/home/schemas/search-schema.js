@@ -18,7 +18,10 @@ export const searchSchema = yup.object().shape({
             'To and From accounts must be different',
             // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
             function () {
-                if (this.parent.toAccountObject.accountId === undefined || this.parent.fromAccountObject.accountId === undefined) {
+                if (
+                    this.parent.toAccountObject.accountId === undefined ||
+                    this.parent.fromAccountObject.accountId === undefined
+                ) {
                     return true;
                 }
 
@@ -38,7 +41,10 @@ export const searchSchema = yup.object().shape({
             'To and From accounts must be different',
             // eslint-disable-next-line get-off-my-lawn/prefer-arrow-functions
             function () {
-                if (this.parent.toAccountObject.accountId === undefined || this.parent.fromAccountObject.accountId === undefined) {
+                if (
+                    this.parent.toAccountObject.accountId === undefined ||
+                    this.parent.fromAccountObject.accountId === undefined
+                ) {
                     return true;
                 }
 

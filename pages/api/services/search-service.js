@@ -12,10 +12,10 @@ const search = async ({input}) => {
         toAccount: toAccount !== undefined ? toAccount : '[0-9]',
         toAmount: toAmount !== undefined ? toAmount : 9999999,
         toDate: toDate !== undefined ? toDate : '3000-01-01' // and this one
-    }
-    console.log(`inputWithDefaultValues`, inputWithDefaultValues)
+    };
+    console.log(`inputWithDefaultValues`, inputWithDefaultValues);
     const data = await searchRepository(inputWithDefaultValues);
-    console.log(`data`, data)
+    console.log(`data`, data);
 
     return data;
 };
