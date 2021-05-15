@@ -1,7 +1,7 @@
 export const transactionCategories = {
-    INCOME: 'Income',
-    EXPENSES: 'Expenses',
-    DEBTS: 'Debts',
     ASSETS: 'Assets',
+    DEBTS: 'Debts',
+    EXPENSES: 'Expenses',
+    INCOME: 'Income',
     VIRTUAL_SAVINGS: 'Virtual Savings'
 };

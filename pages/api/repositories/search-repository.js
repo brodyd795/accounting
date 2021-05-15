@@ -1,14 +1,6 @@
 import {conn} from './transaction-wrapper-repository';
 
-export const searchRepository = ({
-    comment,
-    fromAccount,
-    fromAmount,
-    fromDate,
-    toAccount,
-    toAmount,
-    toDate
-}) =>
+export const searchRepository = ({comment, fromAccount, fromAmount, fromDate, toAccount, toAmount, toDate}) =>
     conn().query(
         `
             SELECT
@@ -51,13 +43,5 @@ export const searchRepository = ({
                 date
             DESC
 		`,
-        [
-            comment,
-            fromAccount,
-            fromAmount,
-            fromDate,
-            toAccount,
-            toAmount,
-            toDate
-        ]
+        [comment, fromAccount, fromAmount, fromDate, toAccount, toAmount, toDate]
     );

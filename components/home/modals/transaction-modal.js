@@ -5,6 +5,7 @@ import Select from 'react-select';
 
 import DatePickerField from '../form-fields/date-selector';
 import AmountSelector from '../form-fields/amount-selector';
+import CommentSelector from '../form-fields/comment-selector';
 import {validationSchema} from '../schemas/transaction-validation-schema';
 
 import {Modal} from './modal';
@@ -93,7 +94,7 @@ export const TransactionModal = ({
                     </StyledFieldContainer>
                     <StyledFieldContainer>
                         <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
-                        <Field name={'comment'} type={'text'} />
+                        <Field component={CommentSelector} name={'comment'} />
                         <ErrorMessage name={'comment'} />
                     </StyledFieldContainer>
                     <StyledButtonsContainer>

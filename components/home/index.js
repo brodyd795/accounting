@@ -9,19 +9,13 @@ import {Search} from './search';
 const StyledContainer = styled.div`
     flex: 1;
     margin: 0 auto;
-    max-width: 768px;
+    padding-bottom: 10px;
+    max-width: 1000px;
     width: 100%;
-`;
-
-const StyledHeader = styled.div`
-    text-align: center;
 `;
 
 export const Home = () => (
     <StyledContainer>
-        <StyledHeader>
-            <h1>{'Accounting'}</h1>
-        </StyledHeader>
         <AccountsSummaryTable />
         <UnseenTransactionsTable />
         <Search />

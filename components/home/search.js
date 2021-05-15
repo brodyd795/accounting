@@ -11,6 +11,7 @@ import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
 import {TransactionsTable} from './transactions-table';
+import {StyledH2} from './headers';
 
 const StyledSearchContainer = styled.div`
     display: flex;
@@ -31,12 +32,26 @@ const StyledLabel = styled.label`
 
 const StyledForm = styled(Form)`
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
 `;
 
 const StyledFieldContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+    align-items: center;
+    margin: 10px 10px 0;
+`;
+
+const StyledFieldsGroupContainer = styled.div`
+    display: block;
+
+    @media (min-width: 576px) {
+        display: flex;
+    }
 `;
 
 const StyledButtonsContainer = styled.div`
@@ -51,34 +66,26 @@ const StyledButton = styled.button`
 `;
 
 const initialValues = {
-    fromAmount: 0,
-    toAmount: 0,
     comment: undefined,
-    toDate: undefined,
-    fromDate: undefined,
     fromAccountObject: undefined,
-    toAccountObject: undefined
+    fromAmount: 0,
+    fromDate: undefined,
+    toAccountObject: undefined,
+    toAmount: 0,
+    toDate: undefined
 };
 
 export const Search = () => {
-    const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
+    const {data: accounts} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchError, setSearchError] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
 
     const handleSubmit = async (values) => {
-        const {
-            comment,
-            fromAccountObject,
-            toAccountObject,
-            fromDate,
-            toDate,
-            fromAmount,
-            toAmount
-        } = values;
+        const {comment, fromAccountObject, toAccountObject, fromDate, toDate, fromAmount, toAmount} = values;
 
         setSearchLoading(true);
-        
+
         const res = await fetch(`/api/controllers/transactions/search-controller`, {
             body: JSON.stringify({
                 input: {
@@ -110,23 +117,25 @@ export const Search = () => {
 
     return (
         <StyledSearchContainer>
-            <h2>{'Searchb'}</h2>
+            <StyledH2>{'Search'}</StyledH2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={searchSchema}>
-                {({setFieldValue, values}) =>
-                    (
-                        <StyledForm>
+                {({setFieldValue, values}) => (
+                    <StyledForm>
+                        <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromDate'}>{'From Date'}</StyledLabel>
+                                <StyledLabel htmlFor={'fromDate'}>{'From Date:'}</StyledLabel>
                                 <DatePickerField name={'fromDate'} type={'text'} />
                                 <ErrorMessage name={'fromDate'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toDate'}>{'To Date'}</StyledLabel>
+                                <StyledLabel htmlFor={'toDate'}>{'To Date:'}</StyledLabel>
                                 <DatePickerField name={'toDate'} type={'text'} />
                                 <ErrorMessage name={'toDate'} />
                             </StyledFieldContainer>
+                        </StyledFieldsGroupContainer>
+                        <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAccountObject'}>{'From account'}</StyledLabel>
+                                <StyledLabel htmlFor={'fromAccountObject'}>{'From account:'}</StyledLabel>
                                 <StyledSelect
                                     id={'fromAccountObject'}
                                     name={'fromAccountObject'}
@@ -137,7 +146,7 @@ export const Search = () => {
                                 <ErrorMessage name="fromAccountObject" />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAccountObject'}>{'To account'}</StyledLabel>
+                                <StyledLabel htmlFor={'toAccountObject'}>{'To account:'}</StyledLabel>
                                 <StyledSelect
                                     id={'toAccountObject'}
                                     name={'toAccountObject'}
@@ -147,37 +156,39 @@ export const Search = () => {
                                 />
                                 <ErrorMessage name="toAccount" />
                             </StyledFieldContainer>
+                        </StyledFieldsGroupContainer>
+                        <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAmount'}>{'From Amount'}</StyledLabel>
+                                <StyledLabel htmlFor={'fromAmount'}>{'From Amount:'}</StyledLabel>
                                 <Field component={AmountSelector} name={'fromAmount'} />
                                 <ErrorMessage name={'fromAmount'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAmount'}>{'To Amount'}</StyledLabel>
+                                <StyledLabel htmlFor={'toAmount'}>{'To Amount:'}</StyledLabel>
                                 <Field component={AmountSelector} name={'toAmount'} />
                                 <ErrorMessage name={'toAmount'} />
                             </StyledFieldContainer>
-                            <StyledFieldContainer>
-                                <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
-                                <Field name={'comment'} type={'text'} />
-                                <ErrorMessage name={'comment'} />
-                            </StyledFieldContainer>
-                            <StyledButtonsContainer>
-                                <StyledButton type={'submit'}>{'Update'}</StyledButton>
-                            </StyledButtonsContainer>
-                            {searchError ? <div>{'Error!'}</div> : null}
-                            {searchLoading ? <div>{'Loading...'}</div> : null}
-                        </StyledForm>
-                    )
-                }
+                        </StyledFieldsGroupContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'comment'}>{'Description:'}</StyledLabel>
+                            <Field name={'comment'} type={'text'} />
+                            <ErrorMessage name={'comment'} />
+                        </StyledFieldContainer>
+                        <StyledButtonsContainer>
+                            <StyledButton type={'submit'}>{'Submit'}</StyledButton>
+                        </StyledButtonsContainer>
+                        {searchError ? <div>{'Error!'}</div> : null}
+                        {searchLoading ? <div>{'Loading...'}</div> : null}
+                    </StyledForm>
+                )}
             </Formik>
-            {searchResults ?
+            {searchResults ? (
                 <TransactionsTable
                     data={searchResults}
                     header={'Search Results'}
                     noResultsText={'No results for this search'}
                 />
-                : null}
+            ) : null}
         </StyledSearchContainer>
-    )
+    );
 };

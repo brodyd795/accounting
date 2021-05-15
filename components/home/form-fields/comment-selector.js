@@ -1,18 +1,25 @@
 import React from 'react';
 
+import {useDemo} from '../../../hooks/use-demo';
+
+import {BlurrableInput} from './styles';
+
 const CommentSelector = (props) => {
-    const {setEditedRow, value} = props;
+    const {field, form} = props;
+    const {name} = field;
+    const {setFieldValue} = form;
+    const {isDemo} = useDemo();
 
-    const handleCommentEdit = (e) => {
-        const comment = e.target.value;
-
-        setEditedRow((editedRow) => ({
-            ...editedRow,
-            comment
-        }));
-    };
-
-    return <input onChange={handleCommentEdit} placeholder={'Enter description...'} required value={value} />;
+    return (
+        <BlurrableInput
+            isDemo={isDemo}
+            {...field}
+            {...props}
+            onValueChange={(val) => setFieldValue(name, val)}
+            placeholder={'Enter description...'}
+            required
+        />
+    );
 };
 
 export default CommentSelector;

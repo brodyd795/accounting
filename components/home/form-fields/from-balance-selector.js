@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {StyledNumberFormat} from '../styles';
+import {StyledNumberFormat} from './styles';
 
 const FromBalanceSelector = (props) => {
     const {setEditedRow, value} = props;
