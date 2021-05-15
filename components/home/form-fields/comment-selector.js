@@ -6,17 +6,18 @@ import {BlurrableInput} from './styles';
 
 const CommentSelector = (props) => {
     const {field, form} = props;
-    const {value, name} = field;
+    const {name} = field;
     const {setFieldValue} = form;
     const {isDemo} = useDemo();
 
     return (
         <BlurrableInput
             isDemo={isDemo}
+            {...field}
+            {...props}
             onValueChange={(val) => setFieldValue(name, val)}
             placeholder={'Enter description...'}
             required
-            value={value}
         />
     );
 };
