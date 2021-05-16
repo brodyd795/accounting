@@ -19,7 +19,7 @@ const StyledButton = styled.button`
     margin: 0 4px;
 `;
 
-export const TransactionRow = ({transaction}) => {
+export const TransactionRow = ({transaction, hideSeenTransactions}) => {
     const {
         transactionId,
         date: dateString,
@@ -34,7 +34,7 @@ export const TransactionRow = ({transaction}) => {
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const date = new Date(dateString);
 
-    if (hasBeenSeen) {
+    if (hasBeenSeen && hideSeenTransactions) {
         return null;
     }
 

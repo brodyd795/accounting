@@ -16,5 +16,12 @@ export const UnseenTransactionsTable = () => {
         return <div>{'Loading transactions...'}</div>;
     }
 
-    return <TransactionsTable data={data} header={'Unseen Transactions'} noResultsText={"You're all caught up!"} />;
+    return (
+        <TransactionsTable
+            data={data}
+            header={'Unseen Transactions'}
+            hideSeenTransactions
+            noResultsText={'You\'re all caught up!'}
+        />
+    );
 };
