@@ -29,7 +29,7 @@ const StyledTable = styled.table`
     }
 `;
 
-export const TransactionsTable = ({data, noResultsText, header}) => (
+export const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
     <StyledUnseenTransactionsContainer>
         <StyledH2>{header}</StyledH2>
         {data.length ? (
@@ -46,7 +46,7 @@ export const TransactionsTable = ({data, noResultsText, header}) => (
                 </thead>
                 <tbody>
                     {data.map((transaction) => (
-                        <TransactionRow key={transaction.transactionId} transaction={transaction} />
+                        <TransactionRow hideSeenTransactions={hideSeenTransactions} key={transaction.transactionId} transaction={transaction} />
                     ))}
                 </tbody>
             </StyledTable>
