@@ -1,5 +1,6 @@
 // Use the SentryWebpack plugin to upload the source maps during build step
 const SentryWebpackPlugin = require('@sentry/webpack-plugin');
+const withPWA = require('next-pwa');
 
 const {
     NEXT_PUBLIC_SENTRY_DSN: SENTRY_DSN,
@@ -13,7 +14,7 @@ const {
 process.env.SENTRY_DSN = SENTRY_DSN;
 const basePath = '';
 
-module.exports = {
+module.exports = withPWA({
     basePath,
     env: {
         // Make the COMMIT_SHA available to the client so that Sentry events can be
@@ -22,6 +23,9 @@ module.exports = {
         NEXT_PUBLIC_COMMIT_SHA: VERCEL_GIT_COMMIT_SHA
     },
     productionBrowserSourceMaps: true,
+    pwa: {
+        dest: 'public'
+    },
     webpack: (config, options) => {
         // In `pages/_app.js`, Sentry is imported from @sentry/browser. While
         // @sentry/node will run in a Node.js environment. @sentry/node will use
@@ -76,4 +80,4 @@ module.exports = {
 
         return config;
     }
-};
+});
