@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import {DemoProvider, useDemo} from '../hooks/use-demo';
 
+import {WebPushSubscription} from './header/web-push-subscription';
+
 const StyledLayout = styled.div`
     height: 100%;
     width: 100%;
@@ -50,6 +52,7 @@ const Header = () => {
                     value={'demo'}
                 />
             </StyledDemoButton>
+            <WebPushSubscription />
         </StyledHeader>
     );
 };
