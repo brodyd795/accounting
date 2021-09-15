@@ -65,12 +65,11 @@ export const WebPushSubscription = () => {
     };
 
     const handleClick = async () => {
-        setIsSubscribed(!isSubscribed);
-
         if (isSubscribed) {
             await subscription.unsubscribe();
 
             setSubscription(null);
+            setIsSubscribed(false);
         } else {
             const sub = await registration.pushManager.subscribe({
                 applicationServerKey: base64ToUint8Array(process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY),
@@ -78,13 +77,14 @@ export const WebPushSubscription = () => {
             });
 
             setSubscription(sub);
+            setIsSubscribed(true);
         }
     };
 
     return (
         <>
             <StyledSubscribeButton>
-                <label htmlFor={'subscribed'}>{'Subscribed'}</label>
+                <label htmlFor={'subscribed'}>{'Subscribe'}</label>
                 <StyledInput
                     id={'subscribed'}
                     name={'subscribed'}
