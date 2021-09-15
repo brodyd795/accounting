@@ -34,7 +34,6 @@ export const WebPushSubscription = () => {
             navigator.serviceWorker.ready.then((reg) => {
                 reg.pushManager.getSubscription().then(async (sub) => {
                     if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
-                        console.log(`sub`, sub);
                         setSubscription(sub);
                         setIsSubscribed(true);
                     }
@@ -101,6 +100,7 @@ export const WebPushSubscription = () => {
             <StyledSubscribeButton>
                 <label htmlFor={'subscribed'}>{'Subscribe'}</label>
                 <StyledInput
+                    checked={isSubscribed}
                     id={'subscribed'}
                     name={'subscribed'}
                     onClick={handleClick}
@@ -109,7 +109,7 @@ export const WebPushSubscription = () => {
                 />
             </StyledSubscribeButton>
             <button disabled={!isSubscribed} onClick={sendNotificationButtonOnClick} type="button">
-                Send Notification
+                delete me
             </button>
         </>
     );
