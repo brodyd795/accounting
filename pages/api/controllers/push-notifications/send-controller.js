@@ -3,6 +3,7 @@ import * as Sentry from '@sentry/node';
 
 import {init} from '../../../../utils/sentry';
 import {getSubscriptionsService} from '../../services/subscription-service';
+import {unseenTransactionsService} from '../../services/unseen-transactions-service';
 
 init();
 
@@ -14,29 +15,36 @@ webPush.setVapidDetails(
 
 export default async (req, res) => {
     try {
-        const subscriptions = await getSubscriptionsService();
+        const [subscriptions, newTransactions] = await Promise.all([
+            getSubscriptionsService(),
+            unseenTransactionsService()
+        ]);
 
-        const notificationBody = JSON.stringify({
-            message: 'Your web push notification is here!',
-            title: 'Hello Web Push'
-        });
+        if (!newTransactions.length) {
+            res.status(200).json({sent: false});
+        } else {
+            const notificationBody = JSON.stringify({
+                message: `You have ${newTransactions.length} new transactions to review`,
+                title: 'New Transactions'
+            });
 
-        const promises = subscriptions.map(({endpoint, private_key, auth}) => {
-            const formattedSub = {
-                endpoint,
-                keys: {
-                    auth,
-                    // eslint-disable-next-line camelcase
-                    p256dh: private_key
-                }
-            };
+            const promises = subscriptions.map(({endpoint, private_key, auth}) => {
+                const formattedSub = {
+                    endpoint,
+                    keys: {
+                        auth,
+                        // eslint-disable-next-line camelcase
+                        p256dh: private_key
+                    }
+                };
 
-            return webPush.sendNotification(formattedSub, notificationBody);
-        });
+                return webPush.sendNotification(formattedSub, notificationBody);
+            });
 
-        await Promise.all(promises);
+            await Promise.all(promises);
 
-        res.status(200).json({sent: true});
+            res.status(200).json({sent: true});
+        }
     } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
