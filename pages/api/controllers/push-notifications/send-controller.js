@@ -1,7 +1,7 @@
 import webPush from 'web-push';
 import * as Sentry from '@sentry/node';
 
-import {init} from '../../../utils/sentry';
+import {init} from '../../../../utils/sentry';
 
 init();
 
@@ -25,13 +25,9 @@ export default async (req, res) => {
 
         res.writeHead(response.statusCode, response.headers).end(response.body);
     } catch (error) {
-        if ('statusCode' in error) {
-            res.writeHead(error.statusCode, error.headers).end(error.body);
-        } else {
-            console.error(error);
+        console.error(error);
 
-            Sentry.captureException(error);
-            res.status(error.status || 500).end(error.message);
-        }
+        Sentry.captureException(error);
+        res.status(error.status || 500).end(error.message);
     }
 };

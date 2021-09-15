@@ -32,10 +32,21 @@ export const WebPushSubscription = () => {
     useEffect(() => {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator && window.workbox !== undefined) {
             navigator.serviceWorker.ready.then((reg) => {
-                reg.pushManager.getSubscription().then((sub) => {
+                reg.pushManager.getSubscription().then(async (sub) => {
                     if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
+                        console.log(`sub`, sub);
                         setSubscription(sub);
                         setIsSubscribed(true);
+
+                        // await fetch('/api/controllers/push-notifications/subscribe-controller', {
+                        //     body: JSON.stringify({
+                        //         subscription: sub
+                        //     }),
+                        //     headers: {
+                        //         'Content-type': 'application/json'
+                        //     },
+                        //     method: 'POST'
+                        // });
                     }
                 });
                 setRegistration(reg);
@@ -53,7 +64,8 @@ export const WebPushSubscription = () => {
             return;
         }
 
-        await fetch('/api/controllers/push-notification-controller', {
+        // will delete
+        await fetch('/api/controllers/push-notifications/send-controller', {
             body: JSON.stringify({
                 subscription
             }),
@@ -68,12 +80,32 @@ export const WebPushSubscription = () => {
         if (isSubscribed) {
             await subscription.unsubscribe();
 
+            await fetch('/api/controllers/push-notifications/unsubscribe-controller', {
+                body: JSON.stringify({
+                    subscription
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: 'POST'
+            });
+
             setSubscription(null);
             setIsSubscribed(false);
         } else {
             const sub = await registration.pushManager.subscribe({
                 applicationServerKey: base64ToUint8Array(process.env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY),
                 userVisibleOnly: true
+            });
+
+            await fetch('/api/controllers/push-notifications/subscribe-controller', {
+                body: JSON.stringify({
+                    subscription: sub
+                }),
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                method: 'POST'
             });
 
             setSubscription(sub);
