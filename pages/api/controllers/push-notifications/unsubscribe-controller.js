@@ -20,6 +20,7 @@ export default async (req, res) => {
 
         res.status(200).json({deleted: true});
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
 
         Sentry.captureException(error);

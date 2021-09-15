@@ -32,7 +32,7 @@ export const WebPushSubscription = () => {
     useEffect(() => {
         if (typeof window !== 'undefined' && 'serviceWorker' in navigator && window.workbox !== undefined) {
             navigator.serviceWorker.ready.then((reg) => {
-                reg.pushManager.getSubscription().then(async (sub) => {
+                reg.pushManager.getSubscription().then((sub) => {
                     if (sub && !(sub.expirationTime && Date.now() > sub.expirationTime - 5 * 60 * 1000)) {
                         setSubscription(sub);
                         setIsSubscribed(true);

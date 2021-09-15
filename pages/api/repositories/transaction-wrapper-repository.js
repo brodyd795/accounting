@@ -41,7 +41,9 @@ export const withTransactionWrapper = async (queries, props) => {
             return results;
         } catch (error) {
             await conn().query('ROLLBACK');
-            console.log('Error in transaction', error);
+
+            // eslint-disable-next-line no-console
+            console.error(error);
 
             throw error;
         } finally {

@@ -1,3 +1,5 @@
+// eslint-disable-next-line eslint-comments/disable-enable-pair
+/* eslint-disable camelcase */
 import React from 'react';
 
 import {StyledNumberFormat} from './styles';

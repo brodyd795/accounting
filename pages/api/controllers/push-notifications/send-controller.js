@@ -26,6 +26,7 @@ export default async (req, res) => {
                 endpoint,
                 keys: {
                     auth,
+                    // eslint-disable-next-line camelcase
                     p256dh: private_key
                 }
             };
@@ -37,6 +38,7 @@ export default async (req, res) => {
 
         res.status(200).json({sent: true});
     } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
 
         Sentry.captureException(error);
