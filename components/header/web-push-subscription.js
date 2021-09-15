@@ -53,7 +53,7 @@ export const WebPushSubscription = () => {
             return;
         }
 
-        await fetch('/api/notification', {
+        await fetch('/api/controllers/push-notification-controller', {
             body: JSON.stringify({
                 subscription
             }),

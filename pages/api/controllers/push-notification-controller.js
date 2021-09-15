@@ -1,7 +1,7 @@
 import webPush from 'web-push';
 import * as Sentry from '@sentry/node';
 
-import {init} from '../../utils/sentry';
+import {init} from '../../../utils/sentry';
 
 init();
 
