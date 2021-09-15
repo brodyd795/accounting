@@ -15,7 +15,6 @@ webPush.setVapidDetails(
 export default async (req, res) => {
     try {
         const {subscription} = req.body;
-        console.log(`new subscription`, subscription);
 
         await subscribeService({subscription});
 
