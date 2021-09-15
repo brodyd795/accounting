@@ -37,16 +37,6 @@ export const WebPushSubscription = () => {
                         console.log(`sub`, sub);
                         setSubscription(sub);
                         setIsSubscribed(true);
-
-                        // await fetch('/api/controllers/push-notifications/subscribe-controller', {
-                        //     body: JSON.stringify({
-                        //         subscription: sub
-                        //     }),
-                        //     headers: {
-                        //         'Content-type': 'application/json'
-                        //     },
-                        //     method: 'POST'
-                        // });
                     }
                 });
                 setRegistration(reg);
@@ -54,17 +44,10 @@ export const WebPushSubscription = () => {
         }
     }, []);
 
+    // delete this whole thing eventually
     const sendNotificationButtonOnClick = async (event) => {
         event.preventDefault();
 
-        // eslint-disable-next-line no-eq-null
-        if (subscription == null) {
-            console.error('web push not subscribed');
-
-            return;
-        }
-
-        // will delete
         await fetch('/api/controllers/push-notifications/send-controller', {
             body: JSON.stringify({
                 subscription
