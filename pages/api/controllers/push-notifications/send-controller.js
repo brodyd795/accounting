@@ -2,6 +2,7 @@ import webPush from 'web-push';
 import * as Sentry from '@sentry/node';
 
 import {init} from '../../../../utils/sentry';
+import {getSubscriptionsService} from '../../services/subscription-service';
 
 init();
 
@@ -13,17 +14,28 @@ webPush.setVapidDetails(
 
 export default async (req, res) => {
     try {
-        const {subscription} = req.body;
-        console.log(`subscription`, subscription);
+        const subscriptions = await getSubscriptionsService();
 
         const notificationBody = JSON.stringify({
             message: 'Your web push notification is here!',
             title: 'Hello Web Push'
         });
 
-        const response = await webPush.sendNotification(subscription, notificationBody);
+        const promises = subscriptions.map(({endpoint, private_key, auth}) => {
+            const formattedSub = {
+                endpoint,
+                keys: {
+                    auth,
+                    p256dh: private_key
+                }
+            };
 
-        res.writeHead(response.statusCode, response.headers).end(response.body);
+            return webPush.sendNotification(formattedSub, notificationBody);
+        });
+
+        await Promise.all(promises);
+
+        res.status(200).json({sent: true});
     } catch (error) {
         console.error(error);
 

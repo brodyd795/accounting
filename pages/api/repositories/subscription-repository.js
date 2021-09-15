@@ -22,3 +22,13 @@ export const unsubscribeRepository = ({keys: {p256dh}}) =>
 		`,
         [p256dh]
     );
+
+export const getSubscriptionsRepository = () =>
+    conn().query(
+        `
+            SELECT
+                *
+            FROM
+                subscriptions
+        `
+    );
