@@ -14,12 +14,10 @@ export default class extends Document {
             <Html dir="ltr" lang="en">
                 <Head>
                     <meta content={APP_NAME} name="application-name" />
-                    <meta content="yes" name="apple-mobile-web-app-capable" />
-                    <meta content="default" name="apple-mobile-web-app-status-bar-style" />
                     <meta content={APP_NAME} name="apple-mobile-web-app-title" />
                     <meta content={APP_DESCRIPTION} name="description" />
-                    <meta content="telephone=no" name="format-detection" />
                     <meta content="yes" name="mobile-web-app-capable" />
+                    <meta content="yes" name="apple-mobile-web-app-capable" />
                     <meta content="#FFFFFF" name="theme-color" />
                     <meta
                         content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
