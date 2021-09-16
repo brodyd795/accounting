@@ -43,21 +43,6 @@ export const WebPushSubscription = () => {
         }
     }, []);
 
-    // delete this whole thing eventually
-    const sendNotificationButtonOnClick = async (event) => {
-        event.preventDefault();
-
-        await fetch('/api/controllers/push-notifications/send-controller', {
-            body: JSON.stringify({
-                subscription
-            }),
-            headers: {
-                'Content-type': 'application/json'
-            },
-            method: 'POST'
-        });
-    };
-
     const handleClick = async () => {
         if (isSubscribed) {
             await subscription.unsubscribe();
@@ -96,21 +81,16 @@ export const WebPushSubscription = () => {
     };
 
     return (
-        <>
-            <StyledSubscribeButton>
-                <label htmlFor={'subscribed'}>{'Subscribe'}</label>
-                <StyledInput
-                    checked={isSubscribed}
-                    id={'subscribed'}
-                    name={'subscribed'}
-                    onClick={handleClick}
-                    type={'checkbox'}
-                    value={'subscribed'}
-                />
-            </StyledSubscribeButton>
-            <button disabled={!isSubscribed} onClick={sendNotificationButtonOnClick} type="button">
-                delete me
-            </button>
-        </>
+        <StyledSubscribeButton>
+            <label htmlFor={'subscribed'}>{'Subscribe'}</label>
+            <StyledInput
+                checked={isSubscribed}
+                id={'subscribed'}
+                name={'subscribed'}
+                onClick={handleClick}
+                type={'checkbox'}
+                value={'subscribed'}
+            />
+        </StyledSubscribeButton>
     );
 };
