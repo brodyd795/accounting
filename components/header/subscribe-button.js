@@ -1,16 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import styled from 'styled-components';
 
 import {base64ToUint8Array} from '../../utils/push-notification-helpers';
 
-const StyledSubscribeButton = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-const StyledInput = styled.input`
-    margin-right: 8px;
-`;
+import {StyledHeaderButton, StyledInput} from './header-styles';
 
 const updateSubscription = async ({isSubscribed, setIsSubscribed, subscription, setSubscription, registration}) => {
     if (isSubscribed) {
@@ -49,7 +41,7 @@ const updateSubscription = async ({isSubscribed, setIsSubscribed, subscription, 
     }
 };
 
-export const WebPushSubscription = () => {
+export const SubscribeButton = () => {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [subscription, setSubscription] = useState(null);
     const [registration, setRegistration] = useState(null);
@@ -79,7 +71,7 @@ export const WebPushSubscription = () => {
     };
 
     return (
-        <StyledSubscribeButton>
+        <StyledHeaderButton>
             <label htmlFor={'subscribed'}>{'Subscribe'}</label>
             <StyledInput
                 checked={isSubscribed}
@@ -89,6 +81,6 @@ export const WebPushSubscription = () => {
                 type={'checkbox'}
                 value={'subscribed'}
             />
-        </StyledSubscribeButton>
+        </StyledHeaderButton>
     );
 };
