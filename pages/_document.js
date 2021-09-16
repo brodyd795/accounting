@@ -19,10 +19,6 @@ export default class extends Document {
                     <meta content="yes" name="mobile-web-app-capable" />
                     <meta content="yes" name="apple-mobile-web-app-capable" />
                     <meta content="#FFFFFF" name="theme-color" />
-                    <meta
-                        content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover"
-                        name="viewport"
-                    />
 
                     <link href="/icons/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
                     <link href="/manifest.json" rel="manifest" />
