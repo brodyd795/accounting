@@ -77,7 +77,7 @@ export const SubscribeButton = () => {
                 checked={isSubscribed}
                 id={'subscribed'}
                 name={'subscribed'}
-                onClick={handleClick}
+                onChange={handleClick}
                 type={'checkbox'}
                 value={'subscribed'}
             />
