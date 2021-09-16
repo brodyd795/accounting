@@ -3,6 +3,7 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable no-restricted-globals */
 
+// credit: based on https://github.com/shadowwalker/next-pwa/blob/master/examples/web-push/worker/index.js
 self.addEventListener('push', (event) => {
     const data = JSON.parse(event.data.text());
 
