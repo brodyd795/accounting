@@ -3,6 +3,9 @@ import styled from 'styled-components';
 
 import {DemoProvider, useDemo} from '../hooks/use-demo';
 
+import {DemoButton} from './header/demo-button';
+import {SubscribeButton} from './header/subscribe-button';
+
 const StyledLayout = styled.div`
     height: 100%;
     width: 100%;
@@ -25,13 +28,8 @@ const StyledH1 = styled.h1`
     padding-left: 8px;
 `;
 
-const StyledDemoButton = styled.div`
+const StyledButtons = styled.div`
     display: flex;
-    align-items: center;
-`;
-
-const StyledInput = styled.input`
-    margin-right: 8px;
 `;
 
 const Header = () => {
@@ -40,16 +38,10 @@ const Header = () => {
     return (
         <StyledHeader>
             <StyledH1>{'Accounting'}</StyledH1>
-            <StyledDemoButton>
-                <label htmlFor={'demo'}>{'Demo'}</label>
-                <StyledInput
-                    id={'demo'}
-                    name={'demo'}
-                    onClick={() => setIsDemo(!isDemo)}
-                    type={'checkbox'}
-                    value={'demo'}
-                />
-            </StyledDemoButton>
+            <StyledButtons>
+                <DemoButton isDemo={isDemo} setIsDemo={setIsDemo} />
+                <SubscribeButton />
+            </StyledButtons>
         </StyledHeader>
     );
 };

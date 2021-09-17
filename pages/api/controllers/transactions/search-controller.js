@@ -21,7 +21,8 @@ export default withApiAuthRequired(async (req, res) => {
 
         res.json(data);
     } catch (error) {
-        console.log(`error`, error);
+        // eslint-disable-next-line no-console
+        console.error(error);
 
         Sentry.captureException(error);
         res.status(error.status || 500).end(error.message);

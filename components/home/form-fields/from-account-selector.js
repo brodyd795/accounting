@@ -12,6 +12,7 @@ const FromAccountSelector = (props) => {
         } else {
             setEditedRow({
                 ...editedRow,
+                // eslint-disable-next-line camelcase
                 from_account: e
             });
         }
