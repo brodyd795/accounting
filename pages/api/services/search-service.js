@@ -1,7 +1,7 @@
 import {withTransactionWrapper} from '../repositories/transaction-wrapper-repository';
 import {searchRepository} from '../repositories/search-repository';
 
-const search = async ({input}) => {
+const search = ({input}) => {
     const {comment, fromAccount, fromAmount, fromDate, toAccount, toAmount, toDate} = input;
 
     const inputWithDefaultValues = {

@@ -13,3 +13,8 @@
 
 # vercel
 .vercel
+
+# service worker
+/public/sw.js*
+/public/workbox*
+/public/worker*

@@ -1,0 +1,12 @@
+name: send-push-notifications
+on:
+    schedule:
+        - cron: '*/5 * * * *'
+jobs:
+    cron:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Send push notifications
+              run: |
+                  curl --request POST \
+                  --url 'https://accounting.dingel.dev/api/controllers/push-notifications/send-controller'
