@@ -20,7 +20,7 @@ export default async (req, res) => {
             unseenTransactionsService()
         ]);
 
-        if (!newTransactions.length) {
+        if (!newTransactions.length || !subscriptions.length) {
             res.status(200).json({sent: false});
         } else {
             const notificationBody = JSON.stringify({
@@ -29,7 +29,7 @@ export default async (req, res) => {
             });
 
             const promises = subscriptions.map(({endpoint, private_key, auth}) => {
-                const formattedSub = {
+                const formattedSubscription = {
                     endpoint,
                     keys: {
                         auth,
@@ -38,7 +38,7 @@ export default async (req, res) => {
                     }
                 };
 
-                return webPush.sendNotification(formattedSub, notificationBody);
+                return webPush.sendNotification(formattedSubscription, notificationBody);
             });
 
             await Promise.all(promises);
