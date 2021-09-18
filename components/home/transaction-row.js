@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {useDemo} from '../../hooks/use-demo';
 import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
+import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
@@ -97,7 +98,7 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             <td>{date.toDateString()}</td>
             <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
             <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
-            <BlurrableTd isDemo={isDemo}>{cleanAmount}</BlurrableTd>
+            <BlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</BlurrableTd>
             <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
             <BorderlessTd>
                 <StyledButton onClick={markTransactionAsSeen} type={'button'}>
