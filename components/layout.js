@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import {DemoProvider, useDemo} from '../hooks/use-demo';
 
 import {DemoButton} from './header/demo-button';
 import {SubscribeButton} from './header/subscribe-button';
+import {Modal} from './home/modals/modal';
 
 const StyledLayout = styled.div`
     height: 100%;
@@ -30,18 +31,31 @@ const StyledH1 = styled.h1`
 
 const StyledButtons = styled.div`
     display: flex;
+    flex-direction: column;
 `;
 
 const Header = () => {
     const {isDemo, setIsDemo} = useDemo();
+    const [showSettingsButtons, setShowSettingsButtons] = useState(false);
 
     return (
         <StyledHeader>
             <StyledH1>{'Accounting'}</StyledH1>
-            <StyledButtons>
-                <DemoButton isDemo={isDemo} setIsDemo={setIsDemo} />
-                <SubscribeButton />
-            </StyledButtons>
+            <button onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
+                {'Settings'}
+            </button>
+            {showSettingsButtons && (
+                <Modal
+                    isOpen={showSettingsButtons}
+                    onRequestClose={() => setShowSettingsButtons(!showSettingsButtons)}
+                    title={'Settings'}
+                >
+                    <StyledButtons>
+                        <DemoButton isDemo={isDemo} setIsDemo={setIsDemo} />
+                        <SubscribeButton />
+                    </StyledButtons>
+                </Modal>
+            )}
         </StyledHeader>
     );
 };
