@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import useSWR from 'swr';
 
+import {useDemo} from '../../../hooks/use-demo';
 import fetcher from '../../../lib/fetch';
+import {getRandomDollarAmount} from '../../../utils/demo-helpers';
 
 import {TransactionModal} from './transaction-modal';
 
@@ -9,6 +11,7 @@ export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, trans
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [updateStatusMessage, setUpdateStatusMessage] = useState('');
     const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
+    const {isDemo} = useDemo();
 
     if (error) {
         return 'Error!';
@@ -70,7 +73,7 @@ export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, trans
             accounts={accounts}
             handleSubmit={handleSubmit}
             initialValues={{
-                amount: amount / 100,
+                amount: isDemo ? getRandomDollarAmount() : amount / 100,
                 comment,
                 date: new Date(date),
                 fromAccountName: fromAccountOption,

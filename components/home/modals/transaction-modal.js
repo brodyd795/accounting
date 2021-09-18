@@ -7,6 +7,7 @@ import DatePickerField from '../form-fields/date-selector';
 import AmountSelector from '../form-fields/amount-selector';
 import CommentSelector from '../form-fields/comment-selector';
 import {validationSchema} from '../schemas/transaction-validation-schema';
+import {useDemo} from '../../../hooks/use-demo';
 
 import {Modal} from './modal';
 
@@ -50,62 +51,68 @@ export const TransactionModal = ({
     initialValues,
     updateStatusMessage,
     title
-}) => (
-    <Modal
-        isOpen={shouldShowModal}
-        onRequestClose={() => setShouldShowModal(false)}
-        setShouldShowModal={setShouldShowModal}
-        title={title}
-    >
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
-            {({setFieldValue, values}) => (
-                <StyledForm>
-                    <StyledFieldContainer>
-                        <StyledLabel htmlFor={'date'}>{'Date'}</StyledLabel>
-                        <DatePickerField name={'date'} type={'text'} />
-                        <ErrorMessage name={'date'} />
-                    </StyledFieldContainer>
-                    <StyledFieldContainer>
-                        <StyledLabel htmlFor={'fromAccountName'}>{'From account name'}</StyledLabel>
-                        <StyledSelect
-                            id={'fromAccountName'}
-                            name={'fromAccountName'}
-                            onChange={(option) => setFieldValue('fromAccountName', option)}
-                            options={accounts}
-                            value={values.fromAccountName}
-                        />
-                        <ErrorMessage name="fromAccountName" />
-                    </StyledFieldContainer>
-                    <StyledFieldContainer>
-                        <StyledLabel htmlFor={'toAccountName'}>{'To account name'}</StyledLabel>
-                        <StyledSelect
-                            id={'toAccountName'}
-                            name={'toAccountName'}
-                            onChange={(option) => setFieldValue('toAccountName', option)}
-                            options={accounts}
-                            value={values.toAccountName}
-                        />
-                        <ErrorMessage name="toAccountName" />
-                    </StyledFieldContainer>
-                    <StyledFieldContainer>
-                        <StyledLabel htmlFor={'amount'}>{'Amount'}</StyledLabel>
-                        <Field component={AmountSelector} name={'amount'} showWhileDemo={false} />
-                        <ErrorMessage name={'amount'} />
-                    </StyledFieldContainer>
-                    <StyledFieldContainer>
-                        <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
-                        <Field component={CommentSelector} name={'comment'} />
-                        <ErrorMessage name={'comment'} />
-                    </StyledFieldContainer>
-                    <StyledButtonsContainer>
-                        <StyledButton onClick={() => setShouldShowModal(false)} type={'button'}>
-                            {'Cancel'}
-                        </StyledButton>
-                        <StyledButton type={'submit'}>{'Update'}</StyledButton>
-                    </StyledButtonsContainer>
-                    <div>{updateStatusMessage}</div>
-                </StyledForm>
-            )}
-        </Formik>
-    </Modal>
-);
+}) => {
+    const {isDemo} = useDemo();
+
+    return (
+        <Modal
+            isOpen={shouldShowModal}
+            onRequestClose={() => setShouldShowModal(false)}
+            setShouldShowModal={setShouldShowModal}
+            title={title}
+        >
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+                {({setFieldValue, values}) => (
+                    <StyledForm>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'date'}>{'Date'}</StyledLabel>
+                            <DatePickerField name={'date'} type={'text'} />
+                            <ErrorMessage name={'date'} />
+                        </StyledFieldContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'fromAccountName'}>{'From account name'}</StyledLabel>
+                            <StyledSelect
+                                id={'fromAccountName'}
+                                name={'fromAccountName'}
+                                onChange={(option) => setFieldValue('fromAccountName', option)}
+                                options={accounts}
+                                value={values.fromAccountName}
+                            />
+                            <ErrorMessage name="fromAccountName" />
+                        </StyledFieldContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'toAccountName'}>{'To account name'}</StyledLabel>
+                            <StyledSelect
+                                id={'toAccountName'}
+                                name={'toAccountName'}
+                                onChange={(option) => setFieldValue('toAccountName', option)}
+                                options={accounts}
+                                value={values.toAccountName}
+                            />
+                            <ErrorMessage name="toAccountName" />
+                        </StyledFieldContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'amount'}>{'Amount'}</StyledLabel>
+                            <Field component={AmountSelector} name={'amount'} />
+                            <ErrorMessage name={'amount'} />
+                        </StyledFieldContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
+                            <Field component={CommentSelector} name={'comment'} />
+                            <ErrorMessage name={'comment'} />
+                        </StyledFieldContainer>
+                        <StyledButtonsContainer>
+                            <StyledButton onClick={() => setShouldShowModal(false)} type={'button'}>
+                                {'Cancel'}
+                            </StyledButton>
+                            <StyledButton disabled={isDemo} type={'submit'}>
+                                {'Update'}
+                            </StyledButton>
+                        </StyledButtonsContainer>
+                        <div>{updateStatusMessage}</div>
+                    </StyledForm>
+                )}
+            </Formik>
+        </Modal>
+    );
+};

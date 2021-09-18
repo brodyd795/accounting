@@ -5,7 +5,7 @@ import {useDemo} from '../../../hooks/use-demo';
 import {StyledNumberFormat} from './styles';
 
 const AmountSelector = (props) => {
-    const {field, form, showWhileDemo} = props;
+    const {field, form} = props;
     const {value, name} = field;
     const {setFieldValue} = form;
     const {isDemo} = useDemo();
@@ -19,7 +19,6 @@ const AmountSelector = (props) => {
             name={name}
             onValueChange={(val) => setFieldValue(name, val.floatValue)}
             prefix={'$'}
-            showWhileDemo={showWhileDemo}
             thousandSeparator={','}
             value={value}
         />

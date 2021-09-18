@@ -1,18 +1,12 @@
 import React from 'react';
 
-import {useDemo} from '../../../hooks/use-demo';
-
-import {BlurrableInput} from './styles';
-
 const CommentSelector = (props) => {
     const {field, form} = props;
     const {name} = field;
     const {setFieldValue} = form;
-    const {isDemo} = useDemo();
 
     return (
-        <BlurrableInput
-            isDemo={isDemo}
+        <input
             {...field}
             {...props}
             onValueChange={(val) => setFieldValue(name, val)}
