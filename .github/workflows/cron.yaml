@@ -1,7 +1,7 @@
 name: send-push-notifications
 on:
     schedule:
-        - cron: '0 10,17 * * *'
+        - cron: '0 13,22 * * *' # UTC
 jobs:
     cron:
         runs-on: ubuntu-latest
