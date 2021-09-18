@@ -5,7 +5,7 @@ import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
 const StyledUnseenTransactionsContainer = styled.div`
-    margin-top: 40px;
+    margin: 40px 8px 0;
 `;
 
 const StyledTableHeader = styled.td`
@@ -29,7 +29,7 @@ const StyledTable = styled.table`
     }
 `;
 
-export const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
+const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
     <StyledUnseenTransactionsContainer>
         <StyledH2>{header}</StyledH2>
         {data.length ? (
@@ -46,7 +46,11 @@ export const TransactionsTable = ({data, noResultsText, header, hideSeenTransact
                 </thead>
                 <tbody>
                     {data.map((transaction) => (
-                        <TransactionRow hideSeenTransactions={hideSeenTransactions} key={transaction.transactionId} transaction={transaction} />
+                        <TransactionRow
+                            hideSeenTransactions={hideSeenTransactions}
+                            key={transaction.transactionId}
+                            transaction={transaction}
+                        />
                     ))}
                 </tbody>
             </StyledTable>
@@ -55,3 +59,5 @@ export const TransactionsTable = ({data, noResultsText, header, hideSeenTransact
         )}
     </StyledUnseenTransactionsContainer>
 );
+
+export {TransactionsTable, StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable};
