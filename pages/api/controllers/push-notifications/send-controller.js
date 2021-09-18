@@ -1,11 +1,8 @@
 import webPush from 'web-push';
-import * as Sentry from '@sentry/node';
+import {withSentry, captureException, flush} from '@sentry/nextjs';
 
-import {init} from '../../../../utils/sentry';
 import {getSubscriptionsService} from '../../services/subscription-service';
 import {unseenTransactionsService} from '../../services/unseen-transactions-service';
-
-init();
 
 webPush.setVapidDetails(
     `mailto:${process.env.WEB_PUSH_EMAIL}`,
@@ -13,7 +10,7 @@ webPush.setVapidDetails(
     process.env.WEB_PUSH_PRIVATE_KEY
 );
 
-export default async (req, res) => {
+const handler = async (req, res) => {
     try {
         const [subscriptions, newTransactions] = await Promise.all([
             getSubscriptionsService(),
@@ -49,7 +46,11 @@ export default async (req, res) => {
         // eslint-disable-next-line no-console
         console.error(error);
 
-        Sentry.captureException(error);
+        captureException(error);
+        await flush(2000);
+
         res.status(error.status || 500).end(error.message);
     }
 };
+
+export default withSentry(handler);
