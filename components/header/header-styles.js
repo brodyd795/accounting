@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-export const StyledHeaderButton = styled.div`
-    display: flex;
-    align-items: center;
-`;
-
-export const StyledInput = styled.input`
-    margin-right: 8px;
+export const StyledHeaderButton = styled.button`
+    width: 6rem;
+    margin: 0 4px;
+    border: 1px solid grey;
+    border-radius: 4px;
 `;
