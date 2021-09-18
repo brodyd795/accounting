@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
 const StyledModal = styled(ReactModal)`
-    color: black;
+    color: white;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -12,13 +12,22 @@ const StyledModal = styled(ReactModal)`
     margin-right: -50%;
     transform: translate(-50%, -50%);
     padding: 20px;
-    background-color: white;
+    background-color: #111311;
     width: 300px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
 `;
 
 const StyledModalHeader = styled.div`
     text-align: center;
     position: relative;
+`;
+
+const StyledModalBody = styled.div`
+    flex: 1;
+    align-items: center;
 `;
 
 const StyledModalHeading = styled.span`
@@ -32,6 +41,8 @@ const StyledCloseModalButton = styled.button`
     background-color: transparent;
     border: none;
     margin-top: 5px;
+    color: white;
+    cursor: pointer;
 `;
 
 export const Modal = ({title, onRequestClose, isOpen, children}) => (
@@ -41,7 +52,7 @@ export const Modal = ({title, onRequestClose, isOpen, children}) => (
             <StyledCloseModalButton onClick={onRequestClose} type={'button'}>
                 {'X'}
             </StyledCloseModalButton>
-            {children}
         </StyledModalHeader>
+        <StyledModalBody>{children}</StyledModalBody>
     </StyledModal>
 );

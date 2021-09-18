@@ -34,6 +34,11 @@ const StyledButtons = styled.div`
     flex-direction: column;
 `;
 
+const StyledSettingsButton = styled.button`
+    cursor: pointer;
+    margin-right: 8px;
+`;
+
 const Header = () => {
     const {isDemo, setIsDemo} = useDemo();
     const [showSettingsButtons, setShowSettingsButtons] = useState(false);
@@ -41,9 +46,9 @@ const Header = () => {
     return (
         <StyledHeader>
             <StyledH1>{'Accounting'}</StyledH1>
-            <button onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
+            <StyledSettingsButton onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
                 {'Settings'}
-            </button>
+            </StyledSettingsButton>
             {showSettingsButtons && (
                 <Modal
                     isOpen={showSettingsButtons}
