@@ -68,10 +68,10 @@ const StyledButton = styled.button`
 const initialValues = {
     comment: undefined,
     fromAccountObject: undefined,
-    fromAmount: 0,
+    fromAmount: undefined,
     fromDate: undefined,
     toAccountObject: undefined,
-    toAmount: 0,
+    toAmount: undefined,
     toDate: undefined
 };
 
