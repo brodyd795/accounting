@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import {base64ToUint8Array} from '../../utils/push-notification-helpers';
 
-import {StyledHeaderButton} from './header-styles';
+import {StyledHeaderButton, StyledInput} from './header-styles';
 
 const updateSubscription = async ({isSubscribed, setIsSubscribed, subscription, setSubscription, registration}) => {
     if (isSubscribed) {
@@ -70,5 +70,17 @@ export const SubscribeButton = () => {
         });
     };
 
-    return <StyledHeaderButton onClick={handleClick}>{isSubscribed ? 'Unsubscribe' : 'Subscribe'}</StyledHeaderButton>;
+    return (
+        <StyledHeaderButton>
+            <label htmlFor={'subscribed'}>{'Subscribe'}</label>
+            <StyledInput
+                checked={isSubscribed}
+                id={'subscribed'}
+                name={'subscribed'}
+                onChange={handleClick}
+                type={'checkbox'}
+                value={'subscribed'}
+            />
+        </StyledHeaderButton>
+    );
 };
