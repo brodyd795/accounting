@@ -89,7 +89,7 @@ export const TransactionModal = ({
                     </StyledFieldContainer>
                     <StyledFieldContainer>
                         <StyledLabel htmlFor={'amount'}>{'Amount'}</StyledLabel>
-                        <Field component={AmountSelector} name={'amount'} />
+                        <Field component={AmountSelector} name={'amount'} showWhileDemo={false} />
                         <ErrorMessage name={'amount'} />
                     </StyledFieldContainer>
                     <StyledFieldContainer>

@@ -160,12 +160,12 @@ export const Search = () => {
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
                                 <StyledLabel htmlFor={'fromAmount'}>{'From Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'fromAmount'} />
+                                <Field component={AmountSelector} name={'fromAmount'} showWhileDemo />
                                 <ErrorMessage name={'fromAmount'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
                                 <StyledLabel htmlFor={'toAmount'}>{'To Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'toAmount'} />
+                                <Field component={AmountSelector} name={'toAmount'} showWhileDemo />
                                 <ErrorMessage name={'toAmount'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>

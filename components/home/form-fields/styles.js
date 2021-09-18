@@ -6,8 +6,9 @@ import Select from 'react-select';
 export const StyledNumberFormat = styled(NumberFormat)`
     width: 100px;
 
-    ${({isDemo}) =>
+    ${({isDemo, showWhileDemo}) =>
         isDemo &&
+        !showWhileDemo &&
         `
         color: transparent;
         text-shadow: 0 0 8px #000;
