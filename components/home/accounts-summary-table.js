@@ -65,18 +65,30 @@ const StyledButton = styled.button`
     font-size: 16px;
 `;
 
+const getRandomDollarAmount = () => {
+    const precision = 100;
+    const maxDigits = 5;
+    const minDigits = 1;
+    const randomNumDigits = Math.floor(
+        Math.random() * (Math.floor(maxDigits) - Math.ceil(minDigits)) + Math.ceil(minDigits)
+    );
+
+    return Math.floor(Math.random() * (10 ** randomNumDigits * precision - precision) + 1) / precision;
+};
+
 const Row = ({account}) => {
     const {isDemo} = useDemo();
     const category = cleanAccountNameOrCategoryForUI(account.category);
     const name = cleanAccountNameOrCategoryForUI(account.accountName);
     const {balance, isNegative} = formatBalanceForUI(account);
+    const randomNum = getRandomDollarAmount();
 
     return (
         <tr>
             <td>{category}</td>
             <td>{name}</td>
             <BlurrableTd isDemo={isDemo} isNegative={isNegative}>
-                {balance}
+                {isDemo ? String(randomNum) : balance}
             </BlurrableTd>
         </tr>
     );
