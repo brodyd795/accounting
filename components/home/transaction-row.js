@@ -101,13 +101,13 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             <BlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</BlurrableTd>
             <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
             <BorderlessTd>
-                <StyledButton onClick={markTransactionAsSeen} type={'button'}>
+                <StyledButton disabled={isDemo} onClick={markTransactionAsSeen} type={'button'}>
                     {'Mark as seen'}
                 </StyledButton>
                 <StyledButton onClick={editTransaction} type={'button'}>
                     {'Edit'}
                 </StyledButton>
-                <StyledButton onClick={deleteTransaction} type={'button'}>
+                <StyledButton disabled={isDemo} onClick={deleteTransaction} type={'button'}>
                     {'Delete'}
                 </StyledButton>
             </BorderlessTd>
