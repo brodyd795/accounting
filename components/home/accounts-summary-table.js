@@ -8,6 +8,7 @@ import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
+import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
@@ -64,17 +65,6 @@ const StyledButton = styled.button`
     padding: 4px;
     font-size: 16px;
 `;
-
-const getRandomDollarAmount = () => {
-    const precision = 100;
-    const maxDigits = 5;
-    const minDigits = 1;
-    const randomNumDigits = Math.floor(
-        Math.random() * (Math.floor(maxDigits) - Math.ceil(minDigits)) + Math.ceil(minDigits)
-    );
-
-    return Math.floor(Math.random() * (10 ** randomNumDigits * precision - precision) + 1) / precision;
-};
 
 const Row = ({account}) => {
     const {isDemo} = useDemo();
