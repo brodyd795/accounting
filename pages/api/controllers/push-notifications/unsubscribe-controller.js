@@ -1,10 +1,9 @@
+import {withApiAuthRequired, getSession} from '@auth0/nextjs-auth0';
 import webPush from 'web-push';
-import * as Sentry from '@sentry/node';
+import {withSentry, captureException, flush} from '@sentry/nextjs';
 
-import {init} from '../../../../utils/sentry';
+import {ADMIN_EMAILS} from '../../../../enums/admin-emails';
 import {unsubscribeService} from '../../services/subscription-service';
-
-init();
 
 webPush.setVapidDetails(
     `mailto:${process.env.WEB_PUSH_EMAIL}`,
@@ -12,8 +11,14 @@ webPush.setVapidDetails(
     process.env.WEB_PUSH_PRIVATE_KEY
 );
 
-export default async (req, res) => {
+const handler = async (req, res) => {
     try {
+        const session = getSession(req, res);
+
+        if (!ADMIN_EMAILS.includes(session.user.email)) {
+            throw new Error('Unauthorized.');
+        }
+
         const {subscription} = req.body;
 
         await unsubscribeService({subscription});
@@ -23,7 +28,11 @@ export default async (req, res) => {
         // eslint-disable-next-line no-console
         console.error(error);
 
-        Sentry.captureException(error);
+        captureException(error);
+        await flush(2000);
+
         res.status(error.status || 500).end(error.message);
     }
 };
+
+export default withSentry(withApiAuthRequired(handler));
