@@ -72,7 +72,6 @@ export const SubscribeButton = () => {
 
     return (
         <StyledHeaderButton>
-            <label htmlFor={'subscribed'}>{'Subscribe'}</label>
             <StyledInput
                 checked={isSubscribed}
                 id={'subscribed'}
@@ -81,6 +80,7 @@ export const SubscribeButton = () => {
                 type={'checkbox'}
                 value={'subscribed'}
             />
+            <label htmlFor={'subscribed'}>{'Subscribe'}</label>
         </StyledHeaderButton>
     );
 };
