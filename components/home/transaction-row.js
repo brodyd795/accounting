@@ -4,6 +4,9 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
+import TrashIcon from '../../public/icons/trash-alt-solid.svg';
+import PencilIcon from '../../public/icons/pencil-alt-solid.svg';
+import CheckmarkIcon from '../../public/icons/check-solid.svg';
 import {useDemo} from '../../hooks/use-demo';
 import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
@@ -18,6 +21,14 @@ const BorderlessTd = styled.td`
 
 const StyledButton = styled.button`
     margin: 0 4px;
+
+    svg {
+        display: inline-block;
+        height: 20px;
+        margin-right: 4px;
+        vertical-align: middle;
+        width: 20px;
+    }
 `;
 
 export const TransactionRow = ({transaction, hideSeenTransactions}) => {
@@ -102,13 +113,13 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
             <BorderlessTd>
                 <StyledButton disabled={isDemo} onClick={markTransactionAsSeen} type={'button'}>
-                    {'Mark as seen'}
+                    <CheckmarkIcon />
                 </StyledButton>
                 <StyledButton onClick={editTransaction} type={'button'}>
-                    {'Edit'}
+                    <PencilIcon />
                 </StyledButton>
                 <StyledButton disabled={isDemo} onClick={deleteTransaction} type={'button'}>
-                    {'Delete'}
+                    <TrashIcon />
                 </StyledButton>
             </BorderlessTd>
             {shouldShowModal && (
