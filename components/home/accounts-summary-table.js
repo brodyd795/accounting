@@ -61,6 +61,7 @@ const StyledDatePicker = styled(DatePicker)`
     cursor: pointer;
     padding: 4px;
     font-size: 16px;
+    background-color: #dedede;
 `;
 
 const StyledTopRow = styled.div`
@@ -73,6 +74,8 @@ const StyledButton = styled.button`
     border-radius: 4px;
     padding: 4px;
     font-size: 16px;
+    background-color: #dedede;
+    cursor: pointer;
 `;
 
 const Row = ({account}) => {
