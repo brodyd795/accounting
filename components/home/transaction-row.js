@@ -80,8 +80,6 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
 
         if (res.ok) {
             setHasBeenSeen(true);
-
-            alert('Success!');
         } else {
             alert('Error!');
         }
@@ -106,8 +104,6 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
 
             if (res.ok) {
                 setHasBeenSeen(true);
-
-                alert('Successful delete!');
             } else {
                 alert('Error while deleting...');
             }
