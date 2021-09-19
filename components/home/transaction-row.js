@@ -32,7 +32,7 @@ const StyledButton = styled.button`
         width: 20px;
 
         path {
-            fill: black;
+            fill: ${({hasBeenSeen}) => (hasBeenSeen ? 'grey' : 'black')};
         }
     }
 `;
@@ -118,7 +118,12 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             <BlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</BlurrableTd>
             <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
             <BorderlessTd>
-                <StyledButton disabled={isDemo} onClick={markTransactionAsSeen} type={'button'}>
+                <StyledButton
+                    disabled={isDemo || hasBeenSeen}
+                    hasBeenSeen={hasBeenSeen}
+                    onClick={markTransactionAsSeen}
+                    type={'button'}
+                >
                     <CheckmarkIcon />
                 </StyledButton>
                 <StyledButton onClick={editTransaction} type={'button'}>
