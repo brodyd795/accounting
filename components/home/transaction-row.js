@@ -8,7 +8,7 @@ import TrashIcon from '../../public/icons/trash-alt-solid.svg';
 import PencilIcon from '../../public/icons/pencil-alt-solid.svg';
 import CheckmarkIcon from '../../public/icons/check-solid.svg';
 import {useDemo} from '../../hooks/use-demo';
-import {formatDateForDb} from '../../utils/date-helpers';
+import {formatDateForDb, formatDateForUI} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
@@ -123,7 +123,7 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
 
     return (
         <tr>
-            <StyledTd>{date.toDateString()}</StyledTd>
+            <StyledTd>{formatDateForUI(date)}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(fromAccountName)}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(toAccountName)}</StyledTd>
             <StyledDemoableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledDemoableTd>
