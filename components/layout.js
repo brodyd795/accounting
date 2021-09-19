@@ -39,29 +39,39 @@ const StyledSettingsButton = styled.button`
     margin-right: 8px;
 `;
 
+const StyledDemoBanner = styled.div`
+    text-align: center;
+    background-color: #d0c25c;
+    color: #0e0e02;
+    padding: 4px;
+`;
+
 const Header = () => {
     const {isDemo, setIsDemo} = useDemo();
     const [showSettingsButtons, setShowSettingsButtons] = useState(false);
 
     return (
-        <StyledHeader>
-            <StyledH1>{'Accounting'}</StyledH1>
-            <StyledSettingsButton onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
-                {'Settings'}
-            </StyledSettingsButton>
-            {showSettingsButtons && (
-                <Modal
-                    isOpen={showSettingsButtons}
-                    onRequestClose={() => setShowSettingsButtons(!showSettingsButtons)}
-                    title={'Settings'}
-                >
-                    <StyledButtons>
-                        <DemoButton isDemo={isDemo} setIsDemo={setIsDemo} />
-                        <SubscribeButton />
-                    </StyledButtons>
-                </Modal>
-            )}
-        </StyledHeader>
+        <>
+            <StyledHeader>
+                <StyledH1>{'Accounting'}</StyledH1>
+                <StyledSettingsButton onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
+                    {'Settings'}
+                </StyledSettingsButton>
+                {showSettingsButtons && (
+                    <Modal
+                        isOpen={showSettingsButtons}
+                        onRequestClose={() => setShowSettingsButtons(!showSettingsButtons)}
+                        title={'Settings'}
+                    >
+                        <StyledButtons>
+                            <DemoButton isDemo={isDemo} setIsDemo={setIsDemo} />
+                            <SubscribeButton />
+                        </StyledButtons>
+                    </Modal>
+                )}
+            </StyledHeader>
+            {isDemo && <StyledDemoBanner>{'Demo mode activated!'}</StyledDemoBanner>}
+        </>
     );
 };
 
