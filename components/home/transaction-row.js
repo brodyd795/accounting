@@ -17,6 +17,7 @@ import {TransactionEditModal} from './modals/transaction-edit-modal';
 
 const BorderlessTd = styled.td`
     border: none;
+    border-right: 1px solid black;
 `;
 
 const StyledButton = styled.button`
@@ -35,6 +36,16 @@ const StyledButton = styled.button`
             fill: ${({hasBeenSeen}) => (hasBeenSeen ? 'grey' : 'black')};
         }
     }
+`;
+
+const StyledTd = styled.td`
+    border: 1px solid black;
+    padding: 8px;
+`;
+
+const StyledBlurrableTd = styled(BlurrableTd)`
+    border: 1px solid black;
+    padding: 8px;
 `;
 
 export const TransactionRow = ({transaction, hideSeenTransactions}) => {
@@ -112,11 +123,11 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
 
     return (
         <tr>
-            <td>{date.toDateString()}</td>
-            <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
-            <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
-            <BlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</BlurrableTd>
-            <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
+            <StyledTd>{date.toDateString()}</StyledTd>
+            <StyledTd>{cleanAccountNameOrCategoryForUI(fromAccountName)}</StyledTd>
+            <StyledTd>{cleanAccountNameOrCategoryForUI(toAccountName)}</StyledTd>
+            <StyledBlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledBlurrableTd>
+            <StyledBlurrableTd isDemo={isDemo}>{comment}</StyledBlurrableTd>
             <BorderlessTd>
                 <StyledButton
                     disabled={isDemo || hasBeenSeen}

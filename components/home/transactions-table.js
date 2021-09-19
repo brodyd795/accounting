@@ -9,7 +9,13 @@ const StyledUnseenTransactionsContainer = styled.div`
 `;
 
 const StyledTableHeader = styled.td`
+    border: 1px solid black;
+    padding: 8px;
     font-weight: bold;
+`;
+
+const StyledTableHeaderWithBorderlessBottom = styled(StyledTableHeader)`
+    border-bottom: none;
 `;
 
 const StyledTable = styled.table`
@@ -22,8 +28,7 @@ const StyledTable = styled.table`
     max-width: fit-content;
     white-space: nowrap;
 
-    th,
-    td {
+    th {
         border: 1px solid black;
         padding: 8px;
     }
@@ -41,7 +46,7 @@ const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = 
                         <StyledTableHeader>{'To'}</StyledTableHeader>
                         <StyledTableHeader>{'Amount'}</StyledTableHeader>
                         <StyledTableHeader>{'Comment'}</StyledTableHeader>
-                        <StyledTableHeader>{'Buttons'}</StyledTableHeader>
+                        <StyledTableHeaderWithBorderlessBottom>{''}</StyledTableHeaderWithBorderlessBottom>
                     </tr>
                 </thead>
                 <tbody>
