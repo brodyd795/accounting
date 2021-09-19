@@ -77,6 +77,5 @@ export const TransactionsTableSkeleton = ({header}) => (
                 ))}
             </tbody>
         </StyledSkeletonTable>
-        )
     </StyledUnseenTransactionsContainer>
 );
