@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import styled from 'styled-components';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import Select from 'react-select';
@@ -83,6 +83,7 @@ export const Search = () => {
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchError, setSearchError] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
+    const searchResultsRef = useRef(null);
 
     const handleSubmit = async (values) => {
         const {comment, fromAccountObject, toAccountObject, fromDate, toDate, fromAmount, toAmount} = values;
@@ -111,6 +112,7 @@ export const Search = () => {
         if (!res.ok) {
             setSearchError(true);
         } else {
+            searchResultsRef.current.scrollIntoView({behavior: 'smooth'});
             setSearchError(false);
             setSearchResults(json);
         }
@@ -185,9 +187,15 @@ export const Search = () => {
                 )}
             </Formik>
             {searchLoading && <TransactionsTableSkeleton header={header} />}
-            {!searchLoading && searchResults && (
-                <TransactionsTable data={searchResults} header={header} noResultsText={'No results for this search'} />
-            )}
+            <div ref={searchResultsRef}>
+                {!searchLoading && searchResults && (
+                    <TransactionsTable
+                        data={searchResults}
+                        header={header}
+                        noResultsText={'No results for this search'}
+                    />
+                )}
+            </div>
         </StyledSearchContainer>
     );
 };
