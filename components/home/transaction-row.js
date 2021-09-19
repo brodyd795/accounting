@@ -21,13 +21,19 @@ const BorderlessTd = styled.td`
 
 const StyledButton = styled.button`
     margin: 0 4px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
 
     svg {
         display: inline-block;
         height: 20px;
-        margin-right: 4px;
         vertical-align: middle;
         width: 20px;
+
+        path {
+            fill: black;
+        }
     }
 `;
 
