@@ -27,7 +27,8 @@ export const TransactionEditModal = ({setTransaction, setShouldShowModal, should
             comment: newComment,
             date: newDate,
             fromAccountName: newFromAccount,
-            toAccountName: newToAccount
+            toAccountName: newToAccount,
+            isMarkedAsSeen: newIsMarkedAsSeen
         } = values;
         const res = await fetch(`/api/controllers/transactions/edit-controller`, {
             body: JSON.stringify({
@@ -36,6 +37,7 @@ export const TransactionEditModal = ({setTransaction, setShouldShowModal, should
                     comment: newComment,
                     date: new Date(newDate),
                     fromAccountId: newFromAccount.accountId,
+                    isMarkedAsSeen: newIsMarkedAsSeen,
                     toAccountId: newToAccount.accountId
                 },
                 originalTransaction: {
@@ -64,7 +66,7 @@ export const TransactionEditModal = ({setTransaction, setShouldShowModal, should
                 comment: newComment,
                 date: new Date(newDate),
                 fromAccountName: newFromAccount.label,
-                isMarkedAsSeen,
+                isMarkedAsSeen: newIsMarkedAsSeen,
                 toAccountName: newToAccount.label,
                 transactionId
             });
@@ -86,6 +88,7 @@ export const TransactionEditModal = ({setTransaction, setShouldShowModal, should
                 comment,
                 date: new Date(date),
                 fromAccountName: fromAccountOption,
+                isMarkedAsSeen: true,
                 toAccountName: toAccountOption
             }}
             setShouldShowModal={setShouldShowModal}

@@ -6,6 +6,7 @@ import Select from 'react-select';
 import DatePickerField from '../form-fields/date-selector';
 import AmountSelector from '../form-fields/amount-selector';
 import CommentSelector from '../form-fields/comment-selector';
+import MarkedAsSeenSelector from '../form-fields/marked-as-seen-selector';
 import {validationSchema} from '../schemas/transaction-validation-schema';
 import {useDemo} from '../../../hooks/use-demo';
 
@@ -100,6 +101,11 @@ export const TransactionModal = ({
                             <StyledLabel htmlFor={'comment'}>{'Comment'}</StyledLabel>
                             <Field component={CommentSelector} name={'comment'} />
                             <ErrorMessage name={'comment'} />
+                        </StyledFieldContainer>
+                        <StyledFieldContainer>
+                            <StyledLabel htmlFor={'isMarkedAsSeen'}>{'Marked as Seen'}</StyledLabel>
+                            <Field component={MarkedAsSeenSelector} name={'isMarkedAsSeen'} />
+                            <ErrorMessage name={'isMarkedAsSeen'} />
                         </StyledFieldContainer>
                         <StyledButtonsContainer>
                             <StyledButton onClick={() => setShouldShowModal(false)} type={'button'}>

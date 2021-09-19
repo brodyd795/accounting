@@ -1,7 +1,7 @@
 import {conn} from './transaction-wrapper-repository';
 
 export const editRepository = ({editedTransaction, transactionId}) => {
-    const {amount, comment, date, fromAccountId, toAccountId} = editedTransaction;
+    const {amount, comment, date, fromAccountId, toAccountId, isMarkedAsSeen} = editedTransaction;
 
     return conn().query(
         `
@@ -12,10 +12,11 @@ export const editRepository = ({editedTransaction, transactionId}) => {
                 fromAccountId = ?,
                 toAccountId = ?,
                 amount = ?,
-                comment = ?
+                comment = ?,
+                isMarkedAsSeen = ?
             WHERE
                 transactionId = ?
 		`,
-        [date, fromAccountId, toAccountId, amount, comment, transactionId]
+        [date, fromAccountId, toAccountId, amount, comment, isMarkedAsSeen, transactionId]
     );
 };
