@@ -60,12 +60,11 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
         isMarkedAsSeen
     } = transaction;
     const {isDemo} = useDemo();
-    const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowModal, setShouldShowModal] = useState(false);
     const [wasDeleted, setWasDeleted] = useState(false);
     const date = new Date(dateString);
 
-    if (wasDeleted || (hasBeenSeen && hideSeenTransactions)) {
+    if (wasDeleted || (isMarkedAsSeen && hideSeenTransactions)) {
         return null;
     }
 
@@ -81,7 +80,10 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
         });
 
         if (res.ok) {
-            setHasBeenSeen(true);
+            setTransaction({
+                ...transaction,
+                isMarkedAsSeen: true
+            });
         } else {
             alert('Error!');
         }
@@ -128,8 +130,8 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
             <StyledDemoableTd isDemo={isDemo}>{comment}</StyledDemoableTd>
             <BorderlessTd>
                 <StyledButton
-                    disabled={isDemo || hasBeenSeen}
-                    hasBeenSeen={hasBeenSeen}
+                    disabled={isDemo || isMarkedAsSeen}
+                    hasBeenSeen={isMarkedAsSeen}
                     onClick={markTransactionAsSeen}
                     type={'button'}
                 >

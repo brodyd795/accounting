@@ -65,8 +65,12 @@ export const TransactionEditModal = ({setTransaction, setShouldShowModal, should
                 amount: newAmount * 100,
                 comment: newComment,
                 date: new Date(newDate),
+                fromAccountCategory: newFromAccount.category,
+                fromAccountId: newFromAccount.accountId,
                 fromAccountName: newFromAccount.label,
                 isMarkedAsSeen: newIsMarkedAsSeen,
+                toAccountCategory: newToAccount.category,
+                toAccountId: newToAccount.accountId,
                 toAccountName: newToAccount.label,
                 transactionId
             });
