@@ -71,6 +71,7 @@ const StyledTopRow = styled.div`
 `;
 
 const StyledButton = styled.button`
+    border: 2px solid black;
     border-radius: 4px;
     padding: 4px;
     font-size: 16px;
