@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import ReactModal from 'react-modal';
 
+import CloseIcon from '../../../public/icons/times-solid.svg';
+
 const StyledModal = styled(ReactModal)`
     color: white;
     position: absolute;
@@ -43,6 +45,17 @@ const StyledCloseModalButton = styled.button`
     margin-top: 5px;
     color: white;
     cursor: pointer;
+
+    svg {
+        display: inline-block;
+        height: 20px;
+        vertical-align: middle;
+        width: 20px;
+
+        path {
+            fill: white;
+        }
+    }
 `;
 
 export const Modal = ({title, onRequestClose, isOpen, children}) => (
@@ -50,7 +63,7 @@ export const Modal = ({title, onRequestClose, isOpen, children}) => (
         <StyledModalHeader>
             <StyledModalHeading>{title}</StyledModalHeading>
             <StyledCloseModalButton onClick={onRequestClose} type={'button'}>
-                {'X'}
+                <CloseIcon />
             </StyledCloseModalButton>
         </StyledModalHeader>
         <StyledModalBody>{children}</StyledModalBody>
