@@ -29,6 +29,14 @@ const StyledTable = styled.table`
         border: 1px solid black;
         padding: 8px;
     }
+
+    thead > tr {
+        background-color: #dedede;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dedede;
+    }
 `;
 
 const StyledTablesContainer = styled.div`
