@@ -48,7 +48,8 @@ const StyledDemoableTd = styled(DemoableTd)`
     padding: 8px;
 `;
 
-export const TransactionRow = ({transaction, hideSeenTransactions}) => {
+export const TransactionRow = ({transaction: transactionProp, hideSeenTransactions}) => {
+    const [transaction, setTransaction] = useState(transactionProp);
     const {
         transactionId,
         date: dateString,
@@ -144,6 +145,7 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             {shouldShowModal && (
                 <TransactionEditModal
                     setShouldShowModal={setShouldShowModal}
+                    setTransaction={setTransaction}
                     shouldShowModal={shouldShowModal}
                     transactionBeingEdited={transaction}
                 />

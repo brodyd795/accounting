@@ -7,7 +7,7 @@ import {getRandomDollarAmount} from '../../../utils/demo-helpers';
 
 import {TransactionModal} from './transaction-modal';
 
-export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, transactionBeingEdited}) => {
+export const TransactionEditModal = ({setTransaction, setShouldShowModal, shouldShowModal, transactionBeingEdited}) => {
     const {data: accounts, error} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [updateStatusMessage, setUpdateStatusMessage] = useState('');
     const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = transactionBeingEdited;
@@ -59,6 +59,15 @@ export const TransactionEditModal = ({setShouldShowModal, shouldShowModal, trans
             setTimeout(() => {
                 setShouldShowModal(false);
             }, 1500);
+            setTransaction({
+                amount: newAmount * 100,
+                comment: newComment,
+                date: new Date(newDate),
+                fromAccountName: newFromAccount.label,
+                isMarkedAsSeen,
+                toAccountName: newToAccount.label,
+                transactionId
+            });
         } else {
             setUpdateStatusMessage('Sorry, something went wrong.');
         }
