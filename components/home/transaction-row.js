@@ -12,7 +12,7 @@ import {formatDateForDb} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
-import {BlurrableTd} from './blurrable-td';
+import {DemoableTd} from './demoable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
 
 const BorderlessTd = styled.td`
@@ -43,7 +43,7 @@ const StyledTd = styled.td`
     padding: 8px;
 `;
 
-const StyledBlurrableTd = styled(BlurrableTd)`
+const StyledDemoableTd = styled(DemoableTd)`
     border: 1px solid black;
     padding: 8px;
 `;
@@ -126,8 +126,8 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             <StyledTd>{date.toDateString()}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(fromAccountName)}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(toAccountName)}</StyledTd>
-            <StyledBlurrableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledBlurrableTd>
-            <StyledBlurrableTd isDemo={isDemo}>{comment}</StyledBlurrableTd>
+            <StyledDemoableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledDemoableTd>
+            <StyledDemoableTd isDemo={isDemo}>{comment}</StyledDemoableTd>
             <BorderlessTd>
                 <StyledButton
                     disabled={isDemo || hasBeenSeen}

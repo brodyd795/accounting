@@ -10,7 +10,7 @@ import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
 import {getRandomAccountBalance} from '../../utils/demo-helpers';
 
-import {BlurrableTd} from './blurrable-td';
+import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
 import {StyledH2} from './headers';
 import {RowSkeleton} from './skeletons';
@@ -86,9 +86,9 @@ const Row = ({account}) => {
         <tr>
             <td>{category}</td>
             <td>{name}</td>
-            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>
+            <DemoableTd isDemo={isDemo} isNegative={isNegative}>
                 {balanceToDisplay}
-            </BlurrableTd>
+            </DemoableTd>
         </tr>
     );
 };
