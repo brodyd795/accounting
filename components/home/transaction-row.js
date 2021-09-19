@@ -61,9 +61,10 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
     const {isDemo} = useDemo();
     const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [wasDeleted, setWasDeleted] = useState(false);
     const date = new Date(dateString);
 
-    if (hasBeenSeen && hideSeenTransactions) {
+    if (wasDeleted || (hasBeenSeen && hideSeenTransactions)) {
         return null;
     }
 
@@ -103,7 +104,7 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             });
 
             if (res.ok) {
-                setHasBeenSeen(true);
+                setWasDeleted(true);
             } else {
                 alert('Error while deleting...');
             }
