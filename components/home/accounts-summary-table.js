@@ -8,7 +8,7 @@ import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
-import {getRandomDollarAmount} from '../../utils/demo-helpers';
+import {getRandomAccountBalance} from '../../utils/demo-helpers';
 
 import {BlurrableTd} from './blurrable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
@@ -72,14 +72,14 @@ const Row = ({account}) => {
     const category = cleanAccountNameOrCategoryForUI(account.category);
     const name = cleanAccountNameOrCategoryForUI(account.accountName);
     const {balance, isNegative} = formatBalanceForUI(account);
-    const randomNum = getRandomDollarAmount();
+    const balanceToDisplay = isDemo ? getRandomAccountBalance(account) : balance;
 
     return (
         <tr>
             <td>{category}</td>
             <td>{name}</td>
             <BlurrableTd isDemo={isDemo} isNegative={isNegative}>
-                {isDemo ? String(randomNum) : balance}
+                {balanceToDisplay}
             </BlurrableTd>
         </tr>
     );
