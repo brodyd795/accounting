@@ -28,6 +28,7 @@ const StyledHeader = styled.div`
 
 const StyledH1 = styled.h1`
     padding-left: 8px;
+    color: #fafff3;
 `;
 
 const StyledButtons = styled.div`
