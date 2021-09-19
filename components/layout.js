@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
+import GearIcon from '../public/icons/cog-solid.svg';
 import {DemoProvider, useDemo} from '../hooks/use-demo';
 
 import {DemoButton} from './header/demo-button';
@@ -37,6 +38,19 @@ const StyledButtons = styled.div`
 const StyledSettingsButton = styled.button`
     cursor: pointer;
     margin-right: 8px;
+    background-color: transparent;
+    border: none;
+
+    svg {
+        display: inline-block;
+        height: 20px;
+        vertical-align: middle;
+        width: 20px;
+
+        path {
+            fill: #fafff3;
+        }
+    }
 `;
 
 const StyledDemoBanner = styled.div`
@@ -55,7 +69,7 @@ const Header = () => {
             <StyledHeader>
                 <StyledH1>{'Accounting'}</StyledH1>
                 <StyledSettingsButton onClick={() => setShowSettingsButtons(!showSettingsButtons)} type={'button'}>
-                    {'Settings'}
+                    <GearIcon />
                 </StyledSettingsButton>
                 {showSettingsButtons && (
                     <Modal
