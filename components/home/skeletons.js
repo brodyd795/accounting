@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {StyledH2} from './headers';
+import {StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable} from './transactions-table';
+
 const SkeletonTd = styled.td`
     height: 24px;
 `;
@@ -35,6 +38,15 @@ const SkeletonTdContent = styled.div`
     }
 `;
 
+const StyledSkeletonTable = styled(StyledTable)`
+    display: table;
+    min-width: 100%;
+
+    @media screen and (min-width: 768px) {
+        min-width: 700px;
+    }
+`;
+
 export const RowSkeleton = ({numberOfColumns}) => (
     <tr>
         {Array.from({length: numberOfColumns}, () => (
@@ -43,4 +55,28 @@ export const RowSkeleton = ({numberOfColumns}) => (
             </SkeletonTd>
         ))}
     </tr>
+);
+
+export const TransactionsTableSkeleton = ({header}) => (
+    <StyledUnseenTransactionsContainer>
+        <StyledH2>{header}</StyledH2>
+        <StyledSkeletonTable>
+            <thead>
+                <tr>
+                    <StyledTableHeader>{'Date'}</StyledTableHeader>
+                    <StyledTableHeader>{'From'}</StyledTableHeader>
+                    <StyledTableHeader>{'To'}</StyledTableHeader>
+                    <StyledTableHeader>{'Amount'}</StyledTableHeader>
+                    <StyledTableHeader>{'Comment'}</StyledTableHeader>
+                    <StyledTableHeader>{'Buttons'}</StyledTableHeader>
+                </tr>
+            </thead>
+            <tbody>
+                {Array.from({length: 5}, () => (
+                    <RowSkeleton numberOfColumns={6} />
+                ))}
+            </tbody>
+        </StyledSkeletonTable>
+        )
+    </StyledUnseenTransactionsContainer>
 );

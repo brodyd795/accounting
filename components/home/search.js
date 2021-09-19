@@ -12,6 +12,7 @@ import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
 import {TransactionsTable} from './transactions-table';
 import {StyledH2} from './headers';
+import {TransactionsTableSkeleton} from './skeletons';
 
 const StyledSearchContainer = styled.div`
     display: flex;
@@ -74,6 +75,8 @@ const initialValues = {
     toAmount: undefined,
     toDate: undefined
 };
+
+const header = 'Search Results';
 
 export const Search = () => {
     const {data: accounts} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
@@ -178,17 +181,13 @@ export const Search = () => {
                             <StyledButton type={'submit'}>{'Submit'}</StyledButton>
                         </StyledButtonsContainer>
                         {searchError ? <div>{'Error!'}</div> : null}
-                        {searchLoading ? <div>{'Loading...'}</div> : null}
                     </StyledForm>
                 )}
             </Formik>
-            {searchResults ? (
-                <TransactionsTable
-                    data={searchResults}
-                    header={'Search Results'}
-                    noResultsText={'No results for this search'}
-                />
-            ) : null}
+            {searchLoading && <TransactionsTableSkeleton header={header} />}
+            {!searchLoading && searchResults && (
+                <TransactionsTable data={searchResults} header={header} noResultsText={'No results for this search'} />
+            )}
         </StyledSearchContainer>
     );
 };
