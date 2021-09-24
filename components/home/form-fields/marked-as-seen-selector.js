@@ -1,19 +1,19 @@
 import React from 'react';
 
-const CommentSelector = (props) => {
+const MarkedAsSeenSelector = (props) => {
     const {field, form} = props;
-    const {name} = field;
+    const {name, value} = field;
     const {setFieldValue} = form;
 
     return (
         <input
             {...field}
             {...props}
+            checked={value}
             onValueChange={(val) => setFieldValue(name, val)}
-            placeholder={'Enter description...'}
-            required
+            type="checkbox"
         />
     );
 };
 
-export default CommentSelector;
+export default MarkedAsSeenSelector;

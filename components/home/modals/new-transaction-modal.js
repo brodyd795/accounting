@@ -60,7 +60,6 @@ export const NewTransactionModal = ({setShouldShowModal, shouldShowModal}) => {
             setShouldShowModal={setShouldShowModal}
             shouldShowModal={shouldShowModal}
             title={'New Transaction'}
-            // transactionBeingEdited={transactionBeingEdited}
             updateStatusMessage={updateStatusMessage}
         />
     );

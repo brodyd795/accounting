@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import styled from 'styled-components';
 import {Formik, Field, Form, ErrorMessage} from 'formik';
 import Select from 'react-select';
@@ -12,6 +12,7 @@ import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
 import {TransactionsTable} from './transactions-table';
 import {StyledH2} from './headers';
+import {TransactionsTableSkeleton} from './skeletons';
 
 const StyledSearchContainer = styled.div`
     display: flex;
@@ -68,18 +69,21 @@ const StyledButton = styled.button`
 const initialValues = {
     comment: undefined,
     fromAccountObject: undefined,
-    fromAmount: 0,
+    fromAmount: undefined,
     fromDate: undefined,
     toAccountObject: undefined,
-    toAmount: 0,
+    toAmount: undefined,
     toDate: undefined
 };
+
+const header = 'Search Results';
 
 export const Search = () => {
     const {data: accounts} = useSWR(`/api/controllers/accounts-list-controller`, fetcher);
     const [searchLoading, setSearchLoading] = useState(false);
     const [searchError, setSearchError] = useState(false);
     const [searchResults, setSearchResults] = useState(null);
+    const searchResultsRef = useRef(null);
 
     const handleSubmit = async (values) => {
         const {comment, fromAccountObject, toAccountObject, fromDate, toDate, fromAmount, toAmount} = values;
@@ -108,6 +112,7 @@ export const Search = () => {
         if (!res.ok) {
             setSearchError(true);
         } else {
+            searchResultsRef.current.scrollIntoView({behavior: 'smooth'});
             setSearchError(false);
             setSearchResults(json);
         }
@@ -160,12 +165,12 @@ export const Search = () => {
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
                                 <StyledLabel htmlFor={'fromAmount'}>{'From Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'fromAmount'} />
+                                <Field component={AmountSelector} name={'fromAmount'} showWhileDemo />
                                 <ErrorMessage name={'fromAmount'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
                                 <StyledLabel htmlFor={'toAmount'}>{'To Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'toAmount'} />
+                                <Field component={AmountSelector} name={'toAmount'} showWhileDemo />
                                 <ErrorMessage name={'toAmount'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>
@@ -178,17 +183,19 @@ export const Search = () => {
                             <StyledButton type={'submit'}>{'Submit'}</StyledButton>
                         </StyledButtonsContainer>
                         {searchError ? <div>{'Error!'}</div> : null}
-                        {searchLoading ? <div>{'Loading...'}</div> : null}
                     </StyledForm>
                 )}
             </Formik>
-            {searchResults ? (
-                <TransactionsTable
-                    data={searchResults}
-                    header={'Search Results'}
-                    noResultsText={'No results for this search'}
-                />
-            ) : null}
+            {searchLoading && <TransactionsTableSkeleton header={header} />}
+            <div ref={searchResultsRef}>
+                {!searchLoading && searchResults && (
+                    <TransactionsTable
+                        data={searchResults}
+                        header={header}
+                        noResultsText={'No results for this search'}
+                    />
+                )}
+            </div>
         </StyledSearchContainer>
     );
 };

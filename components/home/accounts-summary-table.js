@@ -8,10 +8,12 @@ import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
+import {getRandomAccountBalance} from '../../utils/demo-helpers';
 
-import {BlurrableTd} from './blurrable-td';
+import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
 import {StyledH2} from './headers';
+import {RowSkeleton} from './skeletons';
 
 const StyledTable = styled.table`
     table-layout: fixed;
@@ -26,6 +28,14 @@ const StyledTable = styled.table`
     td {
         border: 1px solid black;
         padding: 8px;
+    }
+
+    thead > tr {
+        background-color: #dedede;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dedede;
     }
 `;
 
@@ -47,10 +57,12 @@ const StyledSummaryTableContainer = styled.div`
 
 const StyledDatePicker = styled(DatePicker)`
     text-align: center;
+    border: 2px solid black;
     border-radius: 4px;
     cursor: pointer;
     padding: 4px;
     font-size: 16px;
+    background-color: #dedede;
 `;
 
 const StyledTopRow = styled.div`
@@ -60,9 +72,12 @@ const StyledTopRow = styled.div`
 `;
 
 const StyledButton = styled.button`
+    border: 2px solid black;
     border-radius: 4px;
     padding: 4px;
     font-size: 16px;
+    background-color: #dedede;
+    cursor: pointer;
 `;
 
 const Row = ({account}) => {
@@ -70,14 +85,15 @@ const Row = ({account}) => {
     const category = cleanAccountNameOrCategoryForUI(account.category);
     const name = cleanAccountNameOrCategoryForUI(account.accountName);
     const {balance, isNegative} = formatBalanceForUI(account);
+    const balanceToDisplay = isDemo ? getRandomAccountBalance(account) : balance;
 
     return (
         <tr>
             <td>{category}</td>
             <td>{name}</td>
-            <BlurrableTd isDemo={isDemo} isNegative={isNegative}>
-                {balance}
-            </BlurrableTd>
+            <DemoableTd isDemo={isDemo} isNegative={isNegative}>
+                {balanceToDisplay}
+            </DemoableTd>
         </tr>
     );
 };
@@ -92,7 +108,48 @@ export const AccountsSummaryTable = () => {
     }
 
     if (!data) {
-        return <div>{'Loading accounts summary...'}</div>;
+        return (
+            <StyledSummaryTableContainer>
+                <StyledH2>{'Accounts Summary'}</StyledH2>
+                <StyledTopRow>
+                    <StyledDatePicker
+                        dateFormat={'MMMM yyyy'}
+                        maxDate={new Date()}
+                        minDate={new Date(2021, 3, 1)}
+                        selected={new Date()}
+                    />
+                    <StyledButton type={'button'}>{'New transaction'}</StyledButton>
+                </StyledTopRow>
+                <StyledTablesContainer>
+                    <StyledTable>
+                        <thead>
+                            <tr>
+                                <th>{'Category'}</th>
+                                <th>{'Account Name'}</th>
+                                <th>{'Balance'}</th>
+                            </tr>
+                        </thead>
+                        {Array.from({length: 6}, () => (
+                            <RowSkeleton numberOfColumns={3} />
+                        ))}
+                    </StyledTable>
+                    <StyledTable>
+                        <thead>
+                            <tr>
+                                <th>{'Category'}</th>
+                                <th>{'Account Name'}</th>
+                                <th>{'Balance'}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.from({length: 7}, () => (
+                                <RowSkeleton numberOfColumns={3} />
+                            ))}
+                        </tbody>
+                    </StyledTable>
+                </StyledTablesContainer>
+            </StyledSummaryTableContainer>
+        );
     }
 
     const monthlyAccounts = data.filter((account) => account.category === 'Income' || account.category === 'Expenses');

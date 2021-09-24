@@ -5,11 +5,17 @@ import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
 const StyledUnseenTransactionsContainer = styled.div`
-    margin-top: 40px;
+    margin: 40px 8px 0;
 `;
 
 const StyledTableHeader = styled.td`
+    border: 1px solid black;
+    padding: 8px;
     font-weight: bold;
+`;
+
+const StyledTableHeaderWithBorderlessBottom = styled(StyledTableHeader)`
+    border-bottom: none;
 `;
 
 const StyledTable = styled.table`
@@ -22,14 +28,21 @@ const StyledTable = styled.table`
     max-width: fit-content;
     white-space: nowrap;
 
-    th,
-    td {
+    th {
         border: 1px solid black;
         padding: 8px;
     }
+
+    thead > tr {
+        background-color: #dedede;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dedede;
+    }
 `;
 
-export const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
+const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
     <StyledUnseenTransactionsContainer>
         <StyledH2>{header}</StyledH2>
         {data.length ? (
@@ -41,12 +54,16 @@ export const TransactionsTable = ({data, noResultsText, header, hideSeenTransact
                         <StyledTableHeader>{'To'}</StyledTableHeader>
                         <StyledTableHeader>{'Amount'}</StyledTableHeader>
                         <StyledTableHeader>{'Comment'}</StyledTableHeader>
-                        <StyledTableHeader>{'Buttons'}</StyledTableHeader>
+                        <StyledTableHeaderWithBorderlessBottom>{''}</StyledTableHeaderWithBorderlessBottom>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((transaction) => (
-                        <TransactionRow hideSeenTransactions={hideSeenTransactions} key={transaction.transactionId} transaction={transaction} />
+                        <TransactionRow
+                            hideSeenTransactions={hideSeenTransactions}
+                            key={transaction.transactionId}
+                            transaction={transaction}
+                        />
                     ))}
                 </tbody>
             </StyledTable>
@@ -55,3 +72,5 @@ export const TransactionsTable = ({data, noResultsText, header, hideSeenTransact
         )}
     </StyledUnseenTransactionsContainer>
 );
+
+export {TransactionsTable, StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable};
