@@ -11,6 +11,7 @@ const editTransaction = async ({editedTransaction, originalTransaction}) => {
         comment: newComment,
         date: newDate,
         fromAccountId: newFromAccountId,
+        isMarkedAsSeen: newIsMarkedAsSeen,
         toAccountId: newToAccountId
     } = editedTransaction;
     const {amount, comment, date, fromAccountId, isMarkedAsSeen, toAccountId, transactionId} = originalTransaction;
@@ -35,7 +36,7 @@ const editTransaction = async ({editedTransaction, originalTransaction}) => {
         newToAccountId,
         newAmount,
         newComment,
-        newIsMarkedAsSeen: isMarkedAsSeen
+        newIsMarkedAsSeen
     });
 
     return null;

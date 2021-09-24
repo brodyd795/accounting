@@ -3,14 +3,18 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable no-restricted-globals */
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 // credit: based on https://github.com/shadowwalker/next-pwa/blob/master/examples/web-push/worker/index.js
 self.addEventListener('push', (event) => {
     const data = JSON.parse(event.data.text());
 
     event.waitUntil(
         registration.showNotification(data.title, {
+            badge: '/icons/favicon-32x32',
             body: data.message,
-            icon: '/icons/android-chrome-192x192.png'
+            icon: '/icons/android-chrome-192x192.png',
+            vibrate: [500, 500, 300]
         })
     );
 });

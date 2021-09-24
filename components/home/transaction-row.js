@@ -4,22 +4,52 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
 
+import TrashIcon from '../../public/icons/trash-alt-solid.svg';
+import PencilIcon from '../../public/icons/pencil-alt-solid.svg';
+import CheckmarkIcon from '../../public/icons/check-solid.svg';
 import {useDemo} from '../../hooks/use-demo';
-import {formatDateForDb} from '../../utils/date-helpers';
+import {formatDateForDb, formatDateForUI} from '../../utils/date-helpers';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
+import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
-import {BlurrableTd} from './blurrable-td';
+import {DemoableTd} from './demoable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
 
 const BorderlessTd = styled.td`
     border: none;
+    border-right: 1px solid black;
 `;
 
 const StyledButton = styled.button`
     margin: 0 4px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+
+    svg {
+        display: inline-block;
+        height: 20px;
+        vertical-align: middle;
+        width: 20px;
+
+        path {
+            fill: ${({hasBeenSeen}) => (hasBeenSeen ? 'grey' : 'black')};
+        }
+    }
 `;
 
-export const TransactionRow = ({transaction, hideSeenTransactions}) => {
+const StyledTd = styled.td`
+    border: 1px solid black;
+    padding: 8px;
+`;
+
+const StyledDemoableTd = styled(DemoableTd)`
+    border: 1px solid black;
+    padding: 8px;
+`;
+
+export const TransactionRow = ({transaction: transactionProp, hideSeenTransactions}) => {
+    const [transaction, setTransaction] = useState(transactionProp);
     const {
         transactionId,
         date: dateString,
@@ -30,11 +60,11 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
         isMarkedAsSeen
     } = transaction;
     const {isDemo} = useDemo();
-    const [hasBeenSeen, setHasBeenSeen] = useState(isMarkedAsSeen);
     const [shouldShowModal, setShouldShowModal] = useState(false);
+    const [wasDeleted, setWasDeleted] = useState(false);
     const date = new Date(dateString);
 
-    if (hasBeenSeen && hideSeenTransactions) {
+    if (wasDeleted || (isMarkedAsSeen && hideSeenTransactions)) {
         return null;
     }
 
@@ -50,9 +80,10 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
         });
 
         if (res.ok) {
-            setHasBeenSeen(true);
-
-            alert('Success!');
+            setTransaction({
+                ...transaction,
+                isMarkedAsSeen: true
+            });
         } else {
             alert('Error!');
         }
@@ -76,9 +107,7 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
             });
 
             if (res.ok) {
-                setHasBeenSeen(true);
-
-                alert('Successful delete!');
+                setWasDeleted(true);
             } else {
                 alert('Error while deleting...');
             }
@@ -94,25 +123,31 @@ export const TransactionRow = ({transaction, hideSeenTransactions}) => {
 
     return (
         <tr>
-            <td>{date.toDateString()}</td>
-            <td>{cleanAccountNameOrCategoryForUI(fromAccountName)}</td>
-            <td>{cleanAccountNameOrCategoryForUI(toAccountName)}</td>
-            <BlurrableTd isDemo={isDemo}>{cleanAmount}</BlurrableTd>
-            <BlurrableTd isDemo={isDemo}>{comment}</BlurrableTd>
+            <StyledTd>{formatDateForUI(date)}</StyledTd>
+            <StyledTd>{cleanAccountNameOrCategoryForUI(fromAccountName)}</StyledTd>
+            <StyledTd>{cleanAccountNameOrCategoryForUI(toAccountName)}</StyledTd>
+            <StyledDemoableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledDemoableTd>
+            <StyledDemoableTd isDemo={isDemo}>{comment}</StyledDemoableTd>
             <BorderlessTd>
-                <StyledButton onClick={markTransactionAsSeen} type={'button'}>
-                    {'Mark as seen'}
+                <StyledButton
+                    disabled={isDemo || isMarkedAsSeen}
+                    hasBeenSeen={isMarkedAsSeen}
+                    onClick={markTransactionAsSeen}
+                    type={'button'}
+                >
+                    <CheckmarkIcon />
                 </StyledButton>
                 <StyledButton onClick={editTransaction} type={'button'}>
-                    {'Edit'}
+                    <PencilIcon />
                 </StyledButton>
-                <StyledButton onClick={deleteTransaction} type={'button'}>
-                    {'Delete'}
+                <StyledButton disabled={isDemo} onClick={deleteTransaction} type={'button'}>
+                    <TrashIcon />
                 </StyledButton>
             </BorderlessTd>
             {shouldShowModal && (
                 <TransactionEditModal
                     setShouldShowModal={setShouldShowModal}
+                    setTransaction={setTransaction}
                     shouldShowModal={shouldShowModal}
                     transactionBeingEdited={transaction}
                 />
