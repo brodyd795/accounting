@@ -18,7 +18,10 @@ const handler = async (req, res) => {
         ]);
 
         if (!newTransactions.length || !subscriptions.length) {
-            res.status(200).json({sent: false});
+            res.status(200).json({
+                reason: 'No new transactions',
+                sent: false
+            });
         } else {
             const notificationBody = JSON.stringify({
                 message: `You have ${newTransactions.length} new transactions to review`,
