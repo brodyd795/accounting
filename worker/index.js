@@ -11,8 +11,10 @@ self.addEventListener('push', (event) => {
 
     event.waitUntil(
         registration.showNotification(data.title, {
+            badge: '/icons/favicon-32x32',
             body: data.message,
-            icon: '/icons/android-chrome-192x192.png'
+            icon: '/icons/android-chrome-192x192.png',
+            vibrate: [500, 500, 300]
         })
     );
 });
