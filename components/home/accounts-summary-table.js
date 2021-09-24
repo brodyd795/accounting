@@ -57,6 +57,7 @@ const StyledSummaryTableContainer = styled.div`
 
 const StyledDatePicker = styled(DatePicker)`
     text-align: center;
+    border: 2px solid black;
     border-radius: 4px;
     cursor: pointer;
     padding: 4px;
