@@ -1,22 +1,17 @@
-export const getRandomDollarAmount = () => {
-    const precision = 100;
-    const maxDigits = 5;
-    const minDigits = 1;
-    const randomNumDigits = Math.floor(
-        Math.random() * (Math.floor(maxDigits) - Math.ceil(minDigits)) + Math.ceil(minDigits)
-    );
+export const getRandomDollarAmount = (max = 100000) => {
+    const min = 1;
 
-    return Math.floor(Math.random() * (10 ** randomNumDigits * precision - precision) + 1) / precision;
+    return Math.floor(Math.random() * (max - min) + min);
 };
 
 export const getRandomAccountBalance = (account) => {
-    const randomNum = getRandomDollarAmount();
+    const randomNum = getRandomDollarAmount(100000);
 
     if (account.accountName.includes('US_Bank')) {
-        return '$ 1,000,000';
+        return 1000000;
     } else if (account.accountName.includes('Loan')) {
-        return '$ 0';
+        return 0;
     }
 
-    return `$ ${randomNum}`;
+    return randomNum / 100;
 };

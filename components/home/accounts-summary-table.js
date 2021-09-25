@@ -3,6 +3,7 @@ import useSWR from 'swr';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import NumberFormat from 'react-number-format';
 
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
@@ -92,7 +93,18 @@ const Row = ({account}) => {
             <td>{category}</td>
             <td>{name}</td>
             <DemoableTd isDemo={isDemo} isNegative={isNegative}>
-                {balanceToDisplay}
+                <NumberFormat
+                    decimalScale={2}
+                    decimalSeparator={'.'}
+                    displayType={'text'}
+                    fixedDecimalScale
+                    isDemo={isDemo}
+                    name={name}
+                    prefix={'$'}
+                    renderText={(value, props) => <div {...props}>{value}</div>}
+                    thousandSeparator={','}
+                    value={balanceToDisplay}
+                />
             </DemoableTd>
         </tr>
     );
