@@ -17,13 +17,11 @@ import {StyledH2} from './headers';
 import {RowSkeleton} from './skeletons';
 
 const StyledTable = styled.table`
-    table-layout: fixed;
-    margin: 10px auto;
+    width: 100%;
+    margin: 30px auto;
 
     border-collapse: collapse;
     overflow-x: scroll;
-    display: block;
-    max-width: fit-content;
 
     th,
     td {
@@ -38,12 +36,14 @@ const StyledTable = styled.table`
     tr:nth-child(even) {
         background-color: #dedede;
     }
+
+    @media (min-width: 768px) {
+        margin: 10px;
+    }
 `;
 
 const StyledTablesContainer = styled.div`
-    margin-top: 20px;
-
-    display: block;
+    margin: 0 10px;
 
     @media (min-width: 768px) {
         display: flex;
