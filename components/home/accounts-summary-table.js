@@ -14,7 +14,7 @@ import {getRandomAccountBalance} from '../../utils/demo-helpers';
 import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
 import {StyledH2} from './headers';
-import {RowSkeleton} from './skeletons';
+import {RowSkeleton, StyledSummaryTableTBodySkeleton} from './skeletons';
 
 const StyledTable = styled.table`
     width: 100%;
@@ -141,9 +141,11 @@ export const AccountsSummaryTable = () => {
                                 <th>{'Balance'}</th>
                             </tr>
                         </thead>
-                        {Array.from({length: 6}, () => (
-                            <RowSkeleton numberOfColumns={3} />
-                        ))}
+                        <StyledSummaryTableTBodySkeleton>
+                            {Array.from({length: 6}, () => (
+                                <RowSkeleton numberOfColumns={3} />
+                            ))}
+                        </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                     <StyledTable>
                         <thead>
@@ -153,11 +155,11 @@ export const AccountsSummaryTable = () => {
                                 <th>{'Balance'}</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <StyledSummaryTableTBodySkeleton>
                             {Array.from({length: 7}, () => (
                                 <RowSkeleton numberOfColumns={3} />
                             ))}
-                        </tbody>
+                        </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                 </StyledTablesContainer>
             </StyledSummaryTableContainer>
