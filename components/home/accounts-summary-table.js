@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import useSWR from 'swr';
-import styled, {css} from 'styled-components';
+import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NumberFormat from 'react-number-format';
@@ -12,7 +12,7 @@ import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
 import {getRandomAccountBalance} from '../../utils/demo-helpers';
-import {colors} from '../../styles';
+import {colors, buttonStyles} from '../../styles';
 
 import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
@@ -59,30 +59,13 @@ const StyledSummaryTableContainer = styled.div`
     justify-content: center;
 `;
 
-// extract button styles
-// extract duplicate skeleton content
-
-const buttonStyles = css`
-    text-align: center;
-    border-radius: 16px;
-    border: transparent;
-    padding: 8px 16px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: ${colors.green};
-    color: ${colors.lightGreen};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
 const StyledDownIcon = styled(DownIcon)`
     display: inline-block;
     height: 16px;
     vertical-align: middle;
     width: 16px;
-    margin-left: -10px;
-    z-index: 100;
+    /* margin-left: -10px; */
+    /* z-index: 100; */
 
     path {
         fill: ${colors.lightGreen};
@@ -94,7 +77,7 @@ const StyledPlusIcon = styled(PlusIcon)`
     height: 16px;
     vertical-align: middle;
     width: 16px;
-    margin-left: 26px;
+    margin-left: 8px;
 
     path {
         fill: ${colors.lightGreen};
@@ -111,7 +94,8 @@ const StyledDatePicker = styled(DatePicker)`
     border: transparent;
     font-size: 16px;
     text-align: center;
-    margin-left: -10px;
+    max-width: 130px;
+    margin-left: -8px;
 `;
 
 const StyledTopRow = styled.div`
@@ -149,6 +133,27 @@ const Row = ({account}) => {
     );
 };
 
+const TableHead = () => (
+    <thead>
+        <tr>
+            <th>{'Category'}</th>
+            <th>{'Account Name'}</th>
+            <th>{'Balance'}</th>
+        </tr>
+    </thead>
+);
+
+const DatePickerComponent = ({selectedMonth, setSelectedMonth}) => (
+    <StyledDatePicker
+        dateFormat={'MMMM yyyy'}
+        maxDate={new Date()}
+        minDate={new Date(2021, 3, 1)}
+        onChange={(newDate) => setSelectedMonth(newDate)}
+        selected={selectedMonth}
+        showMonthYearPicker
+    />
+);
+
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const [shouldShowModal, setShouldShowModal] = useState(false);
@@ -164,28 +169,17 @@ export const AccountsSummaryTable = () => {
                 <StyledH2>{'Accounts Summary'}</StyledH2>
                 <StyledTopRow>
                     <StyledButton>
-                        <StyledDatePicker
-                            dateFormat={'MMMM yyyy'}
-                            maxDate={new Date()}
-                            minDate={new Date(2021, 3, 1)}
-                            selected={new Date()}
-                        />
+                        <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
                         <StyledDownIcon />
                     </StyledButton>
-                    <StyledButton type={'button'}>
-                        <div>{'foo'}</div>
-                        <div>{'bar'}</div>
+                    <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
+                        {'New transaction'}
+                        <StyledPlusIcon />
                     </StyledButton>
                 </StyledTopRow>
                 <StyledTablesContainer>
                     <StyledTable>
-                        <thead>
-                            <tr>
-                                <th>{'Category'}</th>
-                                <th>{'Account Name'}</th>
-                                <th>{'Balance'}</th>
-                            </tr>
-                        </thead>
+                        <TableHead />
                         <StyledSummaryTableTBodySkeleton>
                             {Array.from({length: 6}, () => (
                                 <RowSkeleton numberOfColumns={3} />
@@ -193,13 +187,7 @@ export const AccountsSummaryTable = () => {
                         </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                     <StyledTable>
-                        <thead>
-                            <tr>
-                                <th>{'Category'}</th>
-                                <th>{'Account Name'}</th>
-                                <th>{'Balance'}</th>
-                            </tr>
-                        </thead>
+                        <TableHead />
                         <StyledSummaryTableTBodySkeleton>
                             {Array.from({length: 7}, () => (
                                 <RowSkeleton numberOfColumns={3} />
@@ -219,14 +207,7 @@ export const AccountsSummaryTable = () => {
             <StyledH2>{'Accounts Summary'}</StyledH2>
             <StyledTopRow>
                 <StyledButton>
-                    <StyledDatePicker
-                        dateFormat={'MMMM yyyy'}
-                        maxDate={new Date()}
-                        minDate={new Date(2021, 3, 1)}
-                        onChange={(newDate) => setSelectedMonth(newDate)}
-                        selected={selectedMonth}
-                        showMonthYearPicker
-                    />
+                    <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
                     <StyledDownIcon />
                 </StyledButton>
                 <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
@@ -239,13 +220,7 @@ export const AccountsSummaryTable = () => {
             </StyledTopRow>
             <StyledTablesContainer>
                 <StyledTable>
-                    <thead>
-                        <tr>
-                            <th>{'Category'}</th>
-                            <th>{'Account Name'}</th>
-                            <th>{'Balance'}</th>
-                        </tr>
-                    </thead>
+                    <TableHead />
                     <tbody>
                         {persistentAccounts.map((account) => (
                             <Row account={account} key={account.accountId} />
@@ -253,13 +228,7 @@ export const AccountsSummaryTable = () => {
                     </tbody>
                 </StyledTable>
                 <StyledTable>
-                    <thead>
-                        <tr>
-                            <th>{'Category'}</th>
-                            <th>{'Account Name'}</th>
-                            <th>{'Balance'}</th>
-                        </tr>
-                    </thead>
+                    <TableHead />
                     <tbody>
                         {monthlyAccounts.map((account) => (
                             <Row account={account} key={account.accountId} />
