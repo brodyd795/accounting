@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {colors} from '../../styles';
+
 import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
@@ -34,11 +36,11 @@ const StyledTable = styled.table`
     }
 
     thead > tr {
-        background-color: #dedede;
+        background-color: ${colors.grey};
     }
 
     tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: ${colors.grey};
     }
 `;
 
