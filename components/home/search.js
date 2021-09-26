@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import useSWR from 'swr';
 
 import fetcher from '../../lib/fetch';
+import {colors, buttonStyles} from '../../styles';
 
 import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
@@ -35,8 +36,7 @@ const StyledLabel = styled.label`
 const StyledForm = styled(Form)`
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
-    border-radius: 10px;
+    border: 1px solid ${colors.darkGrey};
     margin: 0 10px;
     padding: 10px;
 `;
@@ -55,15 +55,9 @@ const StyledFieldsGroupContainer = styled.div`
     }
 `;
 
-const StyledButtonsContainer = styled.div`
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-`;
-
 const StyledButton = styled.button`
-    margin-right: 5px;
-    margin-left: 5px;
+    ${buttonStyles};
+    margin: 10px auto 0;
 `;
 
 const initialValues = {
@@ -179,9 +173,7 @@ export const Search = () => {
                             <Field name={'comment'} type={'text'} />
                             <ErrorMessage name={'comment'} />
                         </StyledFieldContainer>
-                        <StyledButtonsContainer>
-                            <StyledButton type={'submit'}>{'Submit'}</StyledButton>
-                        </StyledButtonsContainer>
+                        <StyledButton type={'submit'}>{'Submit'}</StyledButton>
                         {searchError ? <div>{'Error!'}</div> : null}
                     </StyledForm>
                 )}
