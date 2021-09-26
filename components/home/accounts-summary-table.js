@@ -94,6 +94,7 @@ const StyledDatePicker = styled(DatePicker)`
     text-align: center;
     max-width: 130px;
     margin-left: -8px;
+    cursor: pointer;
 `;
 
 const StyledTopRow = styled.div`
