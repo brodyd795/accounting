@@ -1,15 +1,18 @@
 import React, {useState} from 'react';
 import useSWR from 'swr';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import NumberFormat from 'react-number-format';
 
+import DownIcon from '../../public/icons/angle-down-solid.svg';
+import PlusIcon from '../../public/icons/plus-solid.svg';
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
 import {getRandomAccountBalance} from '../../utils/demo-helpers';
+import {colors} from '../../styles';
 
 import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
@@ -56,29 +59,65 @@ const StyledSummaryTableContainer = styled.div`
     justify-content: center;
 `;
 
-const StyledDatePicker = styled(DatePicker)`
+// extract button styles
+// extract duplicate skeleton content
+
+const buttonStyles = css`
     text-align: center;
-    border: 2px solid black;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 4px;
+    border-radius: 16px;
+    border: transparent;
+    padding: 8px 16px;
     font-size: 16px;
-    background-color: #dedede;
+    cursor: pointer;
+    background-color: ${colors.green};
+    color: ${colors.lightGreen};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const StyledDownIcon = styled(DownIcon)`
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    margin-left: -10px;
+    z-index: 100;
+
+    path {
+        fill: ${colors.lightGreen};
+    }
+`;
+
+const StyledPlusIcon = styled(PlusIcon)`
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    margin-left: 26px;
+
+    path {
+        fill: ${colors.lightGreen};
+    }
+`;
+
+const StyledButton = styled.button`
+    ${buttonStyles};
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+    background-color: ${colors.green};
+    color: ${colors.lightGreen};
+    border: transparent;
+    font-size: 16px;
+    text-align: center;
+    margin-left: -10px;
 `;
 
 const StyledTopRow = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 0 8px;
-`;
-
-const StyledButton = styled.button`
-    border: 2px solid black;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 16px;
-    background-color: #dedede;
-    cursor: pointer;
 `;
 
 const Row = ({account}) => {
@@ -124,13 +163,19 @@ export const AccountsSummaryTable = () => {
             <StyledSummaryTableContainer>
                 <StyledH2>{'Accounts Summary'}</StyledH2>
                 <StyledTopRow>
-                    <StyledDatePicker
-                        dateFormat={'MMMM yyyy'}
-                        maxDate={new Date()}
-                        minDate={new Date(2021, 3, 1)}
-                        selected={new Date()}
-                    />
-                    <StyledButton type={'button'}>{'New transaction'}</StyledButton>
+                    <StyledButton>
+                        <StyledDatePicker
+                            dateFormat={'MMMM yyyy'}
+                            maxDate={new Date()}
+                            minDate={new Date(2021, 3, 1)}
+                            selected={new Date()}
+                        />
+                        <StyledDownIcon />
+                    </StyledButton>
+                    <StyledButton type={'button'}>
+                        <div>{'foo'}</div>
+                        <div>{'bar'}</div>
+                    </StyledButton>
                 </StyledTopRow>
                 <StyledTablesContainer>
                     <StyledTable>
@@ -173,16 +218,20 @@ export const AccountsSummaryTable = () => {
         <StyledSummaryTableContainer>
             <StyledH2>{'Accounts Summary'}</StyledH2>
             <StyledTopRow>
-                <StyledDatePicker
-                    dateFormat={'MMMM yyyy'}
-                    maxDate={new Date()}
-                    minDate={new Date(2021, 3, 1)}
-                    onChange={(newDate) => setSelectedMonth(newDate)}
-                    selected={selectedMonth}
-                    showMonthYearPicker
-                />
+                <StyledButton>
+                    <StyledDatePicker
+                        dateFormat={'MMMM yyyy'}
+                        maxDate={new Date()}
+                        minDate={new Date(2021, 3, 1)}
+                        onChange={(newDate) => setSelectedMonth(newDate)}
+                        selected={selectedMonth}
+                        showMonthYearPicker
+                    />
+                    <StyledDownIcon />
+                </StyledButton>
                 <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
                     {'New transaction'}
+                    <StyledPlusIcon />
                 </StyledButton>
                 {shouldShowModal && (
                     <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
