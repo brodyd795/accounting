@@ -11,7 +11,6 @@ const StyledUnseenTransactionsContainer = styled.div`
 `;
 
 const StyledTableHeader = styled.td`
-    border: 1px solid black;
     padding: 8px;
     font-weight: bold;
 `;
@@ -21,17 +20,16 @@ const StyledTableHeaderWithBorderlessBottom = styled(StyledTableHeader)`
 `;
 
 const StyledTable = styled.table`
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: auto;
+    border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
+    margin: auto;
     overflow-x: scroll;
     display: block;
     max-width: fit-content;
     white-space: nowrap;
 
-    th {
-        border: 1px solid black;
+    th,
+    td {
         padding: 8px;
     }
 

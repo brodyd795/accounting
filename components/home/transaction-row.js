@@ -16,11 +16,6 @@ import {getRandomDollarAmount} from '../../utils/demo-helpers';
 import {DemoableTd} from './demoable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
 
-const BorderlessTd = styled.td`
-    border: none;
-    border-right: 1px solid black;
-`;
-
 const StyledButton = styled.button`
     margin: 0 4px;
     cursor: pointer;
@@ -40,12 +35,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledTd = styled.td`
-    border: 1px solid black;
     padding: 8px;
 `;
 
 const StyledDemoableTd = styled(DemoableTd)`
-    border: 1px solid black;
     padding: 8px;
 `;
 
@@ -140,7 +133,7 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
                 />
             </StyledDemoableTd>
             <StyledDemoableTd isDemo={isDemo}>{comment}</StyledDemoableTd>
-            <BorderlessTd>
+            <StyledTd>
                 <StyledButton
                     disabled={isDemo || isMarkedAsSeen}
                     hasBeenSeen={isMarkedAsSeen}
@@ -155,7 +148,7 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
                 <StyledButton disabled={isDemo} onClick={deleteTransaction} type={'button'}>
                     <TrashIcon />
                 </StyledButton>
-            </BorderlessTd>
+            </StyledTd>
             {shouldShowModal && (
                 <TransactionEditModal
                     setShouldShowModal={setShouldShowModal}
