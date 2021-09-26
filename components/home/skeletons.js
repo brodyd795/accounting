@@ -8,13 +8,12 @@ import {StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable} from 
 
 const SkeletonTd = styled.td`
     height: 24px;
-    border: 1px solid grey;
 `;
 
 const SkeletonTdContent = styled.div`
     height: 100%;
 
-    background-color: #cccccc;
+    background-color: ${colors.lightGrey};
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
     @keyframes pulse {
