@@ -36,11 +36,11 @@ const StyledTable = styled.table`
     }
 
     thead > tr {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 
     tr:nth-child(even) {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 `;
 

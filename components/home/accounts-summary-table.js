@@ -23,21 +23,21 @@ const StyledTable = styled.table`
     width: 100%;
     margin: 30px auto;
 
+    border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
     overflow-x: scroll;
 
     th,
     td {
-        border: 1px solid black;
         padding: 8px;
     }
 
     thead > tr {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 
     tr:nth-child(even) {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 
     @media (min-width: 768px) {

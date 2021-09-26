@@ -39,13 +39,13 @@ const StyledSkeletonTable = styled(StyledTable)`
 
 export const StyledTransactionsTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 `;
 
 export const StyledSummaryTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: ${colors.grey};
+        background-color: ${colors.lightGrey};
     }
 `;
 

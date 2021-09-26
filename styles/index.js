@@ -4,7 +4,8 @@ export const colors = {
     green: '#729668',
     lightGreen: '#ecfbe6',
     darkGreen: '#1f221b',
-    grey: '#bdc1bc'
+    darkGrey: '#383a37',
+    lightGrey: '#bdc1bc'
 };
 
 export const buttonStyles = css`
