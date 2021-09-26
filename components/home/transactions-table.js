@@ -7,7 +7,7 @@ import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
 const StyledUnseenTransactionsContainer = styled.div`
-    margin: 40px 8px 0;
+    margin: 16px 8px 0;
 `;
 
 const StyledTableHeader = styled.td`

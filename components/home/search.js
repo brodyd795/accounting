@@ -15,6 +15,7 @@ import {StyledH2} from './headers';
 import {TransactionsTableSkeleton} from './skeletons';
 
 const StyledSearchContainer = styled.div`
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,12 +33,11 @@ const StyledLabel = styled.label`
 `;
 
 const StyledForm = styled(Form)`
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
     border: 2px solid black;
     border-radius: 10px;
-    margin: 10px;
+    margin: 0 10px;
     padding: 10px;
 `;
 

@@ -21,7 +21,7 @@ import {RowSkeleton, StyledSummaryTableTBodySkeleton} from './skeletons';
 
 const StyledTable = styled.table`
     width: 100%;
-    margin: 30px auto;
+    margin: 16px auto;
 
     border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
@@ -57,6 +57,7 @@ const StyledSummaryTableContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 16px;
 `;
 
 const StyledDownIcon = styled(DownIcon)`
@@ -165,14 +166,14 @@ export const AccountsSummaryTable = () => {
     if (!data) {
         return (
             <StyledSummaryTableContainer>
-                <StyledH2>{'Accounts Summary'}</StyledH2>
+                <StyledH2>{'Summary'}</StyledH2>
                 <StyledTopRow>
                     <StyledButton>
                         <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
                         <StyledDownIcon />
                     </StyledButton>
                     <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
-                        {'New transaction'}
+                        {'New'}
                         <StyledPlusIcon />
                     </StyledButton>
                 </StyledTopRow>
@@ -203,14 +204,14 @@ export const AccountsSummaryTable = () => {
 
     return (
         <StyledSummaryTableContainer>
-            <StyledH2>{'Accounts Summary'}</StyledH2>
+            <StyledH2>{'Summary'}</StyledH2>
             <StyledTopRow>
                 <StyledButton>
                     <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
                     <StyledDownIcon />
                 </StyledButton>
                 <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
-                    {'New transaction'}
+                    {'New'}
                     <StyledPlusIcon />
                 </StyledButton>
                 {shouldShowModal && (
