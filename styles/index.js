@@ -3,7 +3,8 @@ import {css} from 'styled-components';
 export const colors = {
     green: '#729668',
     lightGreen: '#ecfbe6',
-    darkGreen: '#1f221b'
+    darkGreen: '#1f221b',
+    grey: '#a2a9a1'
 };
 
 export const buttonStyles = css`

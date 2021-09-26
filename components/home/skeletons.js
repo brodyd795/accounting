@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {colors} from '../../styles';
+
 import {StyledH2} from './headers';
 import {StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable} from './transactions-table';
 
@@ -37,13 +39,13 @@ const StyledSkeletonTable = styled(StyledTable)`
 
 export const StyledTransactionsTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: grey;
+        background-color: ${colors.grey};
     }
 `;
 
 export const StyledSummaryTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: grey;
+        background-color: ${colors.grey};
     }
 `;
 

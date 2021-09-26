@@ -33,11 +33,11 @@ const StyledTable = styled.table`
     }
 
     thead > tr {
-        background-color: #dedede;
+        background-color: ${colors.grey};
     }
 
     tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: ${colors.grey};
     }
 
     @media (min-width: 768px) {
@@ -64,8 +64,6 @@ const StyledDownIcon = styled(DownIcon)`
     height: 16px;
     vertical-align: middle;
     width: 16px;
-    /* margin-left: -10px; */
-    /* z-index: 100; */
 
     path {
         fill: ${colors.lightGreen};
