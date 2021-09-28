@@ -9,6 +9,7 @@ import CommentSelector from '../form-fields/comment-selector';
 import MarkedAsSeenSelector from '../form-fields/marked-as-seen-selector';
 import {validationSchema} from '../schemas/transaction-validation-schema';
 import {useDemo} from '../../../hooks/use-demo';
+import {buttonStyles} from '../../../styles';
 
 import {Modal} from './modal';
 
@@ -40,6 +41,7 @@ const StyledButtonsContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
+    ${buttonStyles};
     margin-right: 5px;
     margin-left: 5px;
 `;
