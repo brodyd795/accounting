@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import GearIcon from '../public/icons/cog-solid.svg';
 import {DemoProvider, useDemo} from '../hooks/use-demo';
+import {colors} from '../styles';
 
 import {DemoButton} from './header/demo-button';
 import {SubscribeButton} from './header/subscribe-button';
@@ -15,7 +16,7 @@ const StyledLayout = styled.div`
 
 const StyledHeader = styled.div`
     text-align: center;
-    background-color: #4f7744;
+    background-color: ${colors.green};
     padding: 10px 0;
     display: flex;
     flex: 1;
@@ -28,7 +29,7 @@ const StyledHeader = styled.div`
 
 const StyledH1 = styled.h1`
     padding-left: 8px;
-    color: #fafff3;
+    color: ${colors.darkGreen};
 `;
 
 const StyledButtons = styled.div`
@@ -49,7 +50,7 @@ const StyledSettingsButton = styled.button`
         width: 20px;
 
         path {
-            fill: #fafff3;
+            fill: ${colors.darkGreen};
         }
     }
 `;

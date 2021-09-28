@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {colors} from '../../styles';
+
 import {StyledH2} from './headers';
 import {StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable} from './transactions-table';
 
@@ -12,7 +14,7 @@ const SkeletonTd = styled.td`
 const SkeletonTdContent = styled.div`
     height: 100%;
 
-    background-color: #cccccc;
+    background-color: ${colors.lightGrey};
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
     @keyframes pulse {
@@ -37,13 +39,13 @@ const StyledSkeletonTable = styled(StyledTable)`
 
 export const StyledTransactionsTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: grey;
+        background-color: ${colors.lightGrey};
     }
 `;
 
 export const StyledSummaryTableTBodySkeleton = styled.tbody`
     tr:nth-child(even) {
-        background-color: grey;
+        background-color: ${colors.lightGrey};
     }
 `;
 
