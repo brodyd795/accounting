@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {colors, StyledSection as Section} from '../../styles';
+
 import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
 
+const StyledSection = styled(Section)`
+    display: block;
+`;
+
 const StyledUnseenTransactionsContainer = styled.div`
-    margin: 40px 8px 0;
+    margin: 16px 8px 0;
 `;
 
 const StyledTableHeader = styled.td`
-    border: 1px solid black;
     padding: 8px;
     font-weight: bold;
 `;
@@ -19,31 +24,30 @@ const StyledTableHeaderWithBorderlessBottom = styled(StyledTableHeader)`
 `;
 
 const StyledTable = styled.table`
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: auto;
+    border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
+    margin: auto;
     overflow-x: scroll;
     display: block;
     max-width: fit-content;
     white-space: nowrap;
 
-    th {
-        border: 1px solid black;
+    th,
+    td {
         padding: 8px;
     }
 
     thead > tr {
-        background-color: #dedede;
+        background-color: ${colors.lightGrey};
     }
 
     tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: ${colors.lightGrey};
     }
 `;
 
 const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
-    <StyledUnseenTransactionsContainer>
+    <StyledSection>
         <StyledH2>{header}</StyledH2>
         {data.length ? (
             <StyledTable>
@@ -70,7 +74,7 @@ const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = 
         ) : (
             noResultsText
         )}
-    </StyledUnseenTransactionsContainer>
+    </StyledSection>
 );
 
 export {TransactionsTable, StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable};

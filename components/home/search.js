@@ -6,39 +6,28 @@ import 'react-datepicker/dist/react-datepicker.css';
 import useSWR from 'swr';
 
 import fetcher from '../../lib/fetch';
+import {colors, buttonStyles, StyledSection} from '../../styles';
 
 import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
 import AmountSelector from './form-fields/amount-selector';
+import {formFieldStyles} from './form-fields/styles';
 import {TransactionsTable} from './transactions-table';
 import {StyledH2} from './headers';
 import {TransactionsTableSkeleton} from './skeletons';
 
-const StyledSearchContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-
 const StyledSelect = styled(Select)`
-    width: 150px;
+    width: 142px;
     color: black;
     text-align: left;
-`;
-
-const StyledLabel = styled.label`
-    margin-right: 10px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    color: ${colors.darkGrey};
 `;
 
 const StyledForm = styled(Form)`
-    margin-top: 30px;
     display: flex;
     flex-direction: column;
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
+    border-radius: 8px;
 `;
 
 const StyledFieldContainer = styled.div`
@@ -48,22 +37,12 @@ const StyledFieldContainer = styled.div`
 `;
 
 const StyledFieldsGroupContainer = styled.div`
-    display: block;
-
-    @media (min-width: 576px) {
-        display: flex;
-    }
-`;
-
-const StyledButtonsContainer = styled.div`
-    margin-top: 20px;
     display: flex;
-    justify-content: center;
 `;
 
 const StyledButton = styled.button`
-    margin-right: 5px;
-    margin-left: 5px;
+    ${buttonStyles};
+    margin: 30px auto 0;
 `;
 
 const initialValues = {
@@ -75,6 +54,11 @@ const initialValues = {
     toAmount: undefined,
     toDate: undefined
 };
+
+const StyledField = styled(Field)`
+    border-radius: 10px;
+    ${formFieldStyles};
+`;
 
 const header = 'Search Results';
 
@@ -121,42 +105,40 @@ export const Search = () => {
     };
 
     return (
-        <StyledSearchContainer>
+        <StyledSection>
             <StyledH2>{'Search'}</StyledH2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={searchSchema}>
                 {({setFieldValue, values}) => (
                     <StyledForm>
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromDate'}>{'From Date:'}</StyledLabel>
-                                <DatePickerField name={'fromDate'} type={'text'} />
+                                <DatePickerField name={'fromDate'} placeholderText={'From date'} />
                                 <ErrorMessage name={'fromDate'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toDate'}>{'To Date:'}</StyledLabel>
-                                <DatePickerField name={'toDate'} type={'text'} />
+                                <DatePickerField name={'toDate'} placeholderText={'To date'} />
                                 <ErrorMessage name={'toDate'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAccountObject'}>{'From account:'}</StyledLabel>
                                 <StyledSelect
                                     id={'fromAccountObject'}
                                     name={'fromAccountObject'}
                                     onChange={(option) => setFieldValue('fromAccountObject', option)}
                                     options={accounts}
+                                    placeholder={'From account'}
                                     value={values.fromAccountObject}
                                 />
                                 <ErrorMessage name="fromAccountObject" />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAccountObject'}>{'To account:'}</StyledLabel>
                                 <StyledSelect
                                     id={'toAccountObject'}
                                     name={'toAccountObject'}
                                     onChange={(option) => setFieldValue('toAccountObject', option)}
                                     options={accounts}
+                                    placeholder={'To account'}
                                     value={values.toAccountObject}
                                 />
                                 <ErrorMessage name="toAccount" />
@@ -164,24 +146,23 @@ export const Search = () => {
                         </StyledFieldsGroupContainer>
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'fromAmount'}>{'From Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'fromAmount'} showWhileDemo />
+                                <StyledField
+                                    component={AmountSelector}
+                                    name={'fromAmount'}
+                                    placeholder={'From amount'}
+                                />
                                 <ErrorMessage name={'fromAmount'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledLabel htmlFor={'toAmount'}>{'To Amount:'}</StyledLabel>
-                                <Field component={AmountSelector} name={'toAmount'} showWhileDemo />
+                                <StyledField component={AmountSelector} name={'toAmount'} placeholder={'To amount'} />
                                 <ErrorMessage name={'toAmount'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>
                         <StyledFieldContainer>
-                            <StyledLabel htmlFor={'comment'}>{'Description:'}</StyledLabel>
-                            <Field name={'comment'} type={'text'} />
+                            <StyledField name={'comment'} placeholder={'Description'} type={'text'} />
                             <ErrorMessage name={'comment'} />
                         </StyledFieldContainer>
-                        <StyledButtonsContainer>
-                            <StyledButton type={'submit'}>{'Submit'}</StyledButton>
-                        </StyledButtonsContainer>
+                        <StyledButton type={'submit'}>{'Submit'}</StyledButton>
                         {searchError ? <div>{'Error!'}</div> : null}
                     </StyledForm>
                 )}
@@ -196,6 +177,6 @@ export const Search = () => {
                     />
                 )}
             </div>
-        </StyledSearchContainer>
+        </StyledSection>
     );
 };
