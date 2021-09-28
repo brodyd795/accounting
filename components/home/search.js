@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import useSWR from 'swr';
 
 import fetcher from '../../lib/fetch';
-import {colors, buttonStyles} from '../../styles';
+import {colors, buttonStyles, StyledSection} from '../../styles';
 
 import {searchSchema} from './schemas/search-schema';
 import DatePickerField from './form-fields/date-selector';
@@ -16,15 +16,8 @@ import {TransactionsTable} from './transactions-table';
 import {StyledH2} from './headers';
 import {TransactionsTableSkeleton} from './skeletons';
 
-const StyledSearchContainer = styled.div`
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-`;
-
 const StyledSelect = styled(Select)`
-    width: 170px;
+    width: 142px;
     color: black;
     text-align: left;
     font-size: 14px;
@@ -34,9 +27,7 @@ const StyledSelect = styled(Select)`
 const StyledForm = styled(Form)`
     display: flex;
     flex-direction: column;
-    border: 1px solid ${colors.darkGrey};
-    margin: 0 10px;
-    padding: 10px;
+    border-radius: 8px;
 `;
 
 const StyledFieldContainer = styled.div`
@@ -51,7 +42,7 @@ const StyledFieldsGroupContainer = styled.div`
 
 const StyledButton = styled.button`
     ${buttonStyles};
-    margin: 10px auto 0;
+    margin: 30px auto 0;
 `;
 
 const initialValues = {
@@ -114,18 +105,18 @@ export const Search = () => {
     };
 
     return (
-        <StyledSearchContainer>
+        <StyledSection>
             <StyledH2>{'Search'}</StyledH2>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={searchSchema}>
                 {({setFieldValue, values}) => (
                     <StyledForm>
                         <StyledFieldsGroupContainer>
                             <StyledFieldContainer>
-                                <DatePickerField name={'fromDate'} placeholderText={'From date...'} />
+                                <DatePickerField name={'fromDate'} placeholderText={'From date'} />
                                 <ErrorMessage name={'fromDate'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <DatePickerField name={'toDate'} placeholderText={'To date...'} />
+                                <DatePickerField name={'toDate'} placeholderText={'To date'} />
                                 <ErrorMessage name={'toDate'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>
@@ -136,7 +127,7 @@ export const Search = () => {
                                     name={'fromAccountObject'}
                                     onChange={(option) => setFieldValue('fromAccountObject', option)}
                                     options={accounts}
-                                    placeholder={'From account...'}
+                                    placeholder={'From account'}
                                     value={values.fromAccountObject}
                                 />
                                 <ErrorMessage name="fromAccountObject" />
@@ -147,7 +138,7 @@ export const Search = () => {
                                     name={'toAccountObject'}
                                     onChange={(option) => setFieldValue('toAccountObject', option)}
                                     options={accounts}
-                                    placeholder={'To account...'}
+                                    placeholder={'To account'}
                                     value={values.toAccountObject}
                                 />
                                 <ErrorMessage name="toAccount" />
@@ -158,21 +149,17 @@ export const Search = () => {
                                 <StyledField
                                     component={AmountSelector}
                                     name={'fromAmount'}
-                                    placeholder={'From amount...'}
+                                    placeholder={'From amount'}
                                 />
                                 <ErrorMessage name={'fromAmount'} />
                             </StyledFieldContainer>
                             <StyledFieldContainer>
-                                <StyledField
-                                    component={AmountSelector}
-                                    name={'toAmount'}
-                                    placeholder={'To amount...'}
-                                />
+                                <StyledField component={AmountSelector} name={'toAmount'} placeholder={'To amount'} />
                                 <ErrorMessage name={'toAmount'} />
                             </StyledFieldContainer>
                         </StyledFieldsGroupContainer>
                         <StyledFieldContainer>
-                            <StyledField name={'comment'} placeholder={'Description...'} type={'text'} />
+                            <StyledField name={'comment'} placeholder={'Description'} type={'text'} />
                             <ErrorMessage name={'comment'} />
                         </StyledFieldContainer>
                         <StyledButton type={'submit'}>{'Submit'}</StyledButton>
@@ -190,6 +177,6 @@ export const Search = () => {
                     />
                 )}
             </div>
-        </StyledSearchContainer>
+        </StyledSection>
     );
 };

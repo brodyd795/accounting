@@ -1,10 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {colors} from '../../styles';
+import {colors, StyledSection as Section} from '../../styles';
 
 import {StyledH2} from './headers';
 import {TransactionRow} from './transaction-row';
+
+const StyledSection = styled(Section)`
+    display: block;
+`;
 
 const StyledUnseenTransactionsContainer = styled.div`
     margin: 16px 8px 0;
@@ -43,7 +47,7 @@ const StyledTable = styled.table`
 `;
 
 const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = false}) => (
-    <StyledUnseenTransactionsContainer>
+    <StyledSection>
         <StyledH2>{header}</StyledH2>
         {data.length ? (
             <StyledTable>
@@ -70,7 +74,7 @@ const TransactionsTable = ({data, noResultsText, header, hideSeenTransactions = 
         ) : (
             noResultsText
         )}
-    </StyledUnseenTransactionsContainer>
+    </StyledSection>
 );
 
 export {TransactionsTable, StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable};

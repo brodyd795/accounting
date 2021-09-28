@@ -4,7 +4,7 @@ import {colors} from '../styles';
 
 const GlobalStyle = createGlobalStyle`
     html, body, #__next {
-        background-color: ${colors.lightGreen};
+        background-color: #c3ccc0;
         height: 100%;
         margin: 0;
         padding: 0;

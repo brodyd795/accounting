@@ -12,7 +12,7 @@ import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
 import {getRandomAccountBalance} from '../../utils/demo-helpers';
-import {colors, buttonStyles} from '../../styles';
+import {colors, buttonStyles, StyledSection} from '../../styles';
 
 import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
@@ -21,7 +21,7 @@ import {RowSkeleton, StyledSummaryTableTBodySkeleton} from './skeletons';
 
 const StyledTable = styled.table`
     width: 100%;
-    margin: 16px auto;
+    margin: 24px auto;
 
     border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
@@ -51,13 +51,6 @@ const StyledTablesContainer = styled.div`
     @media (min-width: 768px) {
         display: flex;
     }
-`;
-
-const StyledSummaryTableContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 16px;
 `;
 
 const StyledDownIcon = styled(DownIcon)`
@@ -137,7 +130,7 @@ const TableHead = () => (
     <thead>
         <tr>
             <th>{'Category'}</th>
-            <th>{'Account Name'}</th>
+            <th>{'Account'}</th>
             <th>{'Balance'}</th>
         </tr>
     </thead>
@@ -165,7 +158,7 @@ export const AccountsSummaryTable = () => {
 
     if (!data) {
         return (
-            <StyledSummaryTableContainer>
+            <StyledSection>
                 <StyledH2>{'Summary'}</StyledH2>
                 <StyledTopRow>
                     <StyledButton>
@@ -195,7 +188,7 @@ export const AccountsSummaryTable = () => {
                         </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                 </StyledTablesContainer>
-            </StyledSummaryTableContainer>
+            </StyledSection>
         );
     }
 
@@ -203,7 +196,7 @@ export const AccountsSummaryTable = () => {
     const persistentAccounts = data.filter((account) => account.category === 'Assets' || account.category === 'Debts');
 
     return (
-        <StyledSummaryTableContainer>
+        <StyledSection>
             <StyledH2>{'Summary'}</StyledH2>
             <StyledTopRow>
                 <StyledButton>
@@ -236,6 +229,6 @@ export const AccountsSummaryTable = () => {
                     </tbody>
                 </StyledTable>
             </StyledTablesContainer>
-        </StyledSummaryTableContainer>
+        </StyledSection>
     );
 };

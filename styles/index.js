@@ -1,10 +1,10 @@
-import {css} from 'styled-components';
+import styled, {css} from 'styled-components';
 
 export const colors = {
-    green: '#729668',
-    lightGreen: '#ecfbe6',
     darkGreen: '#1f221b',
     darkGrey: '#383a37',
+    green: '#729668',
+    lightGreen: '#ecfbe6',
     lightGrey: '#bdc1bc'
 };
 
@@ -20,4 +20,15 @@ export const buttonStyles = css`
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 2px 3px 4px grey;
+`;
+
+export const StyledSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 16px;
+    padding: 16px 8px;
+    background-color: white;
+    border-radius: 10px;
 `;

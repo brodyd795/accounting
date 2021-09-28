@@ -50,7 +50,7 @@ const StyledSettingsButton = styled.button`
         width: 20px;
 
         path {
-            fill: ${colors.lightGreen};
+            fill: ${colors.darkGreen};
         }
     }
 `;
