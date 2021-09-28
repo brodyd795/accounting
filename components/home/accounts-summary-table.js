@@ -3,81 +3,102 @@ import useSWR from 'swr';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import NumberFormat from 'react-number-format';
 
+import DownIcon from '../../public/icons/angle-down-solid.svg';
+import PlusIcon from '../../public/icons/plus-solid.svg';
 import fetch from '../../lib/fetch';
 import {cleanAccountNameOrCategoryForUI} from '../../utils/string-helpers';
 import {useDemo} from '../../hooks/use-demo';
 import {formatBalanceForUI} from '../../utils/balance-helpers';
 import {getRandomAccountBalance} from '../../utils/demo-helpers';
+import {colors, buttonStyles, StyledSection} from '../../styles';
 
 import {DemoableTd} from './demoable-td';
 import {NewTransactionModal} from './modals/new-transaction-modal';
 import {StyledH2} from './headers';
-import {RowSkeleton} from './skeletons';
+import {RowSkeleton, StyledSummaryTableTBodySkeleton} from './skeletons';
 
 const StyledTable = styled.table`
-    table-layout: fixed;
-    margin: 10px auto;
+    width: 100%;
+    margin: 24px auto;
 
+    border: 1px solid ${colors.darkGrey};
     border-collapse: collapse;
     overflow-x: scroll;
-    display: block;
-    max-width: fit-content;
 
     th,
     td {
-        border: 1px solid black;
         padding: 8px;
     }
 
     thead > tr {
-        background-color: #dedede;
+        background-color: ${colors.lightGrey};
     }
 
     tr:nth-child(even) {
-        background-color: #dedede;
+        background-color: ${colors.lightGrey};
+    }
+
+    @media (min-width: 768px) {
+        margin: 10px;
+    }
+
+    @media (min-width: 768px) {
+        margin: 10px;
     }
 `;
 
 const StyledTablesContainer = styled.div`
-    margin-top: 20px;
-
-    display: block;
+    margin: 0 10px;
 
     @media (min-width: 768px) {
         display: flex;
     }
 `;
 
-const StyledSummaryTableContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+const StyledDownIcon = styled(DownIcon)`
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+
+    path {
+        fill: ${colors.lightGreen};
+    }
+`;
+
+const StyledPlusIcon = styled(PlusIcon)`
+    display: inline-block;
+    height: 16px;
+    vertical-align: middle;
+    width: 16px;
+    margin-left: 8px;
+
+    path {
+        fill: ${colors.lightGreen};
+    }
+`;
+
+const StyledButton = styled.button`
+    ${buttonStyles};
 `;
 
 const StyledDatePicker = styled(DatePicker)`
-    text-align: center;
-    border: 2px solid black;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 4px;
+    background-color: ${colors.green};
+    color: ${colors.lightGreen};
+    border: transparent;
     font-size: 16px;
-    background-color: #dedede;
+    text-align: center;
+    max-width: 130px;
+    margin-left: -8px;
+    cursor: pointer;
 `;
 
 const StyledTopRow = styled.div`
     display: flex;
     justify-content: space-between;
     margin: 0 8px;
-`;
-
-const StyledButton = styled.button`
-    border: 2px solid black;
-    border-radius: 4px;
-    padding: 4px;
-    font-size: 16px;
-    background-color: #dedede;
-    cursor: pointer;
 `;
 
 const Row = ({account}) => {
@@ -92,11 +113,43 @@ const Row = ({account}) => {
             <td>{category}</td>
             <td>{name}</td>
             <DemoableTd isDemo={isDemo} isNegative={isNegative}>
-                {balanceToDisplay}
+                <NumberFormat
+                    decimalScale={2}
+                    decimalSeparator={'.'}
+                    displayType={'text'}
+                    fixedDecimalScale
+                    isDemo={isDemo}
+                    name={name}
+                    prefix={'$'}
+                    renderText={(value, props) => <div {...props}>{value}</div>}
+                    thousandSeparator={','}
+                    value={balanceToDisplay}
+                />
             </DemoableTd>
         </tr>
     );
 };
+
+const TableHead = () => (
+    <thead>
+        <tr>
+            <th>{'Category'}</th>
+            <th>{'Account'}</th>
+            <th>{'Balance'}</th>
+        </tr>
+    </thead>
+);
+
+const DatePickerComponent = ({selectedMonth, setSelectedMonth}) => (
+    <StyledDatePicker
+        dateFormat={'MMMM yyyy'}
+        maxDate={new Date()}
+        minDate={new Date(2021, 3, 1)}
+        onChange={(newDate) => setSelectedMonth(newDate)}
+        selected={selectedMonth}
+        showMonthYearPicker
+    />
+);
 
 export const AccountsSummaryTable = () => {
     const [selectedMonth, setSelectedMonth] = useState(new Date());
@@ -109,46 +162,37 @@ export const AccountsSummaryTable = () => {
 
     if (!data) {
         return (
-            <StyledSummaryTableContainer>
-                <StyledH2>{'Accounts Summary'}</StyledH2>
+            <StyledSection>
+                <StyledH2>{'Summary'}</StyledH2>
                 <StyledTopRow>
-                    <StyledDatePicker
-                        dateFormat={'MMMM yyyy'}
-                        maxDate={new Date()}
-                        minDate={new Date(2021, 3, 1)}
-                        selected={new Date()}
-                    />
-                    <StyledButton type={'button'}>{'New transaction'}</StyledButton>
+                    <StyledButton>
+                        <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
+                        <StyledDownIcon />
+                    </StyledButton>
+                    <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
+                        {'New'}
+                        <StyledPlusIcon />
+                    </StyledButton>
                 </StyledTopRow>
                 <StyledTablesContainer>
                     <StyledTable>
-                        <thead>
-                            <tr>
-                                <th>{'Category'}</th>
-                                <th>{'Account Name'}</th>
-                                <th>{'Balance'}</th>
-                            </tr>
-                        </thead>
-                        {Array.from({length: 6}, () => (
-                            <RowSkeleton numberOfColumns={3} />
-                        ))}
+                        <TableHead />
+                        <StyledSummaryTableTBodySkeleton>
+                            {Array.from({length: 6}, () => (
+                                <RowSkeleton numberOfColumns={3} />
+                            ))}
+                        </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                     <StyledTable>
-                        <thead>
-                            <tr>
-                                <th>{'Category'}</th>
-                                <th>{'Account Name'}</th>
-                                <th>{'Balance'}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                        <TableHead />
+                        <StyledSummaryTableTBodySkeleton>
                             {Array.from({length: 7}, () => (
                                 <RowSkeleton numberOfColumns={3} />
                             ))}
-                        </tbody>
+                        </StyledSummaryTableTBodySkeleton>
                     </StyledTable>
                 </StyledTablesContainer>
-            </StyledSummaryTableContainer>
+            </StyledSection>
         );
     }
 
@@ -156,19 +200,16 @@ export const AccountsSummaryTable = () => {
     const persistentAccounts = data.filter((account) => account.category === 'Assets' || account.category === 'Debts');
 
     return (
-        <StyledSummaryTableContainer>
-            <StyledH2>{'Accounts Summary'}</StyledH2>
+        <StyledSection>
+            <StyledH2>{'Summary'}</StyledH2>
             <StyledTopRow>
-                <StyledDatePicker
-                    dateFormat={'MMMM yyyy'}
-                    maxDate={new Date()}
-                    minDate={new Date(2021, 3, 1)}
-                    onChange={(newDate) => setSelectedMonth(newDate)}
-                    selected={selectedMonth}
-                    showMonthYearPicker
-                />
+                <StyledButton>
+                    <DatePickerComponent selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} />
+                    <StyledDownIcon />
+                </StyledButton>
                 <StyledButton onClick={() => setShouldShowModal(true)} type={'button'}>
-                    {'New transaction'}
+                    {'New'}
+                    <StyledPlusIcon />
                 </StyledButton>
                 {shouldShowModal && (
                     <NewTransactionModal setShouldShowModal={setShouldShowModal} shouldShowModal={shouldShowModal} />
@@ -176,13 +217,7 @@ export const AccountsSummaryTable = () => {
             </StyledTopRow>
             <StyledTablesContainer>
                 <StyledTable>
-                    <thead>
-                        <tr>
-                            <th>{'Category'}</th>
-                            <th>{'Account Name'}</th>
-                            <th>{'Balance'}</th>
-                        </tr>
-                    </thead>
+                    <TableHead />
                     <tbody>
                         {persistentAccounts.map((account) => (
                             <Row account={account} key={account.accountId} />
@@ -190,13 +225,7 @@ export const AccountsSummaryTable = () => {
                     </tbody>
                 </StyledTable>
                 <StyledTable>
-                    <thead>
-                        <tr>
-                            <th>{'Category'}</th>
-                            <th>{'Account Name'}</th>
-                            <th>{'Balance'}</th>
-                        </tr>
-                    </thead>
+                    <TableHead />
                     <tbody>
                         {monthlyAccounts.map((account) => (
                             <Row account={account} key={account.accountId} />
@@ -204,6 +233,6 @@ export const AccountsSummaryTable = () => {
                     </tbody>
                 </StyledTable>
             </StyledTablesContainer>
-        </StyledSummaryTableContainer>
+        </StyledSection>
     );
 };

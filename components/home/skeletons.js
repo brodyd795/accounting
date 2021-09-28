@@ -1,39 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import {colors} from '../../styles';
+
 import {StyledH2} from './headers';
 import {StyledUnseenTransactionsContainer, StyledTableHeader, StyledTable} from './transactions-table';
 
 const SkeletonTd = styled.td`
     height: 24px;
+    border: 1px solid grey;
 `;
 
 const SkeletonTdContent = styled.div`
     height: 100%;
 
-    box-shadow: 0 4px 10px 0 rgba(33, 33, 33, 0.15);
-    border-radius: 4px;
-    position: relative;
-    overflow: hidden;
+    background-color: ${colors.lightGrey};
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 
-    ::before {
-        content: '';
-        display: block;
-        position: absolute;
-        left: -150px;
-        top: 0;
-        height: 100%;
-        width: 150px;
-        background: linear-gradient(to right, transparent 0%, #d8d8d8 50%, transparent 100%);
-        animation: load 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-    }
-
-    @keyframes load {
-        from {
-            left: -150px;
+    @keyframes pulse {
+        0%,
+        100% {
+            opacity: 0.6;
         }
-        to {
-            left: 100%;
+        50% {
+            opacity: 0.3;
         }
     }
 `;
@@ -44,6 +34,18 @@ const StyledSkeletonTable = styled(StyledTable)`
 
     @media screen and (min-width: 768px) {
         min-width: 700px;
+    }
+`;
+
+export const StyledTransactionsTableTBodySkeleton = styled.tbody`
+    tr:nth-child(even) {
+        background-color: ${colors.lightGrey};
+    }
+`;
+
+export const StyledSummaryTableTBodySkeleton = styled.tbody`
+    tr:nth-child(even) {
+        background-color: ${colors.lightGrey};
     }
 `;
 
@@ -71,11 +73,11 @@ export const TransactionsTableSkeleton = ({header}) => (
                     <StyledTableHeader>{'Buttons'}</StyledTableHeader>
                 </tr>
             </thead>
-            <tbody>
+            <StyledTransactionsTableTBodySkeleton>
                 {Array.from({length: 5}, () => (
                     <RowSkeleton numberOfColumns={6} />
                 ))}
-            </tbody>
+            </StyledTransactionsTableTBodySkeleton>
         </StyledSkeletonTable>
     </StyledUnseenTransactionsContainer>
 );

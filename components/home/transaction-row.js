@@ -3,6 +3,7 @@
 /* eslint-disable no-alert */
 import React, {useState} from 'react';
 import styled from 'styled-components';
+import NumberFormat from 'react-number-format';
 
 import TrashIcon from '../../public/icons/trash-alt-solid.svg';
 import PencilIcon from '../../public/icons/pencil-alt-solid.svg';
@@ -14,11 +15,6 @@ import {getRandomDollarAmount} from '../../utils/demo-helpers';
 
 import {DemoableTd} from './demoable-td';
 import {TransactionEditModal} from './modals/transaction-edit-modal';
-
-const BorderlessTd = styled.td`
-    border: none;
-    border-right: 1px solid black;
-`;
 
 const StyledButton = styled.button`
     margin: 0 4px;
@@ -39,12 +35,10 @@ const StyledButton = styled.button`
 `;
 
 const StyledTd = styled.td`
-    border: 1px solid black;
     padding: 8px;
 `;
 
 const StyledDemoableTd = styled(DemoableTd)`
-    border: 1px solid black;
     padding: 8px;
 `;
 
@@ -118,17 +112,28 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
         setShouldShowModal(true);
     };
 
-    const amountInDollars = amount / 100;
-    const cleanAmount = `$ ${amountInDollars.toLocaleString()}`;
+    const amountInDollars = (isDemo ? getRandomDollarAmount() : amount) / 100;
 
     return (
         <tr>
             <StyledTd>{formatDateForUI(date)}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(fromAccountName)}</StyledTd>
             <StyledTd>{cleanAccountNameOrCategoryForUI(toAccountName)}</StyledTd>
-            <StyledDemoableTd isDemo={isDemo}>{isDemo ? getRandomDollarAmount() : cleanAmount}</StyledDemoableTd>
+            <StyledDemoableTd>
+                <NumberFormat
+                    decimalScale={2}
+                    decimalSeparator={'.'}
+                    displayType={'text'}
+                    fixedDecimalScale
+                    isDemo={isDemo}
+                    prefix={'$'}
+                    renderText={(value, props) => <div {...props}>{value}</div>}
+                    thousandSeparator={','}
+                    value={amountInDollars}
+                />
+            </StyledDemoableTd>
             <StyledDemoableTd isDemo={isDemo}>{comment}</StyledDemoableTd>
-            <BorderlessTd>
+            <StyledTd>
                 <StyledButton
                     disabled={isDemo || isMarkedAsSeen}
                     hasBeenSeen={isMarkedAsSeen}
@@ -143,7 +148,7 @@ export const TransactionRow = ({transaction: transactionProp, hideSeenTransactio
                 <StyledButton disabled={isDemo} onClick={deleteTransaction} type={'button'}>
                     <TrashIcon />
                 </StyledButton>
-            </BorderlessTd>
+            </StyledTd>
             {shouldShowModal && (
                 <TransactionEditModal
                     setShouldShowModal={setShouldShowModal}
