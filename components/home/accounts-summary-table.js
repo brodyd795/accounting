@@ -50,7 +50,7 @@ const StyledTable = styled.table`
 `;
 
 const StyledTablesContainer = styled.div`
-    margin: 0 10px;
+    margin: 16px 10px 8px;
 
     @media (min-width: 768px) {
         display: flex;

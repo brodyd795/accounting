@@ -3,7 +3,7 @@ import styled, {css} from 'styled-components';
 export const colors = {
     darkGreen: '#1f221b',
     darkGrey: '#383a37',
-    green: '#729668',
+    green: '#6a905d',
     lightGreen: '#ecfbe6',
     lightGrey: '#bdc1bc'
 };
@@ -28,7 +28,7 @@ export const StyledSection = styled.div`
     flex-direction: column;
     justify-content: center;
     margin: 16px;
-    padding: 16px 8px;
+    padding: 20px 8px 32px;
     background-color: white;
     border-radius: 10px;
 `;
